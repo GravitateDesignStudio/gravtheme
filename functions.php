@@ -1,12 +1,8 @@
 <?php
 
-require_once('library/grav.php');            // core functions (don't remove)
-add_editor_style("library/css/editor-styles.css");
-
-
-/************* THUMBNAIL SIZE EXAMPLE *************/
-
-// add_image_size( 'thumb-600', 600, 150, true );
+require_once('library/grav.php'); // core functions (don't remove)
+add_editor_style("library/css/editor-styles.css"); // editor styles for tinymce
+// add_image_size( 'thumb-600', 600, 150, true );  // custom image size example
 
 
 
@@ -14,9 +10,23 @@ add_editor_style("library/css/editor-styles.css");
 
 
 /******** MENUS, ROLES & CAPABILITIES *******************/
-// $role = get_role( 'ROLE_NAME_GOES_HERE' );
-// add core gravity form capabilities
-/*$role->add_cap( 'gravityforms_edit_forms' );
+/* remove some menus from the dashboard we don't need (for all users) */
+function remove_menus () {
+global $menu;
+	$restricted = array(__('Posts'), __('Links'), __('Comments'));
+	end ($menu);
+	while (prev($menu)){
+		$value = explode(' ',$menu[key($menu)][0]);
+		
+		if(in_array($value[0] != NULL?$value[0]:"" , $restricted)){unset($menu[key($menu)]);}
+	}
+}
+//add_action('admin_menu', 'remove_menus'); // uncomment to enable
+
+
+/* Add Gforms capabilities to a role */
+/* $role = get_role( 'ROLE_NAME_GOES_HERE' );
+$role->add_cap( 'gravityforms_edit_forms' );
 $role->add_cap( 'gravityforms_delete_forms' );
 $role->add_cap( 'gravityforms_create_form' );
 $role->add_cap( 'gravityforms_view_entries' );
@@ -29,27 +39,6 @@ $role->add_cap( 'gravityforms_view_entry_notes' );
 $role->add_cap( 'gravityforms_edit_entry_notes' );*/
 
 
-/* remove some roles we don't need */
-$wp_roles = new WP_Roles();
-$wp_roles->remove_role('author');
-$wp_roles->remove_role('subscriber');
-$wp_roles->remove_role('editor');
-$wp_roles->remove_role('contributor');
-
-
-/* remove some menus from the dashboard we don't need (for all users) */
-function remove_menus () {
-global $menu;
-	$restricted = array(__('Posts'), __('Links'), __('Comments'));
-	end ($menu);
-	while (prev($menu)){
-		$value = explode(' ',$menu[key($menu)][0]);
-		
-		if(in_array($value[0] != NULL?$value[0]:"" , $restricted)){unset($menu[key($menu)]);}
-	}
-}
-//add_action('admin_menu', 'remove_menus');
-
 
 /* 
     remove some roles we don't need 
@@ -57,12 +46,16 @@ global $menu;
     use "reset_role('author');" to restore the role
     
 */
-
 /*$wp_roles = new WP_Roles();
 $wp_roles->remove_role("author");
 $wp_roles->remove_role("subscriber");
 $wp_roles->remove_role("editor");
 $wp_roles->remove_role("contributor");*/
+
+
+
+
+
 
 
 
@@ -118,7 +111,11 @@ function grav_comments($comment, $args, $depth) {
 		</article>
     <!-- </li> is added by wordpress automatically -->
 <?php
-} // don't remove this bracket!
+} 
+
+
+
+
 
 
 /************* SEARCH FORM LAYOUT *****************/
@@ -131,7 +128,4 @@ function grav_wpsearch($form) {
     <input type="submit" id="searchsubmit" value="'. esc_attr__('Search') .'" />
     </form>';
     return $form;
-} // don't remove this bracket!
-
-
-?>
+} 
