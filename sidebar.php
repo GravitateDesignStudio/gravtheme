@@ -1,13 +1,14 @@
-<div id="sidebar-1">
+<div id="sidebar-1" class="sidebar">
+
 
 	<?php if ( is_active_sidebar( 'sidebar1' ) ) : ?>
+	
 
 		<?php dynamic_sidebar( 'sidebar1' ); ?>
+		
 
 	<?php else : ?>
 
-
-		<!-- This content shows up if there are no widgets defined in the backend. -->
 		
 		<div class="help">
 		
@@ -17,5 +18,6 @@
 		
 
 	<?php endif; ?>
+	
 
 </div>

@@ -1,7 +1,9 @@
-<!doctype html>  
+<!doctype html>
 <html <?php language_attributes(); ?>>
 
 	<head>
+	
+	
 		<meta charset="utf-8">
 		
 		<title><?php bloginfo("name"); ?> <?php wp_title("&bull;"); ?></title>
@@ -11,15 +13,14 @@
 		<link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/favicon.ico">
   		<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
   		
-  		<!-- stylesheet -->
   		<link rel="stylesheet" type="text/css" href="<?php bloginfo("template_url"); ?>/library/css/master.css" />
 
 		<script src="<?php bloginfo("template_url");?>/library/js/libs/jquery.js"></script>
 		
-		<!-- wordpress head functions -->
 		<?php wp_head(); ?>
-		<!-- end of wordpress head -->
 		
 	</head>
 	
+
 	<body <?php body_class(); ?>>
+	
