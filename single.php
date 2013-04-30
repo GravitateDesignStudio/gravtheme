@@ -6,7 +6,7 @@
 	
     	<div class="post">
     
-    		<?php get_template_part("entry"); ?>
+    		<?php get_template_part('entry'); ?>
     	
     	</div>
     	

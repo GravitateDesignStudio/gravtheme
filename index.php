@@ -4,37 +4,37 @@
 		<?php if (is_category()) { ?>
 		
 			<h1 class="archive-title">
-				<span><?php _e("Posts Categorized:"); ?></span> <?php single_cat_title(); ?>
+				<span><?php _e('Posts Categorized:'); ?></span> <?php single_cat_title(); ?>
 			</h1>
 			
 		<?php } elseif (is_tag()) { ?> 
 		
 			<h1 class="archive-title">
-				<span><?php _e("Posts Tagged:"); ?></span> <?php single_tag_title(); ?>
+				<span><?php _e('Posts Tagged:'); ?></span> <?php single_tag_title(); ?>
 			</h1>
 			
 		<?php } elseif (is_author()) { ?>
 		
 			<h1 class="archive-title">
-				<span><?php _e("Posts By:"); ?></span> <?php get_the_author_meta('display_name'); ?>
+				<span><?php _e('Posts By:'); ?></span> <?php get_the_author_meta('display_name'); ?>
 			</h1>
 			
 		<?php } elseif (is_day()) { ?>
 		
 			<h1 class="archive-title">
-				<span><?php _e("Daily Archives:"); ?></span> <?php the_time('l, F j, Y'); ?>
+				<span><?php _e('Daily Archives:'); ?></span> <?php the_time('l, F j, Y'); ?>
 			</h1>
 			
 		<?php } elseif (is_month()) { ?>
 		
 		    <h1 class="archive-title">
-		    	<span><?php _e("Monthly Archives:"); ?>:</span> <?php the_time('F Y'); ?>
+		    	<span><?php _e('Monthly Archives:'); ?>:</span> <?php the_time('F Y'); ?>
 		    </h1>
 		    
 		<?php } elseif (is_year()) { ?>
 		
 		    <h1 class="archive-title">
-		    	<span><?php _e("Yearly Archives:"); ?>:</span> <?php the_time('Y'); ?>
+		    	<span><?php _e('Yearly Archives:'); ?>:</span> <?php the_time('Y'); ?>
 		    </h1>
 		    
 		<?php } else { ?>
@@ -48,7 +48,7 @@
 		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 		
 		
-			<?php get_template_part("entry"); ?>
+			<?php get_template_part('entry'); ?>
 		
 		
 		<?php endwhile; ?>	

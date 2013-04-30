@@ -13,9 +13,9 @@
 		<link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/favicon.ico">
   		<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
   		
-  		<link rel="stylesheet" type="text/css" href="<?php bloginfo("template_url"); ?>/library/css/master.css" />
+  		<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_url'); ?>/library/css/master.css" />
 
-		<script src="<?php bloginfo("template_url");?>/library/js/libs/jquery.js"></script>
+		<script src="<?php bloginfo('template_url');?>/library/js/libs/jquery.js"></script>
 		
 		<?php wp_head(); ?>
 		
