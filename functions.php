@@ -9,9 +9,9 @@ add_editor_style("library/css/editor-styles.css"); // editor styles for tinymce
 /************* SCRIPTS *********************/
 
 function add_grav_scripts() {
-    wp_enqueue_style(
-        'master',
-        get_stylesheet_uri() . '/library/css/master.css'
+     wp_enqueue_style( 
+        'master', 
+        get_template_directory_uri() . '/library/css/master.css' 
     );
     wp_enqueue_script(
         'scripts',
