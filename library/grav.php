@@ -152,9 +152,14 @@ function grav_related_posts() {
 	echo '</ul>';
 }
 
-// Numeric Page Navi (built into the theme by default)
-function page_navi($before = '', $after = '') {
+// Numeric Page Navi, pass a custom query object if using a custom query 
+function page_navi($before = '', $after = '', &$custom_query) {
 	global $wpdb, $wp_query;
+	
+	if(isset($custom_query)) {
+	    $wp_query = $custom_query;
+	}
+	
 	$request = $wp_query->request;
 	$posts_per_page = intval(get_query_var('posts_per_page'));
 	$paged = intval(get_query_var('paged'));
