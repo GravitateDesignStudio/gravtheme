@@ -24,6 +24,26 @@ function add_grav_scripts() {
 add_action( 'wp_enqueue_scripts', 'add_grav_scripts' );
 
 
+/************* SOME UTILITIES ********************/
+
+// var dump something, wrapped in <pre>
+// @mixed $var (the variable you want var_dumped)
+function grav_dump($var){
+    echo '<pre>';
+    var_dump($var);
+    echo '</pre>';
+}
+
+// echos the URL to the /library/ folder in the theme
+// @bool $output_echo (default true, if false this function will only return the url)
+function library_url($output_echo=true){
+    if($output_echo === false) return get_bloginfo('template_url') . '/library';
+    echo get_bloginfo('template_url') . '/library';
+}
+
+
+
+
 
 
 /************* SIDEBARS ********************/
