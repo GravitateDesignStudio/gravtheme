@@ -1,5 +1,25 @@
 <?php
-// Cleaning up the Wordpress Head
+
+/************* ACTIONS AND FILTERS  *****************/
+// enqueue master.css and scripts.js
+function add_grav_scripts() {
+     wp_enqueue_style( 
+        'master', 
+        get_template_directory_uri() . '/library/css/master.css' 
+    );
+    wp_enqueue_script(
+        'scripts',
+        get_template_directory_uri() . '/library/js/scripts.js',
+        array('jquery'),
+        '1.0.0',
+        true
+    );
+}
+add_action( 'wp_enqueue_scripts', 'add_grav_scripts' );
+
+
+
+// clean up wordpress head output (we don't need all this usually)
 function grav_head_cleanup() {
 	// remove header links
 	
@@ -19,6 +39,7 @@ function grav_head_cleanup() {
 	add_action('init', 'grav_head_cleanup');
 	// remove WP version from RSS
 	
+
 // Fixing the Read More in the Excerpts
 // This removes the annoying […] to a Read More link
 function grav_excerpt_more($more) {
@@ -27,6 +48,8 @@ function grav_excerpt_more($more) {
 	return '...  <a href="'. get_permalink($post->ID) . '" title="Read '.get_the_title($post->ID).'">Read more &raquo;</a>';
 }
 add_filter('excerpt_more', 'grav_excerpt_more');
+
+
 	
 // Adding WP 3+ Functions & Theme Support
 function grav_theme_support() {
@@ -60,74 +83,16 @@ function grav_theme_support() {
 	);	
 }
 
-	// launching this stuff after theme setup
-	add_action('after_setup_theme','grav_theme_support');	
-	// adding sidebars to Wordpress (these are created in functions.php)
-	add_action( 'widgets_init', 'grav_register_sidebars' );
-	// adding the search form (created in functions.php)
-	add_filter( 'get_search_form', 'grav_wpsearch' );
+// launching this stuff after theme setup
+add_action('after_setup_theme','grav_theme_support');	
+// adding sidebars to Wordpress (these are created in functions.php)
+add_action( 'widgets_init', 'grav_register_sidebars' );
+// adding the search form (created in functions.php)
+add_filter( 'get_search_form', 'grav_wpsearch' );
+
+
 	
-
-class grav_walker extends Walker_Nav_Menu {
-
-	function start_el(&$output, $item, $depth, $args) {
-		global $wp_query;
-		$indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
-
-		$class_names = $value = '';
-
-		$classes = empty( $item->classes ) ? array() : (array) $item->classes;
-
-		$class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item ) );
-		$class_names = ' class="' . esc_attr( $class_names ) . '"';
-
-		$output .= $indent . '<li id="menu-item-'. $item->ID . '"' . $value . $class_names .'>';
-
-		$attributes  = ! empty( $item->attr_title ) ? ' title="'  . esc_attr( $item->attr_title ) .'"' : '';
-		$attributes .= ! empty( $item->target )     ? ' target="' . esc_attr( $item->target     ) .'"' : '';
-		$attributes .= ! empty( $item->xfn )        ? ' rel="'    . esc_attr( $item->xfn        ) .'"' : '';
-		$attributes .= ! empty( $item->url )        ? ' href="'   . esc_attr( $item->url        ) .'"' : '';
-
-		$item_output = $args->before;
-		$item_output .= '<a'. $attributes .'>';
-		$item_output .= $args->link_before . apply_filters( 'the_title', $item->title, $item->ID ) . $args->link_after;
-		$item_output .= '<br /><span class="sub">' . $item->description . '</span>';
-		$item_output .= '</a>';
-		$item_output .= $args->after;
-
-		$output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
-	}
-}	
-
-
-function grav_main_nav() {
-	// display the wp3 menu if available
-	$walker = new grav_walker;
-
-    	wp_nav_menu(array( 
-    		'menu' => 'main_nav', /* menu name */
-    		'theme_location' => 'main_nav', /* where in the theme it's assigned */
-    		'container_class' => 'menu', /* container class */
-			'walker' => $walker /* customizes the output of the menu */
-			
-    	));
-}
-
-function grav_footer_links() { 
-	// display the wp3 menu if available
-    wp_nav_menu(
-    	array(
-    		'menu' => 'footer_links', /* menu name */
-    		'theme_location' => 'footer_links', /* where in the theme it's assigned */
-    		'container_class' => 'footer-links clearfix' /* container class */
-    	)
-	);
-}
- 
-
-/****************** PLUGINS & EXTRA FEATURES **************************/
-	
-// Related Posts Function (call using grav_related_posts(); )
+// Related Posts Function (call using grav_related_posts(); ) -- relates based on tags
 function grav_related_posts() {
 	echo '<ul id="grav-related-posts">';
 	global $post;
@@ -151,6 +116,8 @@ function grav_related_posts() {
 	wp_reset_query();
 	echo '</ul>';
 }
+
+
 
 // Numeric Page Navi, pass a custom query object if using a custom query 
 function page_navi($before = '', $after = '', &$custom_query) {
@@ -212,19 +179,84 @@ function page_navi($before = '', $after = '', &$custom_query) {
 	}
 	echo '</ol></nav>'.$after."";
 }
-	
+
+
+
 // remove the p from around imgs (http://css-tricks.com/snippets/wordpress/remove-paragraph-tags-from-around-images/)
 function filter_ptags_on_images($content){
    return preg_replace('/<p>\s*(<a .*>)?\s*(<img .* \/>)\s*(<\/a>)?\s*<\/p>/iU', '\1\2\3', $content);
 }
-
 add_filter('the_content', 'filter_ptags_on_images');
 
 
 
 
+
+
+
+
+/************* SIDEBARS, MENUS, ROLES  *****************/
+function grav_register_sidebars() {
+
+    register_sidebar(array(
+        'id' => 'sidebar1',
+        'name' => 'Sidebar 1',
+        'description' => 'The first (primary) sidebar.',
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget' => '</div>',
+        'before_title' => '<h4 class="widgettitle">',
+        'after_title' => '</h4>',
+    ));
+    
+  } 
+
+
+
+//  remove some menus from the dashboard you don't need (for all users) 
+//  uncomment the add_action to enable
+function remove_menus () {
+global $menu;
+    $restricted = array(__('Posts'), __('Links'), __('Comments'));
+    end ($menu);
+    while (prev($menu)){
+        $value = explode(' ',$menu[key($menu)][0]);
+        
+        if(in_array($value[0] != NULL?$value[0]:"" , $restricted)){unset($menu[key($menu)]);}
+    }
+}
+//add_action('admin_menu', 'remove_menus'); 
+
+
+
+// Add Gforms capabilities to a role 
+/*$role = get_role( 'ROLE_NAME' );
+$role->add_cap( 'gravityforms_edit_forms' );
+$role->add_cap( 'gravityforms_delete_forms' );
+$role->add_cap( 'gravityforms_create_form' );
+$role->add_cap( 'gravityforms_view_entries' );
+$role->add_cap( 'gravityforms_edit_entries' );
+$role->add_cap( 'gravityforms_delete_entries' );
+$role->add_cap( 'gravityforms_view_settings' );
+$role->add_cap( 'gravityforms_edit_settings' );
+$role->add_cap( 'gravityforms_export_entries' );
+$role->add_cap( 'gravityforms_view_entry_notes' );
+$role->add_cap( 'gravityforms_edit_entry_notes' );*/
+
+
+
+// permanently delete a role.  use reset_role() to bring it back
+// only needs to be run once, changes DB
+/*$wp_roles = new WP_Roles();
+$wp_roles->remove_role("author");
+$wp_roles->remove_role("subscriber");
+$wp_roles->remove_role("editor");
+$wp_roles->remove_role("contributor");*/
+
+
+
 // reset roles function
 // accepts 'administrator', 'author', 'editor', 'contributor', or 'subscriber'
+// only needs to run once, changes DB
 function reset_role( $role ) {
     $default_roles = array(
         'administrator' => array(
@@ -374,4 +406,81 @@ function reset_role( $role ) {
 
 
 
-?>
+/************* COMMENT LAYOUT *********************/
+        
+// Comment Layout
+function grav_comments($comment, $args, $depth) {
+   $GLOBALS['comment'] = $comment; ?>
+    <li <?php comment_class(); ?>>
+        <article id="comment-<?php comment_ID(); ?>" class="comment-block">
+            <header class="comment-author vcard">
+                <?php echo get_avatar($comment,$size='32',$default='<path_to_url>' ); ?>
+                <?php printf(__('<cite class="fn">%s</cite>'), get_comment_author_link()) ?>
+                <time><a href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ) ?>"><?php printf(__('%1$s'), get_comment_date(),  get_comment_time()) ?></a></time>
+                <?php edit_comment_link(__('(Edit)'),'  ','') ?>
+            </header>
+            <?php if ($comment->comment_approved == '0') : ?>
+                <div class="help">
+                    <p><?php _e('Your comment is awaiting moderation.') ?></p>
+                </div>
+            <?php endif; ?>
+            <section class="comment_content">
+                <?php comment_text() ?>
+            </section>
+            <?php comment_reply_link(array_merge( $args, array('depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
+        </article>
+    <!-- </li> is added by wordpress automatically -->
+<?php
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/************* SEARCH FORM LAYOUT *****************/
+
+// Search Form
+function grav_wpsearch($form) {
+    $form = '<form role="search" method="get" id="searchform" action="' . home_url( '/' ) . '" >
+    <label class="screen-reader-text" for="s">' . __('Search for:', 'bonestheme') . '</label>
+    <input type="text" value="' . get_search_query() . '" name="s" id="s" placeholder="Search the Site..." />
+    <input type="submit" id="searchsubmit" value="'. esc_attr__('Search') .'" />
+    </form>';
+    return $form;
+} 
+
+
+
+
+
+
+
+/************* SOME UTILITY FUNCTIONS  ********************/
+
+// var dump something, wrapped in <pre>
+// @mixed $var (the variable you want var_dumped)
+function grav_dump($var){
+    echo '<pre>';
+    var_dump($var);
+    echo '</pre>';
+}
+
+// echos the URL to the /library/ folder in the theme
+// @bool $output_echo (default true, if false this function will only return the url)
+function library_url($output_echo=true){
+    if($output_echo === false) return get_bloginfo('template_url') . '/library';
+    echo get_bloginfo('template_url') . '/library';
+}
+
+
