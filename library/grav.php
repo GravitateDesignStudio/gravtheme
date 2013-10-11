@@ -120,10 +120,10 @@ function grav_related_posts() {
 
 
 // Numeric Page Navi, pass a custom query object if using a custom query 
-function page_navi($before = '', $after = '', &$custom_query) {
+function page_navi($before = '', $after = '', &$custom_query=null) {
 	global $wpdb, $wp_query;
 	
-	if(isset($custom_query)) {
+	if(isset($custom_query) && !is_null($custom_query)) {
 	    $wp_query = $custom_query;
 	}
 	
