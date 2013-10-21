@@ -182,11 +182,56 @@ function page_navi($before = '', $after = '', &$custom_query=null) {
 
 
 
+
+
+
+/* create a custom excert length ---------- */
+
+remove_filter('get_the_excerpt', 'wp_trim_excerpt');
+function improved_trim_excerpt($text) {
+  global $post;
+          if ( '' == $text ) {
+                  $text = get_the_content('');
+                  $text = apply_filters('the_content', $text);
+                  $text = str_replace('\]\]\>', ']]&gt;', $text);
+                  $text = preg_replace('@<script[^>]*?>.*?</script>@si', '', $text);
+                  $text = strip_tags($text, '<p>');
+                  $excerpt_length = apply_filters('excerpt_length', 55);
+                  $words = explode(' ', $text, $excerpt_length + 1);
+                  if (count($words)> $excerpt_length) {
+                          array_pop($words);
+                          array_push($words, '...');
+                          $text = implode(' ', $words);
+                  }
+          }
+          return $text;
+}
+add_filter('get_the_excerpt', 'improved_trim_excerpt', 20);
+
+
+
+
+
+function grav_excerpt($new_length = 20) {
+  add_filter('excerpt_length', function () use ($new_length) {
+    return $new_length;
+  }, 11);
+  the_excerpt();
+}
+
+
+
+
+
 // remove the p from around imgs (http://css-tricks.com/snippets/wordpress/remove-paragraph-tags-from-around-images/)
 function filter_ptags_on_images($content){
-   return preg_replace('/<p>\s*(<a .*>)?\s*(<img .* \/>)\s*(<\/a>)?\s*<\/p>/iU', '\1\2\3', $content);
+    $content = preg_replace('/<p>\s*(<a .*>)?\s*(<img .* \/>)\s*(<\/a>)?\s*<\/p>/iU', '\1\2\3', $content);
+    return preg_replace('/<p>\s*(<iframe .*>*.<\/iframe>)\s*<\/p>/iU', '\1', $content);
 }
+
 add_filter('the_content', 'filter_ptags_on_images');
+add_filter('the_excerpt', 'filter_ptags_on_images');
+
 
 
 
