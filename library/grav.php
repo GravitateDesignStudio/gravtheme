@@ -2,20 +2,19 @@
 
 /************* ACTIONS AND FILTERS  *****************/
 // enqueue master.css and scripts.js
-function add_grav_scripts() {
+
+function grav_setup() {
      wp_enqueue_style( 
         'master', 
         get_template_directory_uri() . '/library/css/master.css' 
     );
-    wp_enqueue_script(
-        'scripts',
-        get_template_directory_uri() . '/library/js/scripts.js',
-        array('jquery'),
-        '1.0.0',
-        true
-    );
+     wp_enqueue_script('jquery');
+     wp_localize_script( 'jquery', 'gScriptsConfig', array(
+        'test' => 'me',
+        'themeLocation' => get_template_directory_uri()
+    ));
 }
-add_action( 'wp_enqueue_scripts', 'add_grav_scripts' );
+add_action( 'wp_enqueue_scripts', 'grav_setup' );
 
 
 
