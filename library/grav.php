@@ -1,12 +1,15 @@
 <?php
 
+include_once('grav/grav_functions.php'); // Grav Functions
+include_once('grav/grav_arrays.php'); // Grav Arrays
+
 /************* ACTIONS AND FILTERS  *****************/
 // enqueue master.css and scripts.js
 
 function grav_setup() {
-     wp_enqueue_style( 
-        'master', 
-        get_template_directory_uri() . '/library/css/master.css' 
+     wp_enqueue_style(
+        'master',
+        get_template_directory_uri() . '/library/css/master.css'
     );
      wp_enqueue_script('jquery');
      wp_localize_script( 'jquery', 'gScriptsConfig', array(
@@ -21,11 +24,11 @@ add_action( 'wp_enqueue_scripts', 'grav_setup' );
 // clean up wordpress head output (we don't need all this usually)
 function grav_head_cleanup() {
 	// remove header links
-	
+
 	// these two are for RSS feeds - only uncomment if you don't want RSS
 	//remove_action( 'wp_head', 'feed_links_extra', 3 );                 // Category Feeds
 	//remove_action( 'wp_head', 'feed_links', 2 );                       // Post and Comment Feeds
-	
+
 	remove_action( 'wp_head', 'rsd_link' );                               // EditURI link
 	remove_action( 'wp_head', 'wlwmanifest_link' );                       // Windows Live Writer
 	remove_action( 'wp_head', 'index_rel_link' );                         // index link
@@ -37,7 +40,7 @@ function grav_head_cleanup() {
 	// launching operation cleanup
 	add_action('init', 'grav_head_cleanup');
 	// remove WP version from RSS
-	
+
 
 // Fixing the Read More in the Excerpts
 // This removes the annoying […] to a Read More link
@@ -49,48 +52,48 @@ function grav_excerpt_more($more) {
 add_filter('excerpt_more', 'grav_excerpt_more');
 
 
-	
+
 // Adding WP 3+ Functions & Theme Support
 function grav_theme_support() {
 	add_theme_support('post-thumbnails');      // wp thumbnails (sizes handled in functions.php)
 	set_post_thumbnail_size(125, 125, true);   // default thumb size
-	
+
 	//add_custom_background();                   // wp custom background
 	add_theme_support('automatic-feed-links'); // rss thingy
 
 	// adding post format support
 	add_theme_support( 'post-formats',      // post formats
-		array( 
+		array(
 			'aside',   // title less blurb
 			'gallery', // gallery of images
 			'link',    // quick link to other site
 			'image',   // an image
 			'quote',   // a quick quote
 			'status',  // a Facebook like status update
-			'video',   // video 
+			'video',   // video
 			'audio',   // audio
-			'chat'     // chat transcript 
+			'chat'     // chat transcript
 		)
-	);	
+	);
 	add_theme_support( 'menus' );            // wp menus
 
 	register_nav_menus(                      // wp3+ menus
-		array( 
+		array(
 			'main_nav' => 'The Main Menu',   // main nav in header
 			'footer_links' => 'Footer Links' // secondary nav in footer
 		)
-	);	
+	);
 }
 
 // launching this stuff after theme setup
-add_action('after_setup_theme','grav_theme_support');	
+add_action('after_setup_theme','grav_theme_support');
 // adding sidebars to Wordpress (these are created in functions.php)
 add_action( 'widgets_init', 'grav_register_sidebars' );
 // adding the search form (created in functions.php)
 add_filter( 'get_search_form', 'grav_wpsearch' );
 
 
-	
+
 // Related Posts Function (call using grav_related_posts(); ) -- relates based on tags
 function grav_related_posts() {
 	echo '<ul id="grav-related-posts">';
@@ -107,7 +110,7 @@ function grav_related_posts() {
         if($related_posts) {
         	foreach ($related_posts as $post) : setup_postdata($post); ?>
 	           	<li class="related_post"><a href="<?php the_permalink() ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></li>
-	        <?php endforeach; } 
+	        <?php endforeach; }
 	    else { ?>
             <li class="no_related_post">No Related Posts Yet!</li>
 		<?php }
@@ -118,14 +121,14 @@ function grav_related_posts() {
 
 
 
-// Numeric Page Navi, pass a custom query object if using a custom query 
+// Numeric Page Navi, pass a custom query object if using a custom query
 function page_navi($before = '', $after = '', &$custom_query=null) {
 	global $wpdb, $wp_query;
-	
+
 	if(isset($custom_query) && !is_null($custom_query)) {
 	    $wp_query = $custom_query;
 	}
-	
+
 	$request = $wp_query->request;
 	$posts_per_page = intval(get_query_var('posts_per_page'));
 	$paged = intval(get_query_var('paged'));
@@ -251,12 +254,12 @@ function grav_register_sidebars() {
         'before_title' => '<h4 class="widgettitle">',
         'after_title' => '</h4>',
     ));
-    
-  } 
+
+  }
 
 
 
-//  remove some menus from the dashboard you don't need (for all users) 
+//  remove some menus from the dashboard you don't need (for all users)
 //  uncomment the add_action to enable
 function remove_menus () {
 global $menu;
@@ -264,15 +267,15 @@ global $menu;
     end ($menu);
     while (prev($menu)){
         $value = explode(' ',$menu[key($menu)][0]);
-        
+
         if(in_array($value[0] != NULL?$value[0]:"" , $restricted)){unset($menu[key($menu)]);}
     }
 }
-//add_action('admin_menu', 'remove_menus'); 
+//add_action('admin_menu', 'remove_menus');
 
 
 
-// Add Gforms capabilities to a role 
+// Add Gforms capabilities to a role
 /*$role = get_role( 'ROLE_NAME' );
 $role->add_cap( 'gravityforms_edit_forms' );
 $role->add_cap( 'gravityforms_delete_forms' );
@@ -367,7 +370,7 @@ function reset_role( $role ) {
         'delete_themes' => 1,
         'export' => 1,
         ),
-        
+
         'editor' => array(
         'moderate_comments' => 1,
         'manage_categories' => 1,
@@ -404,7 +407,7 @@ function reset_role( $role ) {
         'edit_private_pages' => 1,
         'read_private_pages' => 1,
         ),
-        
+
         'author' => array(
         'upload_files' => 1,
         'edit_posts' => 1,
@@ -417,7 +420,7 @@ function reset_role( $role ) {
         'delete_posts' => 1,
         'delete_published_posts' => 1,
         ),
-        
+
         'contributor' => array(
         'edit_posts' => 1,
         'read' => 1,
@@ -425,12 +428,12 @@ function reset_role( $role ) {
         'level_0' => 1,
         'delete_posts' => 1,
         ),
-        
+
         'subscriber' => array(
         'read' => 1,
         'level_0' => 1,
         ),
-        
+
         'display_name' => array(
         'administrator' => 'Administrator',
         'editor'	=> 'Editor',
@@ -438,20 +441,20 @@ function reset_role( $role ) {
         'contributor' => 'Contributor',
         'subscriber'	=> 'Subscriber',
         ),
-        
+
     );
-    
+
     $role = strtolower( $role );
-    
+
     remove_role( $role );
-    
+
     return add_role( $role, $default_roles['display_name'][$role], $default_roles[$role] );
-} 
+}
 
 
 
 /************* COMMENT LAYOUT *********************/
-        
+
 // Comment Layout
 function grav_comments($comment, $args, $depth) {
    $GLOBALS['comment'] = $comment; ?>
@@ -475,7 +478,7 @@ function grav_comments($comment, $args, $depth) {
         </article>
     <!-- </li> is added by wordpress automatically -->
 <?php
-} 
+}
 
 
 
@@ -502,7 +505,7 @@ function grav_wpsearch($form) {
     <input type="submit" id="searchsubmit" value="'. esc_attr__('Search') .'" />
     </form>';
     return $form;
-} 
+}
 
 
 
