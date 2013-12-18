@@ -75,7 +75,7 @@ define(['jquery'], function($) {
         
         // Return the array of all models currently in storage.
         this.findAll = function() {
-            return _.values(this.data);
+            return this.data;
         };
         
         // Delete a model from `this.data`, returning it.
@@ -90,9 +90,15 @@ define(['jquery'], function($) {
         };
 
         this.empty = function() {
-            sessionStorage.removeItem(this.name);
-            var store = sessionStorage.getItem(this.name);
-            this.data = (store && JSON.parse(store)) || {};
+            try {
+                sessionStorage.removeItem(this.name);
+                var store = sessionStorage.getItem(this.name);
+                this.data = (store && JSON.parse(store)) || {};
+                return true;
+            } catch(e){
+                return false;
+            }
+            
         };
     };
     return Store;

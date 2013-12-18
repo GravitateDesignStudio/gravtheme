@@ -1,4 +1,5 @@
- define(['tracking-config'],function(config){
+//Gravitate Integrated Tracking Ver 0.6 by Corban Cloud
+define(['tracking-config'],function(config){
 	 return function(){
 
 		var self = this;

@@ -15,7 +15,7 @@
 		<script type="text/javascript">
 			grav_theme = <?php echo '"' . get_template_directory_uri() . '"'; ?>;
 		</script>
-		<script data-main="<?php echo get_template_directory_uri(); ?>/library/js/require/require-config" src="<?php echo get_template_directory_uri(); ?>/library/js/require/require.min.js"></script>
+		<script data-main="<?php echo get_template_directory_uri(); ?>/library/js/require/require.config" src="<?php echo get_template_directory_uri(); ?>/library/js/require/require.min.js"></script>
 		
 	</head>
 	

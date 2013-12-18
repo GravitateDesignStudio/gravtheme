@@ -1,17 +1,21 @@
 <?php
-
+error_reporting(E_ALL);
+ini_set('display_errors', True);
 /************* ACTIONS AND FILTERS  *****************/
 // enqueue master.css and scripts.js
+include_once 'tracking/tracking-intergration.php';
 
 function grav_setup() {
      wp_enqueue_style( 
         'master', 
         get_template_directory_uri() . '/library/css/master.css' 
     );
-     wp_enqueue_script('jquery');
-     wp_localize_script( 'jquery', 'gScriptsConfig', array(
-        'test' => 'me',
-        'themeLocation' => get_template_directory_uri()
+    //Make Sure JQuery In Enqued
+    wp_enqueue_script('jquery');
+    //Place data on page for Javascripts
+    wp_localize_script( 'jquery', 'gData', array(
+        'jsDebug' => false,
+        'themeURI' => get_template_directory_uri()
     ));
 }
 add_action( 'wp_enqueue_scripts', 'grav_setup' );
@@ -526,5 +530,6 @@ function library_url($output_echo=true){
     if($output_echo === false) return get_bloginfo('template_url') . '/library';
     echo get_bloginfo('template_url') . '/library';
 }
+
 
 
