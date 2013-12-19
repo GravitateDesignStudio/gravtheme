@@ -13,6 +13,13 @@ function grav_setup() {
         'master',
         get_template_directory_uri() . '/library/css/master.css'
     );
+// uncomment to use foundation 5 grid
+//    wp_enqueue_style(
+//        'foundation',
+//        get_template_directory_uri() . '/library/css/foundation.min.css',
+//        array(),
+//        '5.0.2'
+//    );
     //Make Sure JQuery In Enqued
     wp_enqueue_script('jquery');
     //Place data on page for Javascripts
