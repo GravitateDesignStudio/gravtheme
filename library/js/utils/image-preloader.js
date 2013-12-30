@@ -22,8 +22,10 @@ define(['jquery'], function($) {
 
             return self.images.push(img);
         };
-        /*
+        
         this.loadAll = function(images, bursts){
+            return false;
+            /*
             if(bursts){
                 if(bursts === true)
                     bursts = {length: 5, delay: 250};
@@ -43,7 +45,8 @@ define(['jquery'], function($) {
                         self.load(img.src,img.callBack,img.failBack);
                 });
             }
+            */
         };
-        */ 
+        
     };
 });

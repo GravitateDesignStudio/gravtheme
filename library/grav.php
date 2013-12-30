@@ -5,22 +5,38 @@ include_once('grav/grav_functions.php'); // Grav Functions
 include_once('grav/grav_arrays.php'); // Grav Arrays
 
 /************* ACTIONS AND FILTERS  *****************/
-// enqueue master.css and scripts.js
-include_once 'tracking/tracking-intergration.php';
+// UN COMMENT TO ACTIVATE GRAVITATE TRACKING : IN ALPHA AS OF 12/30/13
+
+$grav_config = array(
+    'jsDebug' => false,
+    'jsUseRequire' => true,
+    'addGravTracking' => false,
+    'themeURI' => get_template_directory_uri()
+);
 
 function grav_setup() {
-     wp_enqueue_style(
+    global $grav_config;
+
+    wp_enqueue_style(
         'master',
         get_template_directory_uri() . '/library/css/master.css'
     );
-    //Make Sure JQuery In Enqued
+   
+    //Make Sure jQuery Enqueued
     wp_enqueue_script('jquery');
+
     //Place data on page for Javascripts
-    wp_localize_script( 'jquery', 'gData', array(
-        'jsDebug' => false,
-        'themeURI' => get_template_directory_uri()
-    ));
+    wp_localize_script( 'jquery', 'gData', $grav_config);
+
+    if($grav_config['jsUseRequire'] === false){
+        wp_enqueue_script('grav_script', get_template_directory_uri() . 'library/js/scripts.js',array('jquery'));
+    }
+    if($grav_config['addGravTracking'] === true){
+        require_once 'tracking/tracking-intergration.php';
+    }
+
 }
+
 add_action( 'wp_enqueue_scripts', 'grav_setup' );
 
 

@@ -7,7 +7,7 @@ require.config({
 
 	baseUrl: gData.themeURI + '/library/js/',
 	//Causes the scripts.js to be automatically loaded on intialzation
-	deps: ['scripts'],
+	deps: ['scripts.amd'],
 	//Shims are for including libraries that do not natively support require defines (which is most)
 	shim: {
 		
@@ -20,7 +20,7 @@ require.config({
     	},
        	'cycle':{
     	    deps: ["jquery"],
-    	    exports: "$.fn.cycle"
+    	    exports: "jQuery.fn.cycle"
     	},
     	'carousel':{
     	    deps: ['jquery','cycle']
