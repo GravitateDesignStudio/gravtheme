@@ -1,4 +1,11 @@
-<?php get_header(); ?>
+<?php
+get_header();
+
+/*
+*	Template Name: Home
+*/
+
+?>
 
 
     <h1>Front Page Template</h1>

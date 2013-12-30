@@ -11,7 +11,8 @@ $grav_config = array(
     'jsDebug' => false,
     'jsUseRequire' => true,
     'addGravTracking' => false,
-    'themeURI' => get_template_directory_uri()
+    'themeURI' => get_template_directory_uri(),
+    'themeUseFoundation5' => true
 );
 
 function grav_setup() {
@@ -21,20 +22,28 @@ function grav_setup() {
         'master',
         get_template_directory_uri() . '/library/css/master.css'
     );
-   
-    //Make Sure jQuery Enqueued
-    wp_enqueue_script('jquery');
 
-    //Place data on page for Javascripts
+    wp_enqueue_script('jquery');
     wp_localize_script( 'jquery', 'gData', $grav_config);
 
+    
+    //Do Config
     if($grav_config['jsUseRequire'] === false){
         wp_enqueue_script('grav_script', get_template_directory_uri() . 'library/js/scripts.js',array('jquery'));
     }
+    
     if($grav_config['addGravTracking'] === true){
         require_once 'tracking/tracking-intergration.php';
     }
 
+    if($grav_config['themeUseFoundation5'] === true){
+        wp_enqueue_style(
+            'foundation',
+            get_template_directory_uri() . '/library/css/foundation.min.css',
+            array(),
+            '5.0.2'
+        );
+    }
 }
 
 add_action( 'wp_enqueue_scripts', 'grav_setup' );
