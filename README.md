@@ -8,6 +8,7 @@ Theme Resources
 	* Custom post type template
 	* Prebuilt 
 	* Wordpress head clean-up
+	* Grav Theme Config/Options
 
 * Asynchronous Javascript Loading
 	* Uses Require JS
@@ -22,11 +23,23 @@ Theme Resources
 	* Includes a ready to use compass config file, if you fancy your self some compass
 	* Styles are already enqued in grav.php > grav_setup()
 
+* More Wordpress Utility Functions
+
+* SASS/CSS Frameworks & Resources
+
+* Expanded Javascript Includes Library
+
+* Foundation 5 integrated
+
+* All Functions separated out to grav.php & grav folder
+
+* Many added helper functions including Calendar, library_url, grav_dump, csv2array
+
+* File structure Reorganization
+
+* Properly Enqueued Scripts & Styles
+
 * _Coming Soon!_
-	
-	* Integrated Event Tracking
-		-[X] Tracking Core (Ver 0.6)
-		-[X] Easy Tracking Config
 
 		-[ ] WP Admin Integration
 			-[ ] GA Version Toggle
@@ -36,11 +49,5 @@ Theme Resources
 			-[ ] Youtube iframe player
 			-[ ] Facebook Sharing
 			-[ ] Twitter Tweets
-
-	* More Wordpress Utility Functions
-
-	* Admin Branding
-
-	* SASS/CSS Frameworks & Resources
-
-	* Expanded Javascript Includes Library
+	
+		* Admin Branding
