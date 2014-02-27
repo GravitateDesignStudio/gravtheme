@@ -4,7 +4,7 @@
  * Standard Functions for Gravitate
  *
  * Copyright (c) 2013-2014
- * Version: 1.0.0
+ * Version: 1.0.1
  */
 ####################################################
 
@@ -679,6 +679,11 @@ function grav_get_youtube_id($url)
 		$split = explode("&", $split[0]);
 		return $split[0];
 	}
+	else if($pos = strpos($url, '/embed/'))
+	{
+		$split = explode("?", substr($url, ($pos+7)));
+		return $split[0];
+	}
 	else if($pos = strpos($url, '/v/'))
 	{
 		$split = explode("?", substr($url, ($pos+3)));
@@ -786,6 +791,101 @@ function grav_get_plural($value)
 	}
 }
 
+function grav_excerpt($new_length = 20)
+{
+  add_filter('excerpt_length', function () use ($new_length) {
+    return $new_length;
+  }, 11);
+  the_excerpt();
+}
+
+// var dump something, wrapped in <pre>
+// @mixed $var (the variable you want var_dumped)
+function grav_dump($var)
+{
+    echo '<pre>';
+    var_dump($var);
+    echo '</pre>';
+}
+
+// Search Form
+function grav_wpsearch()
+{
+    $form = '<form role="search" method="get" name="searchform" action="' . home_url( '/' ) . '" >
+    <label class="screen-reader-text" for="s">' . __('Search for:', 'bonestheme') . '</label>
+    <input type="text" value="' . get_search_query() . '" name="s" class="s" placeholder="Search the Site..." />
+    <input type="submit" class="searchsubmit" value="'. esc_attr__('Search') .'" />
+    </form>';
+    return $form;
+}
+
+// Comment Layout
+function grav_comments($comment, $args, $depth)
+{
+   $GLOBALS['comment'] = $comment; ?>
+    <li <?php comment_class(); ?>>
+        <article id="comment-<?php comment_ID(); ?>" class="comment-block">
+            <header class="comment-author vcard">
+                <?php echo get_avatar($comment,$size='32',$default='<path_to_url>' ); ?>
+                <?php printf(__('<cite class="fn">%s</cite>'), get_comment_author_link()) ?>
+                <time><a href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ) ?>"><?php printf(__('%1$s'), get_comment_date(),  get_comment_time()) ?></a></time>
+                <?php edit_comment_link(__('(Edit)'),'  ','') ?>
+            </header>
+            <?php if ($comment->comment_approved == '0') : ?>
+                <div class="help">
+                    <p><?php _e('Your comment is awaiting moderation.') ?></p>
+                </div>
+            <?php endif; ?>
+            <section class="comment_content">
+                <?php comment_text() ?>
+            </section>
+            <?php comment_reply_link(array_merge( $args, array('depth' => $depth, 'max_depth' => $args['max_depth']))) ?>
+        </article>
+    <!-- </li> is added by wordpress automatically -->
+<?php
+}
+
+// Related Posts Function (call using grav_related_posts(); ) -- relates based on tags
+function grav_related_posts($number_of_posts=3)
+{
+	echo '<ul id="grav-related-posts">';
+	global $post;
+	$tags = wp_get_post_tags($post->ID);
+	if($tags) {
+		foreach($tags as $tag) { $tag_arr .= $tag->slug . ','; }
+        $args = array(
+        	'tag' => $tag_arr,
+        	'numberposts' => $number_of_posts,
+        	'post__not_in' => array($post->ID)
+     	);
+        $related_posts = get_posts($args);
+        if($related_posts) {
+        	foreach ($related_posts as $post) : setup_postdata($post); ?>
+	           	<li class="related_post"><a href="<?php the_permalink() ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></li>
+	        <?php endforeach; }
+	    else { ?>
+            <li class="no_related_post">No Related Posts Yet!</li>
+		<?php }
+	}
+	wp_reset_query();
+	echo '</ul>';
+}
+
+function grav_get_related_posts($number_of_posts=3)
+{
+	global $post;
+	$tags = wp_get_post_tags($post->ID);
+	if($tags)
+	{
+		foreach($tags as $tag) { $tag_arr .= $tag->slug . ','; }
+        $args = array(
+        	'tag' => $tag_arr,
+        	'numberposts' => $number_of_posts,
+        	'post__not_in' => array($post->ID)
+     	);
+    	return get_posts($args);
+	}
+}
 
 
 ?>
