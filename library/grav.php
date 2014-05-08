@@ -15,7 +15,7 @@
 
 $grav_config = array(
     'jsDebug' => false,
-    'jsUseRequire' => true,
+    'jsUseRequire' => false,
     'addGravTracking' => false,
     'themeURI' => get_template_directory_uri(),
     'themeUseFoundation5' => true
@@ -37,7 +37,7 @@ function grav_setup()
 
     //Do Config
     if($grav_config['jsUseRequire'] === false){
-        wp_enqueue_script('grav_script', get_template_directory_uri() . 'library/js/scripts.js',array('jquery'));
+        wp_enqueue_script('grav_script', get_template_directory_uri() . '/library/js/scripts.js',array('jquery'));
     }
 
     if($grav_config['addGravTracking'] === true){
