@@ -888,4 +888,35 @@ function grav_get_related_posts($number_of_posts=3)
 }
 
 
+///////////////////////////
+// Function to CHECK INTERSECTION OF TERMS ACROSS 2 TAXONOMIES
+///////////////////////////
+function grav_intersected_terms( $tax, $term, $joined_tax ) {
+
+    global $wpdb;
+
+    $term_from = get_term_by( 'slug', $term, $tax );
+    $tax_to = esc_sql($joined_tax);
+
+    $query = "
+	    SELECT term_id FROM {$wpdb->term_taxonomy} WHERE taxonomy = '{$tax_to}' AND term_taxonomy_id IN (
+	        SELECT term_taxonomy_id FROM {$wpdb->term_relationships} WHERE object_id IN (
+	            SELECT object_id FROM {$wpdb->term_relationships} 
+	            INNER JOIN {$wpdb->posts} 
+	        	ON {$wpdb->term_relationships}.object_id = {$wpdb->posts}.ID
+	        	WHERE term_taxonomy_id = {$term_from->term_taxonomy_id}
+	        	AND {$wpdb->posts}.post_status = 'publish'
+	        )
+	    ) 
+    ";
+
+    $term_ids = $wpdb->get_col( $query );
+
+    if( empty( $term_ids) )
+        return array();
+
+    return get_terms( $joined_tax, array( 'include' => $term_ids ) );
+}
+
+
 ?>
