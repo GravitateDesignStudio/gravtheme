@@ -1,8 +1,9 @@
 <?php
 
 
-//include_once('grav/grav_functions.php'); // Grav Functions
-//include_once('grav/grav_arrays.php'); // Grav Arrays
+include_once('grav/grav_functions.php'); // Grav Functions
+include_once('grav/grav_arrays.php'); // Grav Arrays
+get_template_part('parts/blocks/acf'); // Advanced Custom Fields
 
 //include_once('grav/cpt/events.php'); // Events CPT
 //include_once('grav/cpt/news.php'); // News CPT
@@ -10,48 +11,46 @@
 //include_once('grav/cpt/casestudies.php'); // Case Study cpt
 //include_once('grav/cpt/staff.php'); // Staff cpt
 
-/************* ACTIONS AND FILTERS  *****************/
-// UN COMMENT TO ACTIVATE GRAVITATE TRACKING : IN ALPHA AS OF 12/30/13
 
-$grav_config = array(
-    'jsDebug' => false,
-    'jsUseRequire' => false,
-    'addGravTracking' => false,
-    'themeURI' => get_template_directory_uri(),
-    'themeUseFoundation5' => true
-);
+
+
+/************* ACTIONS AND FILTERS  *****************/
 
 
 function grav_setup()
 {
-    global $grav_config;
+
+    $version = '1.0';
 
     wp_enqueue_style(
         'master',
-        get_template_directory_uri() . '/library/css/master.css'
+        get_template_directory_uri() . '/library/css/master.css',
+        array(),
+        $version
+    );
+    wp_enqueue_script(
+        'grav_master_script', 
+        get_template_directory_uri() . '/library/js/master.js',
+        array('jquery'), 
+        $version, 
+        false
+    );
+    wp_enqueue_script(
+        'grav_script', 
+        get_template_directory_uri() . '/library/js/scripts.js',
+        array('jquery'), 
+        $version, 
+        true
+    );
+    wp_enqueue_style(
+        'foundation',
+        get_template_directory_uri() . '/library/css/foundation.css',
+        array('master'),
+        $version
     );
 
-    wp_enqueue_script('jquery');
-    wp_localize_script( 'jquery', 'gData', $grav_config);
+    //require_once 'tracking/tracking-intergration.php';
 
-
-    //Do Config
-    if($grav_config['jsUseRequire'] === false){
-        wp_enqueue_script('grav_script', get_template_directory_uri() . '/library/js/scripts.js',array('jquery'));
-    }
-
-    if($grav_config['addGravTracking'] === true){
-        require_once 'tracking/tracking-intergration.php';
-    }
-
-    if($grav_config['themeUseFoundation5'] === true){
-        wp_enqueue_style(
-            'foundation',
-            get_template_directory_uri() . '/library/css/foundation.min.css',
-            array(),
-            '5.0.2'
-        );
-    }
 }
 
 add_action( 'wp_enqueue_scripts', 'grav_setup' );
@@ -72,9 +71,9 @@ function grav_head_cleanup() {
 	remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0 ); // Links for Adjacent Posts
 	remove_action( 'wp_head', 'wp_generator' );                           // WP version
 }
-	// launching operation cleanup
-	add_action('init', 'grav_head_cleanup');
-	// remove WP version from RSS
+// launching operation cleanup
+add_action('init', 'grav_head_cleanup');
+// remove WP version from RSS
 
 
 // Fixing the Read More in the Excerpts
@@ -86,6 +85,9 @@ function grav_excerpt_more($more) {
 }
 add_filter('excerpt_more', 'grav_excerpt_more');
 
+
+// adding the search form (created in functions.php)
+add_filter( 'get_search_form', 'grav_wpsearch' );
 
 
 // Adding WP 3+ Functions & Theme Support
@@ -122,6 +124,8 @@ function grav_theme_support() {
         )
     );
 }
+// launching this stuff after theme setup
+add_action('after_setup_theme','grav_theme_support');
 
 
 function grav_menu($menu='main')
@@ -167,12 +171,6 @@ function grav_menu($menu='main')
     }
 }
 
-// launching this stuff after theme setup
-add_action('after_setup_theme','grav_theme_support');
-// adding sidebars to Wordpress (these are created in functions.php)
-add_action( 'widgets_init', 'grav_register_sidebars' );
-// adding the search form (created in functions.php)
-add_filter( 'get_search_form', 'grav_wpsearch' );
 
 
 // Numeric Page Navi, pass a custom query object if using a custom query
@@ -287,6 +285,8 @@ function grav_register_sidebars()
         'after_title' => '</h4>',
     ));
 }
+// adding sidebars to Wordpress (these are created in functions.php)
+add_action( 'widgets_init', 'grav_register_sidebars' );
 
 
 //  remove some menus from the dashboard you don't need (for all users)
