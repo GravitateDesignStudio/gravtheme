@@ -18,7 +18,7 @@ function grav_custom_post_type_news()
 	  'capability_type' => 'post',
 	  'map_meta_cap' => true,
 	  'hierarchical' => false,
-	  'rewrite' => array('with_front' => true, 'slug' => $slug),
+	  'rewrite' => array('with_front' => false, 'slug' => $slug),
 	  'query_var' => true,
 	  'exclude_from_search' => false,
 	  'can_export'          => true,
