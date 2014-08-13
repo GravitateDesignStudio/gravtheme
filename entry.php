@@ -14,7 +14,7 @@
 
     <p class="meta">
 
-        <span>Posted On: <time datetime="<?php echo the_time('Y-m-j'); ?>" pubdate><?php the_time('F jS, Y'); ?></time> </span>
+        <span>Posted On: <time datetime="<?php echo the_time('Y-m-d'); ?>" pubdate><?php the_time('F jS, Y'); ?></time> </span>
 
         <span>Filed Under: <?php the_category(', '); ?></span>
 
