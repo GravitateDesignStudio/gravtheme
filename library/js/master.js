@@ -1,4 +1,6 @@
-$(document).ready(function(){
+(function($){
+
+
 
 	/* Make all External Links and PDF's open in a new Tab */
     var host = new RegExp('/' + window.location.host + '/');
@@ -13,14 +15,4 @@ $(document).ready(function(){
 
 
 
-
-
-
-
-
-
-
-
-
-
-});
+})(jQuery)
