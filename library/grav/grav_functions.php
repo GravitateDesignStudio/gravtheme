@@ -4,10 +4,69 @@
  * Standard Functions for Gravitate
  *
  * Copyright (c) 2013-2014
- * Version: 1.0.1
+ * Version: 1.2
  */
 ####################################################
 
+
+/**
+ * Create a Menu in the Template
+ *
+ * @param  $menu  (string) The name of the menu you want to use.
+ *
+ * Note: use a custom name to create a new menu. Otherwise use the default main|top|footer|sitemap|mobile
+ *
+ * @return (array)
+ * @author GG
+ **/
+function grav_menu($menu='main')
+{
+    switch($menu)
+    {
+        case 'top':
+            wp_nav_menu(array(
+                'menu' => 'Top Menu', /* menu name */
+                'theme_location' => 'top_nav', /* where in the theme it's assigned */
+                'container' => '' /* no container */
+            ));
+        break;
+        case 'footer':
+            wp_nav_menu(array(
+                'menu' => 'footer_links', /* menu name */
+                'theme_location' => 'footer_links', /* where in the theme it's assigned */
+                'container' => '' /* no container */
+            ));
+        break;
+        case 'sitemap':
+            wp_nav_menu(array(
+                'menu' => 'SiteMap Menu', /* menu name */
+                'theme_location' => 'sitemap_nav', /* where in the theme it's assigned */
+                'container' => '' /* no container */
+            ));
+        break;
+        case 'mobile':
+            wp_nav_menu(array(
+                'menu' => 'Mobile Menu', /* menu name */
+                'theme_location' => 'mobile_nav', /* where in the theme it's assigned */
+                'container' => '' /* no container */
+            ));
+        break;
+        case 'main':
+            wp_nav_menu(array(
+                'menu' => 'Main Menu', /* menu name */
+                'theme_location' => 'main_nav', /* where in the theme it's assigned */
+                'container' => '' /* no container */
+            ));
+        break;
+        default:
+        	wp_nav_menu(array(
+                'menu' => ucwords($menu).' Menu', /* menu name */
+                'theme_location' => $menu.'_nav', /* where in the theme it's assigned */
+                'container' => '' /* no container */
+            ));
+        break;
+    }
+}
 
 /**
  * CSV File to Array function
@@ -131,6 +190,123 @@ function grav_csv2posts($args = array())
 	}
 }
 
+/**
+ * Get Reall IP based on Server Settings
+ * *
+ * @return (string)
+ * @author GG
+ **/
+function grav_get_real_ip()
+{
+	if (isset ($_SERVER ['HTTP_X_FORWARDED_FOR']))
+	{
+		$clientIP = $_SERVER ['HTTP_X_FORWARDED_FOR'];
+	}
+	elseif (isset ($_SERVER ['HTTP_X_REAL_IP']))
+	{
+		$clientIP = $_SERVER ['HTTP_X_REAL_IP'];
+	}
+	else
+	{
+		$clientIP = $_SERVER['REMOTE_ADDR'];
+	}
+	return $clientIP;
+}
+
+/**
+ * Uses Maxmind's API to call the location information based on IP
+ * *
+ * NOTE: This requires you to define the MAXMIND_LICENSE_KEY for the clients account.  They will need to sign up with Maxmind. This also uses the grav_get_real_ip() function to get the real IP.
+ *
+ * @return (array|false)
+ * @author GG
+ **/
+function grav_get_geoip_info()
+{
+	$cookie_key = 'geoip_info';
+
+	if(!empty($_COOKIE[$cookie_key]))
+	{
+		return unserialize(base64_decode($_COOKIE[$cookie_key]));
+	}
+	else if(!grav_is_bot() && defined('MAXMIND_LICENSE_KEY'))
+	{
+		$params = getopt('l:i:');
+
+		$real_ip = grav_get_real_ip();
+
+		if (!isset($params['l'])) $params['l'] = MAXMIND_LICENSE_KEY;
+		if (!isset($params['i'])) $params['i'] = (strpos($real_ip, '10.0.10.') !== false ? '173.12.186.189' : $real_ip); // Gravitates IP = 173.12.186.189
+
+		$query = 'https://geoip.maxmind.com/f?' . http_build_query($params);
+
+		$keys =
+		  array(
+			'country_code',
+			'region_code',
+			'city_name',
+			'postal_code',
+			'latitude',
+			'longitude',
+			'metro_code',
+			'area_code',
+			//'time_zone',
+			//'continent_code',
+			'isp_name',
+			'organization_name',
+			//'domain',
+			//'as_number',
+			//'netspeed',
+			//'user_type',
+			//'accuracy_radius',
+			//'country_confidence',
+			//'city_confidence',
+			//'region_confidence',
+			//'postal_confidence',
+			'error'
+			);
+
+		$curl = curl_init();
+		curl_setopt_array(
+			$curl,
+			array(
+				CURLOPT_URL => $query,
+				CURLOPT_USERAGENT => $_SERVER['HTTP_USER_AGENT'],
+				CURLOPT_RETURNTRANSFER => true
+			)
+		);
+
+		$resp = curl_exec($curl);
+
+		if (curl_errno($curl)) {
+			throw new Exception(
+				'GeoIP request failed with a curl_errno of '
+				. curl_errno($curl)
+			);
+		}
+
+		$values = str_getcsv($resp);
+		$values = array_pad($values, sizeof($keys), '');
+		$results = array_combine($keys, $values);
+
+		if(isset($results['metro_code'])) unset($results['metro_code']);
+		if(isset($results['area_code'])) unset($results['area_code']);
+		if(isset($results['isp_name'])) unset($results['isp_name']);
+		if(isset($results['organization_name'])) unset($results['organization_name']);
+
+		$domain = explode('.', $_SERVER['HTTP_HOST']);
+		$domain = array_reverse($domain);
+		$domain = $domain[1].'.'.$domain[0];
+
+		setcookie($cookie_key, base64_encode(serialize($results)), (time()+604800), '/', '.'.$domain);
+
+		return $results;
+	}
+	else
+	{
+		return false;
+	}
+}
 
 /**
  * Address to Geo Location (latitude, longitude) function
@@ -635,7 +811,7 @@ function grav_is_mobile()
  **/
 function grav_is_bot()
 {
-    $bots = array("Teoma", "alexa", "froogle", "Gigabot", "inktomi",
+    $bots = array("Bot", "Teoma", "alexa", "froogle", "Gigabot", "inktomi",
     "looksmart", "URL_Spider_SQL", "Firefly", "NationalDirectory",
     "Ask Jeeves", "TECNOSEEK", "InfoSeek", "WebFindBot", "girafabot",
     "crawler", "www.galaxy.com", "Googlebot", "Scooter", "Slurp",
@@ -656,13 +832,36 @@ function grav_is_bot()
 }
 
 /**
- * Converts a URL to a verified YouTube URL that works on most devices and ColorBox function
+ * Converts a URL to a verified Vimeo ID
+ *
+ * @param  $url  (string) Url of a defined Vimeo Video.
+ *
+ * @return (int)
+ * @author GG
+ *
+ **/
+function grav_get_vimeo_id($url)
+{
+	preg_match('/([0-9]+)/', $url, $matches);
+
+	if(!empty($matches[1]) && is_numeric($matches[1]))
+	{
+		return $matches[1];
+	}
+	else if(!$pos && strpos($url, 'http') === false)
+	{
+		return $url;
+	}
+
+	return 0;
+}
+
+/**
+ * onverts a URL to a verified YouTube ID
  *
  * @param  $url  (string) Url of a defined Youtube Video.
  *
- * TODO: will also add a check for Vimeo soon.
- *
- * @return (str)
+ * @return (int)
  * @author GG
  *
  **/
@@ -694,7 +893,7 @@ function grav_get_youtube_id($url)
 		return $url;
 	}
 
-	return false;
+	return 0;
 }
 
 /**
@@ -710,16 +909,36 @@ function grav_get_youtube_id($url)
  **/
 function grav_get_video_url($url)
 {
+
+	$autoplay = 1;
+
+	if(strpos($url, 'autoplay=0') || strpos($url, 'autoplay=false'))
+	{
+		$autoplay = 0;
+	}
+
+	if(strpos($url, 'vimeo'))
+	{
+		$id = grav_get_vimeo_id($url);
+
+		if(is_numeric($id))
+		{
+			return 'http://player.vimeo.com/video/'.$id.'?autoplay='.$autoplay;
+		}
+		return $url;
+	}
+
 	$id = grav_get_youtube_id($url);
 
 	if($id)
 	{
-		$link = 'https://www.youtube.com/embed/'.$id.'?rel=0&amp;iframe=true&amp;wmode=transparent';
+		$link = 'https://www.youtube.com/embed/'.$id.'?rel=0&amp;iframe=true&amp;wmode=transparent&amp;autoplay='.$autoplay;
+
 		if(function_exists('grav_is_mobile'))
 		{
 			if(grav_is_mobile())
 			{
-				$link = 'https://www.youtube.com/watch?v='.$id.'&amp;rel=0&amp;iframe=true&amp;wmode=transparent';
+				$link = 'https://www.youtube.com/watch?v='.$id.'&amp;rel=0&amp;iframe=true&amp;wmode=transparent&amp;autoplay='.$autoplay;
 			}
 		}
 		return $link;
@@ -806,6 +1025,23 @@ function grav_dump($var)
     echo '<pre>';
     var_dump($var);
     echo '</pre>';
+}
+
+// print_r something, wrapped in <pre>
+// @mixed $var (the variable you want print_r)
+function grav_print_r($var, $return = false)
+{
+    echo '<pre>';
+    print_r($var, $return);
+    echo '</pre>';
+}
+
+// echos the URL to the /library/ folder in the theme
+// @bool $output_echo (default true, if false this function will only return the url)
+function grav_library_url($output_echo=true)
+{
+    if($output_echo === false) return get_bloginfo('template_url') . '/library';
+    echo get_bloginfo('template_url') . '/library';
 }
 
 // Search Form
@@ -901,13 +1137,13 @@ function grav_intersected_terms( $tax, $term, $joined_tax ) {
     $query = "
 	    SELECT term_id FROM {$wpdb->term_taxonomy} WHERE taxonomy = '{$tax_to}' AND term_taxonomy_id IN (
 	        SELECT term_taxonomy_id FROM {$wpdb->term_relationships} WHERE object_id IN (
-	            SELECT object_id FROM {$wpdb->term_relationships} 
-	            INNER JOIN {$wpdb->posts} 
+	            SELECT object_id FROM {$wpdb->term_relationships}
+	            INNER JOIN {$wpdb->posts}
 	        	ON {$wpdb->term_relationships}.object_id = {$wpdb->posts}.ID
 	        	WHERE term_taxonomy_id = {$term_from->term_taxonomy_id}
 	        	AND {$wpdb->posts}.post_status = 'publish'
 	        )
-	    ) 
+	    )
     ";
 
     $term_ids = $wpdb->get_col( $query );
@@ -917,6 +1153,288 @@ function grav_intersected_terms( $tax, $term, $joined_tax ) {
 
     return get_terms( $joined_tax, array( 'include' => $term_ids ) );
 }
+
+// reset roles function
+// accepts 'administrator', 'author', 'editor', 'contributor', or 'subscriber'
+// only needs to run once, changes DB
+function grav_reset_role( $role )
+{
+    $default_roles = array(
+        'administrator' => array(
+        'switch_themes' => 1,
+        'edit_themes' => 1,
+        'activate_plugins' => 1,
+        'edit_plugins' => 1,
+        'edit_users' => 1,
+        'edit_files' => 1,
+        'manage_options' => 1,
+        'moderate_comments' => 1,
+        'manage_categories' => 1,
+        'manage_links' => 1,
+        'upload_files' => 1,
+        'import' => 1,
+        'unfiltered_html' => 1,
+        'edit_posts' => 1,
+        'edit_others_posts' => 1,
+        'edit_published_posts' => 1,
+        'publish_posts' => 1,
+        'edit_pages' => 1,
+        'read' => 1,
+        'level_10' => 1,
+        'level_9' => 1,
+        'level_8' => 1,
+        'level_7' => 1,
+        'level_6' => 1,
+        'level_5' => 1,
+        'level_4' => 1,
+        'level_3' => 1,
+        'level_2' => 1,
+        'level_1' => 1,
+        'level_0' => 1,
+        'edit_others_pages' => 1,
+        'edit_published_pages' => 1,
+        'publish_pages' => 1,
+        'delete_pages' => 1,
+        'delete_others_pages' => 1,
+        'delete_published_pages' => 1,
+        'delete_posts' => 1,
+        'delete_others_posts' => 1,
+        'delete_published_posts' => 1,
+        'delete_private_posts' => 1,
+        'edit_private_posts' => 1,
+        'read_private_posts' => 1,
+        'delete_private_pages' => 1,
+        'edit_private_pages' => 1,
+        'read_private_pages' => 1,
+        'delete_users' => 1,
+        'create_users' => 1,
+        'unfiltered_upload' => 1,
+        'edit_dashboard' => 1,
+        'update_plugins' => 1,
+        'delete_plugins' => 1,
+        'install_plugins' => 1,
+        'update_themes' => 1,
+        'install_themes' => 1,
+        'update_core' => 1,
+        'list_users' => 1,
+        'remove_users' => 1,
+        'add_users' => 1,
+        'promote_users' => 1,
+        'edit_theme_options' => 1,
+        'delete_themes' => 1,
+        'export' => 1,
+        ),
+
+        'editor' => array(
+        'moderate_comments' => 1,
+        'manage_categories' => 1,
+        'manage_links' => 1,
+        'upload_files' => 1,
+        'unfiltered_html' => 1,
+        'edit_posts' => 1,
+        'edit_others_posts' => 1,
+        'edit_published_posts' => 1,
+        'publish_posts' => 1,
+        'edit_pages' => 1,
+        'read' => 1,
+        'level_7' => 1,
+        'level_6' => 1,
+        'level_5' => 1,
+        'level_4' => 1,
+        'level_3' => 1,
+        'level_2' => 1,
+        'level_1' => 1,
+        'level_0' => 1,
+        'edit_others_pages' => 1,
+        'edit_published_pages' => 1,
+        'publish_pages' => 1,
+        'delete_pages' => 1,
+        'delete_others_pages' => 1,
+        'delete_published_pages' => 1,
+        'delete_posts' => 1,
+        'delete_others_posts' => 1,
+        'delete_published_posts' => 1,
+        'delete_private_posts' => 1,
+        'edit_private_posts' => 1,
+        'read_private_posts' => 1,
+        'delete_private_pages' => 1,
+        'edit_private_pages' => 1,
+        'read_private_pages' => 1,
+        ),
+
+        'author' => array(
+        'upload_files' => 1,
+        'edit_posts' => 1,
+        'edit_published_posts' => 1,
+        'publish_posts' => 1,
+        'read' => 1,
+        'level_2' => 1,
+        'level_1' => 1,
+        'level_0' => 1,
+        'delete_posts' => 1,
+        'delete_published_posts' => 1,
+        ),
+
+        'contributor' => array(
+        'edit_posts' => 1,
+        'read' => 1,
+        'level_1' => 1,
+        'level_0' => 1,
+        'delete_posts' => 1,
+        ),
+
+        'subscriber' => array(
+        'read' => 1,
+        'level_0' => 1,
+        ),
+
+        'display_name' => array(
+        'administrator' => 'Administrator',
+        'editor'	=> 'Editor',
+        'author'	=> 'Author',
+        'contributor' => 'Contributor',
+        'subscriber'	=> 'Subscriber',
+        ),
+
+    );
+
+    $role = strtolower( $role );
+
+    remove_role( $role );
+
+    return add_role( $role, $default_roles['display_name'][$role], $default_roles[$role] );
+}
+
+//  remove some menus from the dashboard you don't need (for all users)
+function grav_remove_menus () {
+    global $menu, $grav_restricted_menus;
+
+    if(!$grav_restricted_menus)
+    {
+    	$grav_restricted_menus = array(__('Posts'), __('Links'), __('Comments'));
+    }
+    end ($menu);
+    while (prev($menu)){
+        $value = explode(' ',$menu[key($menu)][0]);
+
+        if(in_array($value[0] != NULL?$value[0]:"" , $grav_restricted_menus)){unset($menu[key($menu)]);}
+    }
+}
+
+// clean up wordpress head output (we don't need all this usually)
+function grav_head_cleanup() {
+	// remove header links
+
+	// these two are for RSS feeds - only uncomment if you don't want RSS
+	//remove_action( 'wp_head', 'feed_links_extra', 3 );                 // Category Feeds
+	//remove_action( 'wp_head', 'feed_links', 2 );                       // Post and Comment Feeds
+
+	remove_action( 'wp_head', 'rsd_link' );                               // EditURI link
+	remove_action( 'wp_head', 'wlwmanifest_link' );                       // Windows Live Writer
+	remove_action( 'wp_head', 'index_rel_link' );                         // index link
+	remove_action( 'wp_head', 'parent_post_rel_link', 10, 0 );            // previous link
+	remove_action( 'wp_head', 'start_post_rel_link', 10, 0 );             // start link
+	remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0 ); // Links for Adjacent Posts
+	remove_action( 'wp_head', 'wp_generator' );                           // WP version
+}
+
+// Fixing the Read More in the Excerpts
+// This removes the annoying […] to a Read More link
+function grav_excerpt_more($more) {
+	global $post;
+	// edit here if you like
+	return '...  <a href="'. get_permalink($post->ID) . '" title="Read '.get_the_title($post->ID).'">Read more &raquo;</a>';
+}
+
+function grav_improved_trim_excerpt($text) {
+  global $post;
+  if ( '' == $text ) {
+          $text = get_the_content('');
+          $text = apply_filters('the_content', $text);
+          $text = str_replace('\]\]\>', ']]&gt;', $text);
+          $text = preg_replace('@<script[^>]*?>.*?</script>@si', '', $text);
+          $text = strip_tags($text, '<p>');
+          $excerpt_length = apply_filters('excerpt_length', 55);
+          $words = explode(' ', $text, $excerpt_length + 1);
+          if (count($words)> $excerpt_length) {
+                  array_pop($words);
+                  array_push($words, '...');
+                  $text = implode(' ', $words);
+          }
+  }
+  return $text;
+}
+
+// Numeric Page Navi, pass a custom query object if using a custom query
+function grav_page_navi($before = '', $after = '', &$custom_query=null)
+{
+	global $wpdb, $wp_query;
+
+	if(isset($custom_query) && !is_null($custom_query)) {
+	    $wp_query = $custom_query;
+	}
+
+	$request = $wp_query->request;
+	$posts_per_page = intval(get_query_var('posts_per_page'));
+	$paged = intval(get_query_var('paged'));
+	$numposts = $wp_query->found_posts;
+	$max_page = $wp_query->max_num_pages;
+	if ( $numposts <= $posts_per_page ) { return; }
+	if(empty($paged) || $paged == 0) {
+		$paged = 1;
+	}
+	$pages_to_show = 7;
+	$pages_to_show_minus_1 = $pages_to_show-1;
+	$half_page_start = floor($pages_to_show_minus_1/2);
+	$half_page_end = ceil($pages_to_show_minus_1/2);
+	$start_page = $paged - $half_page_start;
+	if($start_page <= 0) {
+		$start_page = 1;
+	}
+	$end_page = $paged + $half_page_end;
+	if(($end_page - $start_page) != $pages_to_show_minus_1) {
+		$end_page = $start_page + $pages_to_show_minus_1;
+	}
+	if($end_page > $max_page) {
+		$start_page = $max_page - $pages_to_show_minus_1;
+		$end_page = $max_page;
+	}
+	if($start_page <= 0) {
+		$start_page = 1;
+	}
+	echo $before.'<nav class="page-navigation"><ol class="grav_page_navi clearfix">'."";
+	if ($start_page >= 2 && $pages_to_show < $max_page) {
+		$first_page_text = "First";
+		echo '<li class="bpn-first-page-link"><a href="'.get_pagenum_link().'" title="'.$first_page_text.'">'.$first_page_text.'</a></li>';
+	}
+	echo '<li class="bpn-prev-link">';
+	previous_posts_link('<<');
+	echo '</li>';
+	for($i = $start_page; $i  <= $end_page; $i++) {
+		if($i == $paged) {
+			echo '<li class="bpn-current">'.$i.'</li>';
+		} else {
+			echo '<li><a href="'.get_pagenum_link($i).'">'.$i.'</a></li>';
+		}
+	}
+	echo '<li class="bpn-next-link">';
+	next_posts_link('>>');
+	echo '</li>';
+	if ($end_page < $max_page) {
+		$last_page_text = "Last";
+		echo '<li class="bpn-last-page-link"><a href="'.get_pagenum_link($max_page).'" title="'.$last_page_text.'">'.$last_page_text.'</a></li>';
+	}
+	echo '</ol></nav>'.$after."";
+}
+
+// remove the p from around imgs (http://css-tricks.com/snippets/wordpress/remove-paragraph-tags-from-around-images/)
+function grav_filter_ptags_on_images($content)
+{
+    $content = preg_replace('/<p>\s*(<a .*>)?\s*(<img .* \/>)\s*(<\/a>)?\s*<\/p>/iU', '\1\2\3', $content);
+    return preg_replace('/<p>\s*(<iframe .*>*.<\/iframe>)\s*<\/p>/iU', '\1', $content);
+}
+
+
 
 
 ?>
