@@ -10,13 +10,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="application-name" content="<?php bloginfo('name'); ?>" />
 
-	<link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/favicon.ico">
+	<link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/library/images/favicon.ico">
 		<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
 	<?php wp_head(); ?>
-
-	<?php global $grav_config; if($grav_config['jsUseRequire']): ?>
-	<script data-main="<?php echo get_template_directory_uri(); ?>/library/js/require/require.config" src="<?php echo get_template_directory_uri(); ?>/library/js/require/require.min.js"></script>
-	<?php endif; ?>
 
 </head>
 
