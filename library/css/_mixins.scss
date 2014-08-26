@@ -1,3 +1,17 @@
+@mixin fontsize($fontsize, $lineheight: 'auto', $basesize: 16) {
+
+	@if $lineheight == 'auto' {
+		$lineheight: round($fontsize * 1.2);
+	}
+
+	font-size: $fontsize + px;
+	font-size: ($fontsize / $basesize) + rem;
+	line-height: ($lineheight) + px;
+	line-height: ($lineheight / $basesize) + rem;
+	margin-top: (($lineheight - $fontsize)/2 * -1) + px;
+	margin-top: ((($lineheight - $fontsize)/2 * -1) / $basesize ) + rem;
+}
+
 @mixin transition($transition-property, $transition-time, $method) {
     -webkit-transition: $transition-property $transition-time $method;
     -moz-transition: $transition-property $transition-time $method;
