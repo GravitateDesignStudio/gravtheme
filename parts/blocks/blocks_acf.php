@@ -4,7 +4,7 @@
 /*
 * Global variables to use across multiple blocks
 */
-$block_background_colors = array (
+$acf_block_background_colors = array (
 	'white' => 'White',
 	'dark' => 'Blue',
 	'darker' => 'Dark Blue',
@@ -50,7 +50,7 @@ foreach($files as $file){
 		'name' => 'block_background',
 		'type' => 'select',
 		'column_width' => '',
-		'choices' => $block_background_colors,
+		'choices' => $acf_block_background_colors,
 		'default_value' => '',
 		'allow_null' => 0,
 		'multiple' => 0,
