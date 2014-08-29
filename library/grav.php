@@ -3,7 +3,7 @@
 include_once('grav/grav_functions.php'); // Grav Functions
 //include_once('grav/grav_arrays.php'); // Grav Arrays
 include_once('acf.php'); // Advanced Custom Fields
-include_once(dirname(dirname(__FILE__)).'/parts/blocks/blocks-acf.php'); // Blocks Advanced Custom Fields
+include_once(dirname(dirname(__FILE__)).'/parts/blocks/blocks_acf.php'); // Blocks Advanced Custom Fields
 
 // Add Custom Post Types
 //include_once('grav/cpt/resources.php'); // Resources cpt

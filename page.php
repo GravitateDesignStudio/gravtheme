@@ -7,7 +7,7 @@
 
 		<?php the_content(); ?>
 
-		<?php get_template_part('parts/blocks/blocks-handler'); ?>
+		<?php get_template_part('parts/blocks/blocks_handler'); ?>
 
 	<?php endwhile; endif; ?>
 
