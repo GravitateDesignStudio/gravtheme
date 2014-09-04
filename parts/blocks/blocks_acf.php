@@ -44,7 +44,7 @@ foreach($dirs as $dir){
 
 foreach($files as $file){
 	$block = preg_replace('/_acf.php/', '', $file);
-	$background_acf = array (
+	$acf_background = array (
 		'key' => 'field_'.$block.'_x000000000001',
 		'label' => 'Background',
 		'name' => 'block_background',
@@ -55,7 +55,7 @@ foreach($files as $file){
 		'allow_null' => 0,
 		'multiple' => 0,
 	);
-	$background_acf_image = array (
+	$acf_background_image = array (
 		'key' => 'field_'.$block.'_x000000000002',
 		'label' => 'Background Image',
 		'name' => 'block_background_image',

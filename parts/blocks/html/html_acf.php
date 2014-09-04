@@ -6,8 +6,8 @@
 				'min' => '',
 				'max' => '',
 				'sub_fields' => array (
-					$background_acf, 
-					$background_acf_image,
+					$acf_background,
+					$acf_background_image,
 					array (
 						'key' => 'field_html_1000000000001',
 						'label' => 'HTML Column',

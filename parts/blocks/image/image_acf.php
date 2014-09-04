@@ -6,6 +6,8 @@ $acf_layout = array (
 			'min' => '',
 			'max' => '',
 			'sub_fields' => array (
+				$acf_background,
+				$acf_background_image,
 				array (
 					'key' => 'field_5400a5a051e00',
 					'label' => 'Without Padding',
