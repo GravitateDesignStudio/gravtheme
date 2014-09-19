@@ -74,7 +74,7 @@ function grav_setup()
         'css_master',
         get_template_directory_uri() . '/library/css/master.pscss',
         //get_template_directory_uri() . '/library/css/master.css',
-        array(),
+        array('css_plugins'),
         $cache_var
     );
 
@@ -89,7 +89,7 @@ function grav_setup()
     wp_enqueue_script(
         'js_master',
         get_template_directory_uri() . '/library/js/master.js',
-        array('jquery'),
+        array('jquery', 'js_plugins'),
         $cache_var,
         true
     );
