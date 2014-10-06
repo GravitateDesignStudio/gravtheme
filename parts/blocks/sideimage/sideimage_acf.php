@@ -1,5 +1,12 @@
 <?php
 
+$column_width_options = array(
+		2 => 'Small',
+		5 => 'Medium',
+		8 => 'Large',
+		6 => 'Half',
+	);
+
 $acf_layout = array (
 				'name' => 'sideimage',
 				'label' => 'Content With Image',
@@ -36,11 +43,7 @@ $acf_layout = array (
 						'required' => 0,
 						'conditional_logic' => 0,
 						'column_width' => '',
-						'choices' => array (
-							'small' => 'Small',
-							'medium' => 'Medium',
-							'large' => 'Large',
-						),
+						'choices' => $column_width_options,
 						'other_choice' => 0,
 						'save_other_choice' => 0,
 						'default_value' => '',

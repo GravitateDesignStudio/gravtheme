@@ -6,7 +6,7 @@ if(get_sub_field('testimonials'))
 	<div class="block-inner">
 		<div class="row">
 			<div class="columns">
-				<div class="cycle-slideshow" data-cycle-fx="fade" data-cycle-timeout="8000" data-cycle-speed="1200" data-cycle-slides=".slide">
+				<div class="cycle-slideshow" data-cycle-fx="fade" data-cycle-timeout="8000" data-cycle-speed="1200" data-cycle-slides=".slide" data-cycle-log="false">
 
 					<?php
 					while(has_sub_field('testimonials'))
