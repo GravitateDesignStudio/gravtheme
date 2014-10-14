@@ -8,7 +8,7 @@ $column_width_options = array(
 	);
 
 $acf_layout = array (
-				'name' => 'sideimage',
+				'name' => 'imageside',
 				'label' => 'Content With Image',
 				'display' => 'row',
 				'sub_fields' => array (
