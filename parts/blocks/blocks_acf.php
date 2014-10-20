@@ -25,7 +25,7 @@ $acf_block_background_colors = array (
 */
 $files = array();
 $layouts = array();
-$directory = get_template_directory().'/parts/blocks';
+$directory = get_stylesheet_directory().'/parts/blocks';
 
 if (! is_dir($directory)) {
     exit('Invalid directory path');
