@@ -35,6 +35,9 @@ add_filter('the_excerpt', 'grav_filter_ptags_on_images');
 // adding sidebars to Wordpress (these are created in functions.php)
 add_action( 'widgets_init', 'grav_register_sidebars' );
 
+// adding format options to tiny MCE ( better with Tiny MCE Advanced )
+add_filter( 'tiny_mce_before_init', 'grav_mce_button' ); 
+
 
 /************* ACTIONS AND FILTERS  *****************/
 
@@ -131,6 +134,23 @@ function grav_theme_support()
         )
     );
 }
+
+// adding formats to Tiny MCE
+function grav_mce_button( $init_array ) {  
+
+	$style_formats = array(  
+		array(  
+			'title' => 'Button',  
+			'block' => 'span',  
+			'classes' => 'button-container',
+			'wrapper' => true,
+		),
+	);  
+	$init_array['style_formats'] = json_encode( $style_formats );  
+	
+	return $init_array;  
+  
+} 
 
 
 /************* SIDEBARS, MENUS, ROLES  *****************/
