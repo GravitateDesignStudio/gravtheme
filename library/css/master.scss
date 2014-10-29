@@ -1,23 +1,43 @@
-/*************************************
-Imports
-**************************************/
 
-@import 'normalize';
-@import 'mixins';
-@import 'wordpress';
+/////////////////////////////////////
+// Variables for Foundation
+/////////////////////////////////////
+$row_max_width : 62.5em;
+$gutter_width : 0.9375em;
+$foundation_small : 641px;
+$foundation_medium : 1025px;
+$foundation_large : 1441px;
+$foundation_xlarge : 1921px;
 
-/*************************************
-Sprite
-**************************************/
+
+/////////////////////////////////////
+// Sprite
+/////////////////////////////////////
 
 $sprite: '../image/sprite.png';
 
-/*************************************
-Colors
-**************************************/
+
+/////////////////////////////////////
+// Variables
+/////////////////////////////////////
 
 $white: #ffffff;
 $black: #000000;
+
+
+/////////////////////////////////////
+//Imports
+/////////////////////////////////////
+
+@import 'sass-includes/foundation';
+@import 'sass-includes/blocks';
+@import 'sass-includes/colorbox';
+@import 'sass-includes/normalize';
+@import 'sass-includes/mixins';
+@import 'sass-includes/wordpress';
+
+
+
 
 /*************************************
 Global

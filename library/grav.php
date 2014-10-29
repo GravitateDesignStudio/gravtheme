@@ -66,18 +66,19 @@ function grav_setup()
         }
     }
 
-    wp_enqueue_style(
-        'css_plugins',
-        get_template_directory_uri() . '/library/css/plugins.css',
-        array(),
-        $cache_var
-    );
+    // wp_enqueue_style(
+    //     'css_plugins',
+    //     get_template_directory_uri() . '/library/css/plugins.css',
+    //     array(),
+    //     $cache_var
+    // );
+
 
     wp_enqueue_style(
         'css_master',
         get_template_directory_uri() . '/library/css/master.pscss',
         //get_template_directory_uri() . '/library/css/master.css',
-        array('css_plugins'),
+        array(),
         $cache_var
     );
 

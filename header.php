@@ -11,7 +11,8 @@
 	<meta name="application-name" content="<?php bloginfo('name'); ?>" />
 
 	<link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/library/images/favicon.ico">
-		<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
+	<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
+
 	<?php wp_head(); ?>
 
 </head>
