@@ -69,6 +69,23 @@ function grav_menu($menu='main')
 }
 
 /**
+ * Check all Post Types and Taxonomies for changes.  If so then flush rewrite rules.
+ *
+ * @return (void)
+ * @author GG
+ *
+ **/
+function grav_check_registered_post_types()
+{
+    $cpts = implode('',get_post_types()).implode('',get_taxonomies());
+    if(get_option( 'grav_registered_post_types' ) != $cpts)
+    {
+        flush_rewrite_rules();
+        update_option( 'grav_registered_post_types', $cpts );
+    }
+}
+
+/**
  * CSV File to Array function
  *
  * @param  $args  (array) of configurations to set for the function. Defaults are shown in the function.
