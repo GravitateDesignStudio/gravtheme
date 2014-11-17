@@ -4,7 +4,7 @@
  * Standard Functions for Gravitate
  *
  * Copyright (c) 2013-2014
- * Version: 1.2
+ * Version: 1.3
  */
 ####################################################
 
@@ -215,13 +215,17 @@ function grav_csv2posts($args = array())
  **/
 function grav_get_real_ip()
 {
-	if (isset ($_SERVER ['HTTP_X_FORWARDED_FOR']))
+	if (!empty($_SERVER['HTTP_CLIENT_IP']))
 	{
-		$clientIP = $_SERVER ['HTTP_X_FORWARDED_FOR'];
+		$clientIP = $_SERVER['HTTP_CLIENT_IP'];
 	}
-	elseif (isset ($_SERVER ['HTTP_X_REAL_IP']))
+	elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
 	{
-		$clientIP = $_SERVER ['HTTP_X_REAL_IP'];
+		$clientIP = $_SERVER['HTTP_X_FORWARDED_FOR'];
+	}
+	elseif (!empty($_SERVER['HTTP_X_REAL_IP']))
+	{
+		$clientIP = $_SERVER['HTTP_X_REAL_IP'];
 	}
 	else
 	{
@@ -238,11 +242,49 @@ function grav_get_real_ip()
  * @return (array|false)
  * @author GG
  **/
-function grav_get_geoip_info()
+function grav_get_geoip_info($manual_ip=false)
 {
-	$cookie_key = 'geoip_info';
+	$geo_info = false;
 
-	if(!empty($_COOKIE[$cookie_key]))
+	if($manual_ip)
+	{
+		$geo_info = grav_get_geoip_info_by_ip($manual_ip);
+	}
+	else
+	{
+		$ips = array($_SERVER['HTTP_CLIENT_IP'], $_SERVER['HTTP_X_FORWARDED_FOR'], $_SERVER['HTTP_X_REAL_IP'], $_SERVER['REMOTE_ADDR']);
+
+		foreach ($ips as $ip)
+		{
+			if(!empty($ip) && filter_var($ip, FILTER_VALIDATE_IP))
+			{
+				$geo_info = grav_get_geoip_info_by_ip($ip);
+
+				if(!empty($geo_info['latitude']) && !empty($geo_info['longitude']))
+				{
+					return $geo_info;
+				}
+			}
+		}
+	}
+
+	return $geo_info;
+}
+
+function grav_get_geoip_info_by_ip($ip=false)
+{
+	if($ip)
+	{
+		$real_ip = $ip;
+	}
+	else
+	{
+		$real_ip = grav_get_real_ip();
+	}
+
+	$cookie_key = 'geoip_info_'.$real_ip;
+
+	if(!empty($_COOKIE[$cookie_key]) && !$ip)
 	{
 		return unserialize(base64_decode($_COOKIE[$cookie_key]));
 	}
@@ -250,10 +292,8 @@ function grav_get_geoip_info()
 	{
 		$params = getopt('l:i:');
 
-		$real_ip = grav_get_real_ip();
-
 		if (!isset($params['l'])) $params['l'] = MAXMIND_LICENSE_KEY;
-		if (!isset($params['i'])) $params['i'] = (strpos($real_ip, '10.0.10.') !== false ? '173.12.186.189' : $real_ip); // Gravitates IP = 173.12.186.189
+		if (!isset($params['i'])) $params['i'] = trim(strpos($real_ip, '10.0.10.') !== false ? '173.12.186.189' : $real_ip); // Gravitates IP = 173.12.186.189
 
 		$query = 'https://geoip.maxmind.com/f?' . http_build_query($params);
 
@@ -305,6 +345,7 @@ function grav_get_geoip_info()
 		$values = str_getcsv($resp);
 		$values = array_pad($values, sizeof($keys), '');
 		$results = array_combine($keys, $values);
+		$results['ip'] = $params['i'];
 
 		if(isset($results['metro_code'])) unset($results['metro_code']);
 		if(isset($results['area_code'])) unset($results['area_code']);
@@ -315,7 +356,7 @@ function grav_get_geoip_info()
 		$domain = array_reverse($domain);
 		$domain = $domain[1].'.'.$domain[0];
 
-		setcookie($cookie_key, base64_encode(serialize($results)), (time()+604800), '/', '.'.$domain);
+		setcookie($cookie_key, base64_encode(serialize($results)), (time()+600), '/', '.'.$domain);
 
 		return $results;
 	}
