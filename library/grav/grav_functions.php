@@ -4,7 +4,7 @@
  * Standard Functions for Gravitate
  *
  * Copyright (c) 2013-2014
- * Version: 1.3
+ * Version: 1.4
  */
 ####################################################
 
@@ -1492,7 +1492,28 @@ function grav_filter_ptags_on_images($content)
     return preg_replace('/<p>\s*(<iframe .*>*.<\/iframe>)\s*<\/p>/iU', '\1', $content);
 }
 
+function grav_get_social_share_link($social, $twitter_screen_name='')
+{
+	switch($social)
+	{
+		case 'facebook':
+			return "window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href),'facebookShare','width=626,height=436');return false;";
+		break;
 
+		case 'twitter':
+			return "window.open('https://twitter.com/share?text=".get_the_title()."&url='+encodeURIComponent(location.href)+'&via=".$twitter_screen_name."','twitterShare','width=626,height=436');return false;";
+		break;
 
+		case 'googleplus':
+			return "window.open('https://plus.google.com/share?url='+encodeURIComponent(location.href),'googlePlusShare','width=626,height=436');return false;";
+		break;
 
-?>
+		case 'pinterest':
+			return "window.open('https://www.pinterest.com/pin/create/button/?url='+encodeURIComponent(location.href)+'&media=&description=".get_the_title()."','pinterestShare','width=626,height=436');return false;";
+		break;
+
+		case 'linkedin':
+			return "window.open('https://www.linkedin.com/cws/share?url='+encodeURIComponent(location.href),'linkedinShare','width=626,height=436');return false;";
+		break;
+	}
+}
