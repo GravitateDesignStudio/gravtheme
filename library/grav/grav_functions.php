@@ -4,7 +4,7 @@
  * Standard Functions for Gravitate
  *
  * Copyright (c) 2013-2014
- * Version: 1.4
+ * Version: 1.5
  */
 ####################################################
 
@@ -205,6 +205,126 @@ function grav_csv2posts($args = array())
 			}
 		}
 	}
+}
+
+/**
+ * Function to Combine CSS and JS Files.  The function will check to see if any file gets updated and will re-compress the files.
+ * This function must be used within "wp_enqueue_scripts" action.
+ * Ex.
+ *       add_action( 'wp_enqueue_scripts', 'grav_compress_enqueue_files');
+ *
+ * @return (void)
+ * @author GG
+ **/
+function grav_compress_enqueue_files()
+{
+    global $wp_scripts, $wp_styles;
+
+    $types = array('js' => $wp_scripts, 'css' => $wp_styles);
+
+    foreach ($types as $ext => $type)
+    {
+
+        $cache_var = 0;
+
+        $files_var = '';
+
+        if(!empty($type->queue))
+        {
+            foreach ($type->queue as $queued_file)
+            {
+                $queued = $type->registered[$queued_file];
+
+                $files_var.= $queued->handle;
+
+                if(strpos($queued->src, site_url()) !== false)
+                {
+                    $file = str_replace(array(site_url().'/', 'pscss'), array(ABSPATH, 'scss'), $queued->src);
+
+                    if(file_exists($file))
+                    {
+                        $cache_var+= filemtime($file);
+                    }
+                }
+            }
+
+            $cache_var.= md5($files_var);
+
+            $min_file_path = get_template_directory().'/library/'.$ext.'/theme.min.'.$cache_var.'.'.$ext;
+            $min_file_url = get_template_directory_uri().'/library/'.$ext.'/theme.min.'.$cache_var.'.'.$ext;
+
+        	if(is_dir(dirname($min_file_path)))
+        	{
+        		if(!file_exists($min_file_path))
+	            {
+	                $fp = fopen($min_file_path, 'a');
+	                foreach ($type->queue as $queued_file)
+	                {
+	                    $queued = $type->registered[$queued_file];
+
+	                    if($fp && $queued->handle != 'admin-bar')
+	                    {
+	                        if(strpos($queued->src, '/icomoon.io/'))
+	                        {
+	                            $content = gzinflate(substr(file_get_contents($queued->src),10,-8));
+	                        }
+	                        else
+	                        {
+	                            $content = file_get_contents(str_replace('pscss', 'pscss?style=compressed', $queued->src));
+	                        }
+
+				            // Write File
+	                        if(fwrite($fp, str_replace(array("  "), array(" "), $content)))
+	                        {
+	                        	// Remove Old Files
+								if($oldfiles = glob(dirname($min_file_path).'/theme.min.*.'.$ext))
+					            {
+					            	foreach ($oldfiles as $oldfile)
+					            	{
+					            		if($oldfile != $min_file_path) // make sure it is not the file we just created.
+					            		{
+					            			unlink($oldfile);
+					            		}
+					            	}
+					            }
+	                        }
+	                    }
+	                }
+	                fclose($fp);
+	            }
+
+                if(file_exists($min_file_path))
+	            {
+	                if($ext == 'js')
+	                {
+	                    wp_enqueue_script('theme-min', $min_file_url, array('jquery'), '', true);
+	                }
+	                else if($ext == 'css')
+	                {
+	                    wp_enqueue_style('theme-min', $min_file_url, array());
+	                }
+
+	                foreach ($type->queue as $queued_file)
+	                {
+	                    $queued = $type->registered[$queued_file];
+
+	                    if(strpos($queued->handle, 'theme-min') === false && $queued->handle != 'admin-bar')
+	                    {
+	                        if($ext == 'js')
+	                        {
+	                            wp_deregister_script( $queued->handle );
+	                        }
+	                        else if($ext == 'css')
+	                        {
+	                            wp_deregister_style( $queued->handle );
+	                        }
+	                    }
+	                }
+	            }
+	        }
+
+        }
+    }
 }
 
 /**
