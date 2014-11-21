@@ -19,13 +19,14 @@
  * @return (array)
  * @author GG
  **/
-function grav_menu($menu='main')
+function grav_menu($menu='main', $class='')
 {
     switch($menu)
     {
         case 'top':
             wp_nav_menu(array(
                 'menu' => 'Top Menu', /* menu name */
+                'menu_class' => $class,
                 'theme_location' => 'top_nav', /* where in the theme it's assigned */
                 'container' => '' /* no container */
             ));
@@ -33,6 +34,7 @@ function grav_menu($menu='main')
         case 'footer':
             wp_nav_menu(array(
                 'menu' => 'footer_links', /* menu name */
+                'menu_class' => $class,
                 'theme_location' => 'footer_links', /* where in the theme it's assigned */
                 'container' => '' /* no container */
             ));
@@ -40,6 +42,7 @@ function grav_menu($menu='main')
         case 'sitemap':
             wp_nav_menu(array(
                 'menu' => 'SiteMap Menu', /* menu name */
+                'menu_class' => $class,
                 'theme_location' => 'sitemap_nav', /* where in the theme it's assigned */
                 'container' => '' /* no container */
             ));
@@ -47,6 +50,7 @@ function grav_menu($menu='main')
         case 'mobile':
             wp_nav_menu(array(
                 'menu' => 'Mobile Menu', /* menu name */
+                'menu_class' => $class,
                 'theme_location' => 'mobile_nav', /* where in the theme it's assigned */
                 'container' => '' /* no container */
             ));
@@ -54,6 +58,7 @@ function grav_menu($menu='main')
         case 'main':
             wp_nav_menu(array(
                 'menu' => 'Main Menu', /* menu name */
+                'menu_class' => $class,
                 'theme_location' => 'main_nav', /* where in the theme it's assigned */
                 'container' => '' /* no container */
             ));
@@ -61,6 +66,7 @@ function grav_menu($menu='main')
         default:
         	wp_nav_menu(array(
                 'menu' => ucwords($menu).' Menu', /* menu name */
+                'menu_class' => $class,
                 'theme_location' => $menu.'_nav', /* where in the theme it's assigned */
                 'container' => '' /* no container */
             ));
