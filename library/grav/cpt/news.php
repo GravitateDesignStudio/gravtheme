@@ -23,6 +23,7 @@ function grav_custom_post_type_news()
 	  'exclude_from_search' => false,
 	  'can_export'          => true,
 	  'has_archive'         => true,
+	  'menu_icon'		=> 'dashicons-megaphone',
 	  'supports' => array('title','excerpt','editor','thumbnail'),
 	  'labels' => array (
 		  'name' => $plural_label,
