@@ -23,6 +23,7 @@ function grav_custom_post_type_events()
 	  'exclude_from_search' => false,
 	  'can_export'          => true,
 	  'has_archive'         => true,
+	  'menu_icon'		=> 'dashicons-calendar-alt',
 	  'supports' => array('title','editor','excerpt'),
 	  'labels' => array (
 		  'name' => $plural_label,
