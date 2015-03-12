@@ -9,7 +9,19 @@
 ####################################################
 
 
-
+/**
+ * Get svg file to include from library/images/svgs
+ *
+ * Pass the name of the file as the argument minus the file extension
+ *
+ **/
+function grav_get_svg($svg){
+	$path = get_template_directory().'/library/images/svgs/'.$svg.'.svg';
+	if(file_exists($path)){
+		return file_get_contents($path);
+	}
+	return '';
+}
 
 /**
  * Create a Menu in the Template
