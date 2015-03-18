@@ -4,7 +4,7 @@ function grav_custom_post_type_resources()
 {
 	$single_label = 'Resource';
 	$plural_label = $single_label.'s';
-	$name = strtolower(str_replace(' ', '-', $plural_label));
+	$name = strtolower(str_replace(' ', '-', $single_label));
 	$slug = $name;
 
 	// Case Studies
@@ -23,6 +23,7 @@ function grav_custom_post_type_resources()
 	  'exclude_from_search' => false,
 	  'can_export'          => true,
 	  'has_archive'         => true,
+	  'menu_icon'			=> 'dashicons-album',
 	  'supports' => array('title','editor','thumbnail'),
 	  'labels' => array (
 		  'name' => $plural_label,

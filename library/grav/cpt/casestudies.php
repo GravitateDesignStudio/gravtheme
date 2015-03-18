@@ -4,7 +4,7 @@ function grav_custom_post_type_casestudies()
 {
 	$single_label = 'Case Study';
 	$plural_label = 'Case Studies';
-	$name = 'case_studies';
+	$name = 'case_study';
 	$slug = str_replace('_', '-', $name);
 
 	// Case Studies

@@ -4,7 +4,7 @@ function grav_custom_post_type_events()
 {
 	$single_label = 'Event';
 	$plural_label = $single_label.'s';
-	$name = strtolower(str_replace(' ', '-', $plural_label));
+	$name = strtolower(str_replace(' ', '-', $single_label));
 	$slug = $name;
 
 	// Case Studies
@@ -23,6 +23,7 @@ function grav_custom_post_type_events()
 	  'exclude_from_search' => false,
 	  'can_export'          => true,
 	  'has_archive'         => true,
+	  'menu_icon'			=> 'dashicons-calendar-alt',
 	  'menu_icon'		=> 'dashicons-calendar-alt',
 	  'supports' => array('title','editor','excerpt'),
 	  'labels' => array (

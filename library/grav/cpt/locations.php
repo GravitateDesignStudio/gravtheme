@@ -4,7 +4,7 @@ function grav_custom_post_type_locations()
 {
 	$single_label = 'Location';
 	$plural_label = $single_label.'s';
-	$name = 'locations';
+	$name = 'location';
 	$slug = $name;
 
 	// Case Studies
@@ -23,6 +23,7 @@ function grav_custom_post_type_locations()
 	  'exclude_from_search' => false,
 	  'can_export'          => true,
 	  'has_archive'         => true,
+	  'menu_icon'			=> 'dashicons-location-alt',
 	  'supports' => array('title','editor','excerpt','thumbnail'),
 	  'labels' => array (
 		  'name' => $plural_label,
