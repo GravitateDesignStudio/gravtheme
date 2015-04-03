@@ -3,8 +3,9 @@
 /**
  * Standard Functions for Gravitate
  *
- * Copyright (c) 2013-2014
- * Version: 1.5
+ * Copyright (c) 2013-2015
+ * Version: 1.6
+ * Written by Brian F. and Geoff G.
  */
 ####################################################
 
@@ -15,12 +16,83 @@
  * Pass the name of the file as the argument minus the file extension
  *
  **/
-function grav_get_svg($svg){
+function grav_get_svg($svg)
+{
 	$path = get_template_directory().'/library/images/svgs/'.$svg.'.svg';
-	if(file_exists($path)){
+	if(file_exists($path))
+	{
 		return file_get_contents($path);
 	}
 	return '';
+}
+
+function grav_set_permissions($allowed=true)
+{
+	if($allowed)
+	{
+		add_action( 'admin_init', 'grav_add_update_capabilities' );
+	}
+	else
+	{
+		add_action( 'admin_init', 'grav_remove_update_capabilities');
+	}
+}
+
+/**
+ * Remove file update capabilities from all roles.
+ */
+function grav_remove_update_capabilities()
+{
+    if(is_admin())
+    {
+        global $wp_roles;
+
+        // A list of capabilities to remove from all roles.
+        $caps = array(
+            'update_core',
+            'update_plugins',
+            'install_plugins',
+            'delete_plugins',
+            'update_themes',
+            'install_themes',
+            'delete_themes'
+        );
+
+        if(!empty($wp_roles->roles))
+        {
+            foreach ( $wp_roles->roles as $role_name => $role )
+            {
+                foreach ( $caps as $cap )
+                {
+                    if(isset($role['capabilities'][$cap]))
+                    {
+                        $role_obj = get_role( $role_name );
+                        if(!empty($role_obj))
+                        {
+                            $role_obj->remove_cap( $cap );
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/**
+ * Add file update capabilities to Admins.
+ */
+function grav_add_update_capabilities()
+{
+
+    $role = get_role( 'administrator' );
+
+    $role->add_cap( 'update_core' );
+    $role->add_cap( 'update_plugins' );
+    $role->add_cap( 'install_plugins' );
+    $role->add_cap( 'delete_plugins' );
+    $role->add_cap( 'update_themes' );
+    $role->add_cap( 'install_themes' );
+    $role->add_cap( 'delete_themes' );
 }
 
 /**
@@ -79,7 +151,7 @@ function grav_menu($menu='main', $class='')
         break;
         default:
         	wp_nav_menu(array(
-                'menu' => ucwords($menu).' Menu', /* menu name */
+                'menu' => ucwords($menu), /* menu name */
                 'menu_class' => $class,
                 'theme_location' => $menu.'_nav', /* where in the theme it's assigned */
                 'container' => '' /* no container */
@@ -1656,4 +1728,136 @@ function grav_get_social_share_link($social, $twitter_screen_name='')
 			return "window.open('https://www.linkedin.com/cws/share?url='+encodeURIComponent(location.href),'linkedinShare','width=626,height=436');return false;";
 		break;
 	}
+}
+
+/*
+* Add Button Support to Tiny MCE
+*/
+function grav_mce_init( $init )
+{
+	$init['relative_urls'] = true;
+	$init['document_base_url'] = get_bloginfo('url');
+	return $init;
+}
+function grav_add_anchor_btn_js($plugin_array)
+{
+	if(file_exists(get_template_directory().'/library/js/mce_anchor_add_buttons.js'))
+	{
+	   	$plugin_array['grav_add_anchor_btn'] = get_template_directory_uri().'/library/js/mce_anchor_add_buttons.js'; // CHANGE THE BUTTON SCRIPT HERE
+	}
+	return $plugin_array;
+}
+function grav_add_anchor_btn($buttons)
+{
+   array_splice($buttons, 12, 0, "grav_add_anchor_btn");
+   return $buttons;
+}
+/*
+* END - Add Button Support to Tiny MCE
+*/
+
+
+function grav_register_sidebars()
+{
+    register_sidebar(array(
+        'id' => 'sidebar1',
+        'name' => 'Sidebar 1',
+        'description' => 'The first (primary) sidebar.',
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget' => '</div>',
+        'before_title' => '<h4 class="widgettitle">',
+        'after_title' => '</h4>',
+    ));
+}
+
+// Adding WP 3+ Functions & Theme Support
+function grav_theme_support()
+{
+	add_theme_support('post-thumbnails');      // wp thumbnails (sizes handled in functions.php)
+	set_post_thumbnail_size(125, 125, true);   // default thumb size
+
+	//add_custom_background();                   // wp custom background
+	add_theme_support('automatic-feed-links'); // rss thingy
+
+	// adding post format support
+	add_theme_support( 'post-formats',      // post formats
+		array(
+			'aside',   // title less blurb
+			'gallery', // gallery of images
+			'link',    // quick link to other site
+			'image',   // an image
+			'quote',   // a quick quote
+			'status',  // a Facebook like status update
+			'video',   // video
+			'audio',   // audio
+			'chat'     // chat transcript
+		)
+	);
+	add_theme_support( 'menus' );            // wp menus
+
+	register_nav_menus(                      // wp3+ menus
+        array(
+            'main_nav' => 'The Main Menu',   // main nav in header
+            'mobile_nav' => 'The Mobile Menu',   // Mobile nav in header
+            'top_nav' => 'The Top Menu',   // top right nav in header
+            'footer_links' => 'Footer Links', // secondary nav in footer
+            'site_map' => 'Site Map Links' // Sitemap Links
+        )
+    );
+}
+
+function grav_enqueue_scripts()
+{
+	global $grav_enqueue_files;
+
+    if(!empty($grav_enqueue_files))
+    {
+        foreach ($grav_enqueue_files as $key => $file)
+        {
+        	$cache_var = 0;
+
+        	if(strpos($file, get_template_directory_uri()) !== false) // If Local file then get the time of when it was modified
+        	{
+	        	$file_path = str_replace(get_template_directory_uri(), get_template_directory(), $file);
+
+	            if(file_exists($file_path))
+	            {
+	                $cache_var = filemtime($file_path);
+	            }
+	        }
+
+        	switch(substr($file, strrpos($file, '.')))
+        	{
+        		case '.css':
+
+        			wp_enqueue_style($key, $file, array(), $cache_var);
+
+        			break;
+
+        		case '.js':
+
+        			wp_enqueue_script($key, $file, array('jquery'), $cache_var, true);
+
+        			break;
+        	}
+        }
+    }
+}
+
+// adding formats to Tiny MCE
+function grav_mce_button( $init_array )
+{
+
+	$style_formats = array(
+		array(
+			'title' => 'Button',
+			'block' => 'span',
+			'classes' => 'button-container',
+			'wrapper' => true,
+		),
+	);
+	$init_array['style_formats'] = json_encode( $style_formats );
+
+	return $init_array;
+
 }
