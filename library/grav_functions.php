@@ -4,7 +4,7 @@
  * Standard Functions for Gravitate
  *
  * Copyright (c) 2013-2015
- * Version: 1.6
+ * Version: 1.7
  * Written by Brian F. and Geoff G.
  */
 ####################################################
@@ -188,9 +188,9 @@ function grav_check_registered_post_types()
 function grav_csv2array($args = array())
 {
 	// Set Defaults
-	$args['file'] == (!empty($args['file']) ? $args['separator'] : ''); // Absolute Path to FIle. Required
-	$args['separator'] == (!empty($args['separator']) ? $args['separator'] : ','); // Field Separator in file
-	$args['has_labels'] == (!empty($args['has_labels']) ? true : false);
+	$args['file'] = (!empty($args['file']) ? $args['file'] : ''); // Absolute Path to FIle. Required
+	$args['separator'] = (!empty($args['separator']) ? $args['separator'] : ','); // Field Separator in file
+	$args['has_labels'] = (!empty($args['has_labels']) ? true : false);
 
 	// Data to Return
 	$data = array();
@@ -257,9 +257,9 @@ function grav_csv2array($args = array())
 function grav_csv2posts($args = array())
 {
 	// Set Defaults
-	$args['file'] == (!empty($args['file']) ? $args['separator'] : ''); // Absolute Path to FIle. Required
-	$args['separator'] == (!empty($args['separator']) ? $args['separator'] : ','); // Field Separator in file
-	$args['has_labels'] == true; // This is Required to be true.
+	$args['file'] = (!empty($args['file']) ? $args['file'] : ''); // Absolute Path to FIle. Required
+	$args['separator'] = (!empty($args['separator']) ? $args['separator'] : ','); // Field Separator in file
+	$args['has_labels'] = true; // This is Required to be true.
 
 	// Data to Return
 	$data = grav_csv2array($args);
