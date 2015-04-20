@@ -56,11 +56,11 @@
 
 
 
-		<?php if (function_exists('page_navi')) { // if expirimental feature is active ?>
+		<?php if (function_exists('grav_page_navi')) { // if expirimental feature is active ?>
 
 
 			<div class="page-navi">
-				<?php page_navi(); ?>
+				<?php grav_page_navi(); ?>
 			</div>
 
 
