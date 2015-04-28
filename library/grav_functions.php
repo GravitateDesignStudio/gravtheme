@@ -4,7 +4,7 @@
  * Standard Functions for Gravitate
  *
  * Copyright (c) 2013-2015
- * Version: 1.7
+ * Version: 1.8.0
  * Written by Brian F. and Geoff G.
  */
 ####################################################
