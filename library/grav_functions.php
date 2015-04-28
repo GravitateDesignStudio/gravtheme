@@ -1861,3 +1861,30 @@ function grav_mce_button( $init_array )
 	return $init_array;
 
 }
+
+function _get($value)
+{
+	if(isset($_GET[$value]))
+	{
+		return $_GET[$value];
+	}
+	return '';
+}
+
+function _post($value)
+{
+	if(isset($_POST[$value]))
+	{
+		return $_POST[$value];
+	}
+	return '';
+}
+
+function _request($value)
+{
+	if(isset($_REQUEST[$value]))
+	{
+		return $_REQUEST[$value];
+	}
+	return '';
+}
