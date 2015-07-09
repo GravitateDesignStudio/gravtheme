@@ -11,7 +11,7 @@
 	});
 
 
-// equal column widths
+// equal column heights
 	function elEQ(e, f) {
 	    var estEl = 0, allEl = 0, initialEl = 0, el, curEl, elArray = [];
 	    $(e).each(function() {
