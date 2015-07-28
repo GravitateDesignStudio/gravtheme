@@ -39,8 +39,8 @@ add_filter('mce_buttons', 'grav_add_anchor_btn');
 
 // Add and enqueue CSS and JS Files
 $grav_enqueue_files = array(
-    'master_css' => get_template_directory_uri() . '/library/css/min/master.min.css',
-    'master_js' => get_template_directory_uri() . '/library/js/min/master.min.js',
+    'master_css' => get_template_directory_uri() . '/library/css/master.css',
+    'master_js' => get_template_directory_uri() . '/library/js/master.js',
 );
 
 //add_editor_style("library/css/editor-styles.css"); // editor styles for tinymce
