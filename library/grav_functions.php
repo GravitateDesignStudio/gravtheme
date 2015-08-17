@@ -1888,3 +1888,17 @@ function _request($value)
 	}
 	return '';
 }
+
+/*
+*
+* Get array of created gravity forms
+*
+*/
+function grav_get_forms(){
+	$forms = RGFormsModel::get_forms( null, 'title' );
+	$form_list = array();
+	foreach($forms as $form){
+		$form_list[$form->id] = $form->title;
+	}
+	return $form_list;
+}
