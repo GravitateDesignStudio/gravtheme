@@ -1902,3 +1902,28 @@ function grav_get_forms(){
 	}
 	return $form_list;
 }
+
+function grav_update_postmeta_with_s3($bucket='', $region='', $overwrite=false)
+{
+    global $wpdb;
+
+    if($bucket)
+    {
+        $meta_values = $wpdb->get_results("SELECT * FROM ".$wpdb->postmeta." WHERE meta_key = '_wp_attached_file'");
+
+        if(!empty($meta_values))
+        {
+            foreach ($meta_values as $meta)
+            {
+                if(!empty($meta->post_id)) //amazonS3_info  a:3:{s:6:"bucket";s:27:"uploads.skyhighnetworks.com";s:3:"key";s:23:"2015/03/25160157/03.jpg";s:6:"region";s:0:"";}
+                {
+                    if($overwrite || !get_post_meta($meta->post_id, 'amazonS3_info', true )) // If does not currently have amazonS3_info then add it
+                    {
+                        update_post_meta($meta->post_id, 'amazonS3_info', array('bucket' => $bucket, 'key' => $meta->meta_value, $region));
+                        echo 'Updated '.$meta->meta_value.' from the S3 Bucket<br>';
+                    }
+                }
+            }
+        }
+    }
+}
