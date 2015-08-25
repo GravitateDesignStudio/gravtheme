@@ -1915,7 +1915,7 @@ function grav_update_postmeta_with_s3($bucket='', $region='', $overwrite=false)
         {
             foreach ($meta_values as $meta)
             {
-                if(!empty($meta->post_id)) //amazonS3_info  a:3:{s:6:"bucket";s:27:"uploads.skyhighnetworks.com";s:3:"key";s:23:"2015/03/25160157/03.jpg";s:6:"region";s:0:"";}
+                if(!empty($meta->post_id))
                 {
                     if($overwrite || !get_post_meta($meta->post_id, 'amazonS3_info', true )) // If does not currently have amazonS3_info then add it
                     {
