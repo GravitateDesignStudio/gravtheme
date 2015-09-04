@@ -33,6 +33,12 @@ add_filter('tiny_mce_before_init', 'grav_mce_init' );
 add_filter("mce_external_plugins", "grav_add_anchor_btn_js");
 add_filter('mce_buttons', 'grav_add_anchor_btn');
 
+// Add SVG MIME type support to WP
+add_filter('upload_mimes', 'grav_mime_types');
+
+// Add menu shortcode that allows to add sitemap menu to wysiwyg
+add_shortcode('menu', 'grav_menu_shortcode');
+
 ###############################################################################
 #######################   CUSTOM THEME FUNCTIONALITY  #########################
 ###############################################################################

@@ -4,10 +4,32 @@
  * Standard Functions for Gravitate
  *
  * Copyright (c) 2013-2015
- * Version: 1.8.0
+ * Version: 1.9.0
  * Written by Brian F. and Geoff G.
  */
 ####################################################
+
+
+
+/**
+*
+* Create shortcode for menu intended for sitemap use
+*
+**/
+function grav_menu_shortcode($atts, $content = null) {
+	extract(shortcode_atts(array( 'name' => null, ), $atts));
+	return wp_nav_menu( array( 'menu' => $name, 'echo' => false ) );
+}
+
+/**
+*
+* Allow svgs to be uploaded via WP media library
+*
+**/
+function grav_mime_types($mimes) {
+	$mimes['svg'] = 'image/svg+xml';
+	return $mimes;
+}
 
 
 /**
