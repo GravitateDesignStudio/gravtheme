@@ -1848,20 +1848,14 @@ function grav_enqueue_scripts()
 	            }
 	        }
 
-        	switch(substr($file, strrpos($file, '.')))
-        	{
-        		case '.css':
-
-        			wp_enqueue_style($key, $file, array(), $cache_var);
-
-        			break;
-
-        		case '.js':
-
-        			wp_enqueue_script($key, $file, array('jquery'), $cache_var, true);
-
-        			break;
-        	}
+        	if(strpos($file, '.js'))
+	        {
+	        	wp_enqueue_script($key, $file, array('jquery'), $cache_var, true);
+	        }
+	        else if(strpos($file, '.css') || strpos($file, '/css'))
+	        {
+	        	wp_enqueue_style($key, $file, array(), $cache_var);
+	        }
         }
     }
 }
