@@ -54,3 +54,10 @@ $grav_enqueue_files = array(
 // Add Custom Post Types
 // include_once('library/cpt/resources.php');
 // include_once('library/cpt/team.php');
+
+// Disable Access to W3 Total Cache
+if(isset($_GET['page']) && strpos($_GET['page'], 'w3tc_') !== false && $_GET['page'] != 'w3tc_dashboard')
+{
+  echo 'Sorry, This Plugin is Locked by Gravitate. <br><br><a href="javascript:history.go(-1);">< Back</a>';
+  exit;
+}
