@@ -1943,3 +1943,14 @@ function grav_update_postmeta_with_s3($bucket='', $region='', $overwrite=false)
         }
     }
 }
+function grav_privacy_settings(){
+	$locals = array('staging', 'local.', '.dev', '-dev');
+	foreach ($locals as $local) {
+		if (strpos($_SERVER['HTTP_HOST'], $local) !== false) {
+	    	if(get_option('blog_public')){
+	    		update_option( 'blog_public', 0 );
+	    		break;
+	    	}
+		}
+	}
+}
