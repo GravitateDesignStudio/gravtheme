@@ -61,3 +61,5 @@ if(isset($_GET['page']) && strpos($_GET['page'], 'w3tc_') !== false && $_GET['pa
   echo 'Sorry, This Plugin is Locked by Gravitate. <br><br><a href="javascript:history.go(-1);">< Back</a>';
   exit;
 }
+// Automatically checks the privacy box if you are not on the live server so search engines do not index this site.
+add_action( 'init', 'grav_privacy_settings' );
