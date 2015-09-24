@@ -1,41 +1,14 @@
 /////////////////////////////////////
-// Variables for Foundation
-/////////////////////////////////////
-$row_max_width : 62.5em;
-$gutter_width : 0.9375em;
-$foundation_small : 641px;
-$foundation_medium : 1025px;
-$foundation_large : 1441px;
-$foundation_xlarge : 1921px;
-
-
-/////////////////////////////////////
-// Sprite
-/////////////////////////////////////
-
-$sprite: '../image/sprite.png';
-
-
-/////////////////////////////////////
-// Variables
-/////////////////////////////////////
-
-$white: #ffffff;
-$black: #000000;
-
-
-/////////////////////////////////////
 //Imports
 /////////////////////////////////////
 
+@import 'sass-includes/variables';
+@import 'sass-includes/mixins';
+@import 'sass-includes/normalize';
 @import 'sass-includes/foundation';
 @import 'sass-includes/blocks';
 @import 'sass-includes/colorbox';
-@import 'sass-includes/normalize';
-@import 'sass-includes/mixins';
 @import 'sass-includes/wordpress';
-
-
 
 
 /*************************************
@@ -87,9 +60,11 @@ ul{
 /*************************************
 Buttons
 **************************************/
-button, .button, input[type=submit] {
+button,
+.button,
+input[type=submit] {
 	border-style: solid;
-	border-width: 0px;
+	border-width: 0;
 	color: $white;
 	cursor: pointer;
 	display: inline-block;
