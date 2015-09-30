@@ -1,17 +1,7 @@
 /*************************************
 Content Blocks
 **************************************/
-.block-container.white + .block-container.white .block-inner,
-.block-container.black + .block-container.black .block-inner,
-.block-container.light + .block-container.light .block-inner,
-.block-container.dark + .block-container.dark .block-inner,
-.block-container.red + .block-container.red .block-inner,
-.block-container.blue + .block-container.blue .block-inner,
-.block-container.green + .block-container.green .block-inner,
-.block-container.none + .block-container.none .block-inner,
-.block-container.gray + .block-container.gray .block-inner,
-.block-container.lightgray + .block-container.lightgray .block-inner,
-.block-container.darkgray + .block-container.darkgray .block-inner,
-.block-container.grey + .block-container.grey .block-inner,
-.block-container.lightgrey + .block-container.lightgrey .block-inner,
-.block-container.darkgrey + .block-container.darkgrey .block-inner { padding-top: 0; }
+$block_colors: 'white', 'black', 'light', 'dark', 'red', 'blue', 'green', 'none', 'gray', 'lightgray', 'darkgray', 'grey', 'lightgrey', 'darkgrey';
+@each $color in $block_colors {
+	.block-container.#{$color} + .block-container.#{$color} .block-inner { padding-top: 0; }
+}
