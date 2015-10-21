@@ -584,7 +584,33 @@ img, object, embed { max-width: 100%; height: auto; }
 /*************************************
 Content Blocks
 **************************************/
-.block-container.white + .block-container.white .block-inner, .block-container.black + .block-container.black .block-inner, .block-container.light + .block-container.light .block-inner, .block-container.dark + .block-container.dark .block-inner, .block-container.red + .block-container.red .block-inner, .block-container.blue + .block-container.blue .block-inner, .block-container.green + .block-container.green .block-inner, .block-container.none + .block-container.none .block-inner, .block-container.gray + .block-container.gray .block-inner, .block-container.lightgray + .block-container.lightgray .block-inner, .block-container.darkgray + .block-container.darkgray .block-inner, .block-container.grey + .block-container.grey .block-inner, .block-container.lightgrey + .block-container.lightgrey .block-inner, .block-container.darkgrey + .block-container.darkgrey .block-inner { padding-top: 0; }
+.block-container.white + .block-container.white .block-inner { padding-top: 0; }
+
+.block-container.black + .block-container.black .block-inner { padding-top: 0; }
+
+.block-container.light + .block-container.light .block-inner { padding-top: 0; }
+
+.block-container.dark + .block-container.dark .block-inner { padding-top: 0; }
+
+.block-container.red + .block-container.red .block-inner { padding-top: 0; }
+
+.block-container.blue + .block-container.blue .block-inner { padding-top: 0; }
+
+.block-container.green + .block-container.green .block-inner { padding-top: 0; }
+
+.block-container.none + .block-container.none .block-inner { padding-top: 0; }
+
+.block-container.gray + .block-container.gray .block-inner { padding-top: 0; }
+
+.block-container.lightgray + .block-container.lightgray .block-inner { padding-top: 0; }
+
+.block-container.darkgray + .block-container.darkgray .block-inner { padding-top: 0; }
+
+.block-container.grey + .block-container.grey .block-inner { padding-top: 0; }
+
+.block-container.lightgrey + .block-container.lightgrey .block-inner { padding-top: 0; }
+
+.block-container.darkgrey + .block-container.darkgrey .block-inner { padding-top: 0; }
 
 /*************************************
 Colorbox
@@ -659,13 +685,12 @@ WordPress Specifics
 /*************************************
 Global
 **************************************/
-body { background-color: #ffffff; font-size: 18px; }
+body { font-size: 16px; }
 
 hr { border: 0; height: 0; border-top: 1px solid #777; }
 
 p { font-size: 1em; font-weight: normal; }
 
-table { border-collapse: collapse; }
 table thead tr th { border-bottom: 1px solid #777; padding: 0.5rem; text-align: left; }
 table tbody tr td { border-bottom: 1px solid #777; padding: 0.5rem; text-align: left; }
 
@@ -674,7 +699,7 @@ ul { padding: 0; list-style: none; list-style-position: inside; }
 /*************************************
 Buttons
 **************************************/
-button, .button, input[type=submit] { border-style: solid; border-width: 0; color: #ffffff; cursor: pointer; display: inline-block; font-size: 0.88889rem; font-weight: normal; line-height: normal; margin: 0 0 1.11111rem; position: relative; padding-top: 0.489rem; padding-right: 1.378rem; padding-bottom: 0.444rem; padding-left: 1.378rem; outline: none; text-align: center; text-decoration: none; text-transform: uppercase; -webkit-transition: background-color 0.3s ease; -moz-transition: background-color 0.3s ease; -ms-transition: background-color 0.3s ease; -o-transition: background-color 0.3s ease; transition: background-color 0.3s ease; -webkit-appearance: none; -webkit-border-radius: 0; }
+button, .button, input[type=submit] { -moz-transition: background-color, 0.3s, ease; -o-transition: background-color, 0.3s, ease; -webkit-transition: background-color, 0.3s, ease; transition: background-color, 0.3s, ease; border-style: solid; border-width: 0; color: #ffffff; cursor: pointer; display: inline-block; font-size: 0.88889rem; font-weight: normal; line-height: normal; margin: 0 0 1.11111rem; position: relative; padding-top: 0.489rem; padding-right: 1.378rem; padding-bottom: 0.444rem; padding-left: 1.378rem; outline: none; text-align: center; text-decoration: none; text-transform: uppercase; -webkit-appearance: none; -webkit-border-radius: 0; }
 button:hover, .button:hover, input[type=submit]:hover { color: #ffffff; }
 
 /*# sourceMappingURL=master.css.map */

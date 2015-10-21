@@ -2,6 +2,7 @@
 //Imports
 /////////////////////////////////////
 
+@import 'compass';
 @import 'sass-includes/variables';
 @import 'sass-includes/mixins';
 @import 'sass-includes/normalize';
@@ -14,9 +15,9 @@
 /*************************************
 Global
 **************************************/
+
 body{
-	background-color: $white;
-	font-size: 18px;
+	font-size: 16px;
 }
 
 hr{
@@ -31,7 +32,6 @@ p{
 }
 
 table{
-	border-collapse: collapse;
 	thead{
 		tr{
 			th{
@@ -63,6 +63,7 @@ Buttons
 button,
 .button,
 input[type=submit] {
+	@include transition(background-color, 0.3s, ease);
 	border-style: solid;
 	border-width: 0;
 	color: $white;
@@ -81,7 +82,6 @@ input[type=submit] {
 	text-align: center;
 	text-decoration: none;
 	text-transform: uppercase;
-	@include transition(background-color, 0.3s, ease);
 	-webkit-appearance: none;
 	-webkit-border-radius: 0;
 	&:hover{
