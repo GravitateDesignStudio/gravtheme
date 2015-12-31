@@ -4,7 +4,7 @@
  * Standard Functions for Gravitate
  *
  * Copyright (c) 2013-2015
- * Version: 1.9.0
+ * Version: 1.9.1
  * Written by Brian F. and Geoff G.
  */
 ####################################################
@@ -48,74 +48,6 @@ function grav_get_svg($svg)
 	return '';
 }
 
-function grav_set_permissions($allowed=true)
-{
-	if($allowed)
-	{
-		add_action( 'admin_init', 'grav_add_update_capabilities' );
-	}
-	else
-	{
-		add_action( 'admin_init', 'grav_remove_update_capabilities');
-	}
-}
-
-/**
- * Remove file update capabilities from all roles.
- */
-function grav_remove_update_capabilities()
-{
-    if(is_admin())
-    {
-        global $wp_roles;
-
-        // A list of capabilities to remove from all roles.
-        $caps = array(
-            'update_core',
-            'update_plugins',
-            'install_plugins',
-            'delete_plugins',
-            'update_themes',
-            'install_themes',
-            'delete_themes'
-        );
-
-        if(!empty($wp_roles->roles))
-        {
-            foreach ( $wp_roles->roles as $role_name => $role )
-            {
-                foreach ( $caps as $cap )
-                {
-                    if(isset($role['capabilities'][$cap]))
-                    {
-                        $role_obj = get_role( $role_name );
-                        if(!empty($role_obj))
-                        {
-                            $role_obj->remove_cap( $cap );
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-/**
- * Add file update capabilities to Admins.
- */
-function grav_add_update_capabilities()
-{
-
-    $role = get_role( 'administrator' );
-
-    $role->add_cap( 'update_core' );
-    $role->add_cap( 'update_plugins' );
-    $role->add_cap( 'install_plugins' );
-    $role->add_cap( 'delete_plugins' );
-    $role->add_cap( 'update_themes' );
-    $role->add_cap( 'install_themes' );
-    $role->add_cap( 'delete_themes' );
-}
 
 /**
  * Create a Menu in the Template
@@ -1614,7 +1546,8 @@ function grav_remove_menus () {
 }
 
 // clean up wordpress head output (we don't need all this usually)
-function grav_head_cleanup() {
+function grav_init() 
+{
 	// remove header links
 
 	// these two are for RSS feeds - only uncomment if you don't want RSS
@@ -1628,6 +1561,12 @@ function grav_head_cleanup() {
 	remove_action( 'wp_head', 'start_post_rel_link', 10, 0 );             // start link
 	remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0 ); // Links for Adjacent Posts
 	remove_action( 'wp_head', 'wp_generator' );                           // WP version
+	
+	// Check and Update Privacy Settings.
+	grav_privacy_settings();
+	
+	// Check and Update Permalinks
+	grav_check_registered_post_types();
 }
 
 // Fixing the Read More in the Excerpts
@@ -1943,14 +1882,19 @@ function grav_update_postmeta_with_s3($bucket='', $region='', $overwrite=false)
         }
     }
 }
-function grav_privacy_settings(){
+function grav_privacy_settings()
+{
 	$locals = array('staging', 'local.', '.dev', '-dev');
-	foreach ($locals as $local) {
-		if (strpos($_SERVER['HTTP_HOST'], $local) !== false) {
-	    	if(get_option('blog_public')){
-	    		update_option( 'blog_public', 0 );
-	    		break;
-	    	}
+	
+	foreach ($locals as $local) 
+	{
+		if (strpos($_SERVER['HTTP_HOST'], $local) !== false) 
+		{
+	    		if(get_option('blog_public'))
+	    		{
+	    			update_option( 'blog_public', 0 );
+	    			break;
+	    		}
 		}
 	}
 }
