@@ -8,7 +8,6 @@ if ( !defined('ABSPATH') ) exit;
 include_once('library/grav_functions.php'); // Grav Functions
 //include_once('library/grav_arrays.php'); // Grav Arrays
 include_once('library/acf.php'); // Advanced Custom Fields
-include_once('parts/blocks/blocks_acf.php'); // Blocks Advanced Custom Fields
 
 add_action('wp_enqueue_scripts', 'grav_enqueue_scripts'); // Add and enqueue CSS and JS Files
 add_action('init', 'grav_init'); // launching operation cleanup
