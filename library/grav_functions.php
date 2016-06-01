@@ -1563,7 +1563,7 @@ function grav_init()
 	remove_action( 'wp_head', 'wp_generator' );                           // WP version
 	
 	// Check and Update Privacy Settings.
-	grav_privacy_settings();
+	// grav_privacy_settings();
 	
 	// Check and Update Permalinks
 	grav_check_registered_post_types();
