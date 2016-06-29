@@ -22,7 +22,11 @@
 
 <?php endif; ?>
 
-<?php GRAV_BLOCKS::display(); ?>
+<?php
+	if(class_exists('GRAV_BLOCKS')){
+		GRAV_BLOCKS::display();
+	}
+?>
 
 <?php get_sidebar(); // sidebar 1 ?>
 
