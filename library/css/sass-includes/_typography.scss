@@ -1,0 +1,12 @@
+p {
+	font-size: 1em;
+	font-weight: normal;
+}
+
+ul {
+	padding: 0;
+	nav & {
+		list-style: none;
+		list-style-position: inside;
+	}
+}

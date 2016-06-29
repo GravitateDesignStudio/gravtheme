@@ -21,4 +21,4 @@
 
 <body id="body" <?php body_class(); ?>>
 
-<div id="global-content" class="global-wrapper">
+<main id="global-content" class="global-wrapper">

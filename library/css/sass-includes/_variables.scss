@@ -1,22 +1,20 @@
 /*************************************
 Foundation Variables
 **************************************/
-$row_max_width : 1440px;
-$gutter_width : .9375rem;
-$small : 641px;
-$medium : 1025px;
-$large : 1441px;
-$xlarge : 1921px;
-
+$row-max-width: 1440px;
+$mobile-gutter-width: .625rem;
+$gutter-width: .9375rem;
+$medium: 641px;
+$large: 1025px;
+$xlarge: 1441px;
+$xxlarge: 1921px;
 
 
 /*************************************
 Sprite
 **************************************/
 
-$sprite: '../image/sprite.png';
-
-
+// $sprite: image-url('sprite.png');
 
 /*************************************
 Fonts
@@ -33,3 +31,5 @@ Colors
 
 $white: #ffffff;
 $black: #000000;
+$gray-med: #777777;
+$grey-med: $gray-med;

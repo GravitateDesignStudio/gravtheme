@@ -1,0 +1,30 @@
+body {
+	font-size: 16px;
+}
+
+hr {
+	border: 0;
+	height: 0;
+	border-top: 1px solid $gray-med;
+}
+
+table {
+	thead {
+		tr {
+			th {
+				border-bottom: 1px solid $gray-med;
+  				padding: 0.5rem;
+  				text-align: left;
+			}
+		}
+	}
+	tbody {
+		tr {
+			td {
+				border-bottom: 1px solid $gray-med;
+  				padding: 0.5rem;
+  				text-align: left;
+			}
+		}
+	}
+}

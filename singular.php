@@ -6,7 +6,7 @@
 
     	<div class="post">
 
-    		<?php get_template_part('entry'); ?>
+    		<?php get_template_part('parts/entry'); ?>
 
     	</div>
 
@@ -22,8 +22,8 @@
 
 <?php endif; ?>
 
+<?php GRAV_BLOCKS::display(); ?>
 
 <?php get_sidebar(); // sidebar 1 ?>
-
 
 <?php get_footer(); ?>

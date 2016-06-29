@@ -3,8 +3,8 @@
 /**
  * Standard Functions for Gravitate
  *
- * Copyright (c) 2013-2015
- * Version: 1.9.1
+ * Copyright (c) 2013-2016
+ * Version: 1.10.0
  * Written by Brian F. and Geoff G.
  */
 ####################################################
@@ -501,11 +501,9 @@ function grav_get_geoip_info_by_ip($ip=false)
 
 		$resp = curl_exec($curl);
 
-		if (curl_errno($curl)) {
-			throw new Exception(
-				'GeoIP request failed with a curl_errno of '
-				. curl_errno($curl)
-			);
+        if(curl_errno($curl))
+		{
+			trigger_error('GeoIP request failed with a curl_errno of ' . curl_errno($curl), E_USER_WARNING);
 		}
 
 		$values = str_getcsv($resp);
@@ -531,6 +529,7 @@ function grav_get_geoip_info_by_ip($ip=false)
 		return false;
 	}
 }
+
 
 /**
  * Address to Geo Location (latitude, longitude) function
@@ -1546,7 +1545,7 @@ function grav_remove_menus () {
 }
 
 // clean up wordpress head output (we don't need all this usually)
-function grav_init() 
+function grav_init()
 {
 	// remove header links
 
@@ -1561,10 +1560,10 @@ function grav_init()
 	remove_action( 'wp_head', 'start_post_rel_link', 10, 0 );             // start link
 	remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0 ); // Links for Adjacent Posts
 	remove_action( 'wp_head', 'wp_generator' );                           // WP version
-	
+
 	// Check and Update Privacy Settings.
 	// grav_privacy_settings();
-	
+
 	// Check and Update Permalinks
 	grav_check_registered_post_types();
 }
@@ -1717,12 +1716,28 @@ function grav_add_anchor_btn($buttons)
 * END - Add Button Support to Tiny MCE
 */
 
+function grav_mce_formats( $settings ) {
+
+    $style_formats = array(
+        array(
+            'title' => 'Button',
+            'selector' => 'a',
+            'classes' => 'button'
+        ),
+    );
+
+    $settings['style_formats_merge'] = true;
+    $settings['style_formats'] = json_encode( $style_formats );
+
+    return $settings;
+}
+
 
 function grav_register_sidebars()
 {
     register_sidebar(array(
         'id' => 'sidebar1',
-        'name' => 'Sidebar 1',
+        'name' => 'Primary Sidebar',
         'description' => 'The first (primary) sidebar.',
         'before_widget' => '<div id="%1$s" class="widget %2$s">',
         'after_widget' => '</div>',
@@ -1734,37 +1749,34 @@ function grav_register_sidebars()
 // Adding WP 3+ Functions & Theme Support
 function grav_theme_support()
 {
-	add_theme_support('post-thumbnails');      // wp thumbnails (sizes handled in functions.php)
-	set_post_thumbnail_size(125, 125, true);   // default thumb size
-
-	//add_custom_background();                   // wp custom background
-	add_theme_support('automatic-feed-links'); // rss thingy
-
-	// adding post format support
-	add_theme_support( 'post-formats',      // post formats
-		array(
-			'aside',   // title less blurb
-			'gallery', // gallery of images
-			'link',    // quick link to other site
-			'image',   // an image
-			'quote',   // a quick quote
-			'status',  // a Facebook like status update
-			'video',   // video
-			'audio',   // audio
-			'chat'     // chat transcript
-		)
-	);
-	add_theme_support( 'menus' );            // wp menus
-
-	register_nav_menus(                      // wp3+ menus
+	add_theme_support('post-thumbnails');      		// wp thumbnails (sizes handled in functions.php)
+	set_post_thumbnail_size(300, 300, true);   		// default thumb size
+	add_theme_support('automatic-feed-links'); 		// rss thingy
+	add_theme_support( 'menus' );            		// wp menus
+	add_theme_support( 'custom-logo');				// adds ability for custom logo in customizer
+	register_nav_menus(                      		// wp3+ menus
         array(
-            'main_nav' => 'The Main Menu',   // main nav in header
-            'mobile_nav' => 'The Mobile Menu',   // Mobile nav in header
-            'top_nav' => 'The Top Menu',   // top right nav in header
-            'footer_links' => 'Footer Links', // secondary nav in footer
-            'site_map' => 'Site Map Links' // Sitemap Links
+            'main_nav' => 'The Main Menu',   		// main nav in header
+            'mobile_nav' => 'The Mobile Menu',   	// Mobile nav in header
+            'top_nav' => 'The Top Menu',   			// top right nav in header
+            'footer_links' => 'Footer Links', 		// secondary nav in footer
+            'site_map' => 'Site Map Links' 			// Sitemap Links
         )
     );
+	// add_custom_background();                   	// wp custom background
+	// add_theme_support( 'post-formats',      		// post formats
+	// 	array(
+	// 		'aside',   // title less blurb
+	// 		'gallery', // gallery of images
+	// 		'link',    // quick link to other site
+	// 		'image',   // an image
+	// 		'quote',   // a quick quote
+	// 		'status',  // a Facebook like status update
+	// 		'video',   // video
+	// 		'audio',   // audio
+	// 		'chat'     // chat transcript
+	// 	)
+	// );
 }
 
 function grav_enqueue_scripts()
@@ -1885,10 +1897,10 @@ function grav_update_postmeta_with_s3($bucket='', $region='', $overwrite=false)
 function grav_privacy_settings()
 {
 	$locals = array('staging', 'local.', '.dev', '-dev');
-	
-	foreach ($locals as $local) 
+
+	foreach ($locals as $local)
 	{
-		if (strpos($_SERVER['HTTP_HOST'], $local) !== false) 
+		if (strpos($_SERVER['HTTP_HOST'], $local) !== false)
 		{
 	    		if(get_option('blog_public'))
 	    		{
@@ -2024,4 +2036,19 @@ class grav_child_walker extends Walker_Nav_Menu {
 		}
 		parent::end_el($output, $item, $depth, $args);
 	}
+}
+
+
+/*
+* Function to get thumbnail
+* @param  $size, $post_id
+*
+* @return url of thumbnail image size
+* @author BF
+ */
+function grav_get_thumbnail_url($size = 'thumbnail', $post_id = 0){
+    $post_id = ($post_id != 0) ? $post_id : get_the_ID();
+    $thumb = wp_get_attachment_image_src( get_post_thumbnail_id($post_id), $size );
+    $url = ($thumb) ? $thumb['0'] : false;
+    return $url;
 }
