@@ -1751,6 +1751,11 @@ function grav_theme_support()
 {
 	add_theme_support('post-thumbnails');      		// wp thumbnails (sizes handled in functions.php)
 	set_post_thumbnail_size(300, 300, true);   		// default thumb size
+	
+	// Add New Image Sizes
+	add_image_size('small', 300, 300, false);
+	add_image_size('xlarge', 1440, 1900, false);
+
 	add_theme_support('automatic-feed-links'); 		// rss thingy
 	add_theme_support( 'menus' );            		// wp menus
 	add_theme_support( 'custom-logo');				// adds ability for custom logo in customizer
