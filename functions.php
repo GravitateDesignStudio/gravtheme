@@ -38,6 +38,12 @@ add_shortcode('menu', 'grav_menu_shortcode');
 // editor styles for tinymce
 add_editor_style("library/css/editor-styles.css");
 
+// Move Yoast to the bottom
+add_filter( 'wpseo_metabox_prio', create_function( '', 'return "low";' ));
+
+// Update Image Compression Quality
+add_filter( 'jpeg_quality', create_function( '', 'return 75;' ) );
+
 ###############################################################################
 #######################   CUSTOM THEME FUNCTIONALITY  #########################
 ###############################################################################
