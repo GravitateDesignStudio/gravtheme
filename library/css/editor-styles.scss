@@ -13,3 +13,7 @@ Base index of scss files
 @import 'sass-includes/typography';
 @import 'sass-includes/spacing';
 @import 'sass-includes/wordpress';
+
+body {
+	margin: 20px !important;
+}
