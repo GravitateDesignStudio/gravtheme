@@ -2057,3 +2057,231 @@ function grav_get_thumbnail_url($size = 'thumbnail', $post_id = 0){
     $url = ($thumb) ? $thumb['0'] : false;
     return $url;
 }
+
+/*
+*
+*
+*
+*/
+
+function grav_get_link_fields($label = 'link', $includes = array(), $show_text = true, $unique_id = '')
+{
+	$block = $unique_id;
+
+	$allowed_options = array(
+		'none' => 'None',
+		'page' => 'Page Link',
+		'url' => 'URL',
+		'file' => 'File Download',
+		'video' => 'Play Video',
+	);
+	$allowed_fields = (!empty($includes)) ? array() : $allowed_options;
+
+	if(!empty($includes)){
+		foreach($includes as $include_key => $include){
+			// Allow the Dev to change the Label
+			if(!is_numeric($include_key) && isset($allowed_options[$include_key]))
+			{
+				$allowed_fields[$include_key] = $include;
+			}
+			else  // Use Default Label
+			{
+				$allowed_fields[$include] = $allowed_options[$include];
+			}
+		}
+	}
+
+	$label_title = ucwords($label);
+	$label_sanitized = sanitize_title($label);
+	$fields = array();
+
+	$fields[] = array (
+		'key' => 'field_'.$block.'_'.$label_sanitized.'_type',
+		'label' => $label_title.' Type',
+		'name' => $label_sanitized.'_type',
+		'type' => 'radio',
+		'layout' => 'horizontal',
+		'column_width' => '',
+		'choices' => $allowed_fields,
+		'default_value' => '',
+		'allow_null' => 0,
+		'multiple' => 0,
+	);
+	if($show_text){
+		$fields[] = array (
+			'key' => 'field_'.$block.'_'.$label_sanitized.'_text',
+			'label' => $label_title.' Text',
+			'name' => $label_sanitized.'_text',
+			'type' => 'text',
+			'required' => 1,
+			'conditional_logic' => array (
+				'status' => 1,
+				'rules' => array (
+					array (
+						'field' => 'field_'.$block.'_'.$label_sanitized.'_type',
+						'operator' => '!=',
+						'value' => 'none',
+					),
+				),
+				'allorany' => 'all',
+			),
+			'column_width' => '',
+			'default_value' => '',
+			'placeholder' => '',
+			'prepend' => '',
+			'append' => '',
+			'formatting' => 'none',
+			'maxlength' => '',
+		);
+	}
+
+	if(isset($allowed_fields['url']))
+	{
+		$fields[] = array (
+			'key' => 'field_'.$block.'_'.$label_sanitized.'_url',
+			'label' => $allowed_fields['url'],
+			'name' => $label_sanitized.'_url',
+			'type' => 'text',
+			'required' => 1,
+			'conditional_logic' => array (
+				'status' => 1,
+				'rules' => array (
+					array (
+						'field' => 'field_'.$block.'_'.$label_sanitized.'_type',
+						'operator' => '==',
+						'value' => 'url',
+					),
+				),
+				'allorany' => 'all',
+			),
+			'column_width' => '',
+			'default_value' => '',
+			'placeholder' => 'http://',
+			'prepend' => '',
+			'append' => '',
+			'formatting' => 'none',
+			'maxlength' => '',
+		);
+	}
+
+	if(isset($allowed_fields['page']))
+	{
+		$fields[] = array (
+			'key' => 'field_'.$block.'_'.$label_sanitized.'_page',
+			'label' => $allowed_fields['page'],
+			'name' => $label_sanitized.'_page',
+			'type' => 'page_link',
+			'required' => 1,
+			'conditional_logic' => array (
+				'status' => 1,
+				'rules' => array (
+					array (
+						'field' => 'field_'.$block.'_'.$label_sanitized.'_type',
+						'operator' => '==',
+						'value' => 'page',
+					),
+				),
+				'allorany' => 'all',
+			),
+			'column_width' => '',
+			'post_type' => array (
+				0 => 'all',
+			),
+			'allow_null' => 0,
+			'multiple' => 0,
+		);
+	}
+
+	if(isset($allowed_fields['file']))
+	{
+		$fields[] = array (
+			'key' => 'field_'.$block.'_'.$label_sanitized.'_file',
+			'label' => $allowed_fields['file'],
+			'name' => $label_sanitized.'_file',
+			'type' => 'file',
+			'required' => 1,
+			'conditional_logic' => array (
+				'status' => 1,
+				'rules' => array (
+					array (
+						'field' => 'field_'.$block.'_'.$label_sanitized.'_type',
+						'operator' => '==',
+						'value' => 'file',
+					),
+				),
+				'allorany' => 'all',
+			),
+			'column_width' => '',
+			'save_format' => 'url',
+			'library' => 'all',
+		);
+	}
+
+	if(isset($allowed_fields['video']))
+	{
+		$fields[] = array (
+			'key' => 'field_'.$block.'_'.$label_sanitized.'_video',
+			'label' => $allowed_fields['video'],
+			'name' => $label_sanitized.'_video',
+			'type' => 'text',
+			'required' => 1,
+			'instructions' => 'This works for Vimeo or Youtube. Just paste in the url to the video you want to show.',
+			'conditional_logic' => array (
+				'status' => 1,
+				'rules' => array (
+					array (
+						'field' => 'field_'.$block.'_'.$label_sanitized.'_type',
+						'operator' => '==',
+						'value' => 'video',
+					),
+				),
+				'allorany' => 'all',
+			),
+			'column_width' => '',
+			'default_value' => '',
+			'placeholder' => 'http://',
+			'prepend' => '',
+			'append' => '',
+			'formatting' => 'none',
+			'maxlength' => '',
+		);
+	}
+
+	return $fields;
+}
+
+function grav_get_link_url($field)
+{
+    if($type = get_field($field.'_type'))
+    {
+        if($type != 'none')
+        {
+            $url = get_field($field.'_'.$type);
+            if($type == 'video')
+            {
+                $url = grav_get_video_url($url);
+            }
+            return esc_url($url);
+        }
+    }
+    return '';
+}
+
+function grav_get_link_html($field, $class='', $type='a')
+{
+    if($url = grav_get_link_url($field))
+    {
+		if($type === 'a')
+		{
+        ?>
+            <a class="block-link-<?php echo esc_attr(get_field($field.'_type'));?><?php echo ($class ? ' '.$class : '');?>" href="<?php echo esc_url($url);?>"><?php echo esc_html(get_field($field.'_text'));?></a>
+        <?php
+		}
+		if($type === 'span')
+		{
+        ?>
+            <span class="block-link-<?php echo esc_attr(get_field($field.'_type'));?><?php echo ($class ? ' '.$class : '');?>"?>"><?php echo esc_html(get_field($field.'_text'));?></span>
+        <?php
+		}
+    }
+}
