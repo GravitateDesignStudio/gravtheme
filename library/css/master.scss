@@ -8,8 +8,8 @@ Base index of scss files
 @import 'sass-utilities/mixins';
 @import 'sass-utilities/extendables';
 @import 'sass-utilities/normalize';
-@import 'sass-utilities/foundation6';
-//@import 'sass-utilities/foundation6flex';
+// @import 'sass-utilities/foundation6';
+@import 'sass-utilities/foundation6flex';
 @import 'sass-includes/globals';
 @import 'sass-includes/ui';
 @import 'sass-includes/typography';

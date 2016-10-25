@@ -1751,7 +1751,7 @@ function grav_theme_support()
 {
 	add_theme_support('post-thumbnails');      		// wp thumbnails (sizes handled in functions.php)
 	set_post_thumbnail_size(300, 300, true);   		// default thumb size
-	
+
 	// Add New Image Sizes
 	add_image_size('small', 300, 300, false);
 	add_image_size('xlarge', 1440, 1900, false);
@@ -2285,3 +2285,26 @@ function grav_get_link_html($field, $class='', $type='a')
 		}
     }
 }
+
+/**
+ * Renders a password form on password protected pages
+ * @return form markup
+ */
+function my_password_form() {
+    global $post;
+    $label = 'pwbox-'.( empty( $post->ID ) ? rand() : $post->ID ); ?>
+
+	<section class="grav-pw-login">
+		<div class="inner">
+			<div class="row align-center">
+				<div class="columns small-12 medium-8">
+					<form action="<?php echo esc_url( site_url( 'wp-login.php?action=postpass', 'login_post' ) ); ?>" method="post">
+					To view this protected post, enter the password below:
+					<input name="post_password" id="' . $label . '" type="password" size="20" maxlength="20" /><input type="submit" name="Submit" value="Submit" />
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+
+<?php }

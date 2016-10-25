@@ -1,4 +1,16 @@
-<?php get_header(); ?>
+<?php
+
+get_header();
+
+if (post_password_required()) {
+
+	my_password_form();
+
+	get_footer();
+
+	return;
+
+} ?>
 
 
 	<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
