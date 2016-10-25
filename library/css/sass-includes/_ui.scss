@@ -36,3 +36,13 @@ Inputs
 input[type=submit] {
 	@extend .button;
 }
+
+/*************************************
+Gravity Forms
+**************************************/
+
+.gform_container {
+	.gform_validation_container {
+		display: none;
+	}
+}
