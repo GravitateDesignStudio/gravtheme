@@ -110,7 +110,7 @@ jQuery(function($){
 	*
 	*/
 	$(window).load(function() {
-		eqHeights();
+
 	});
 
 	/*
@@ -128,7 +128,7 @@ jQuery(function($){
 	*
 	*/
 	$(window).resize(function() {
-		eqHeights();
+
 	});
 
 

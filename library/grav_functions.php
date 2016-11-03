@@ -4,7 +4,7 @@
  * Standard Functions for Gravitate
  *
  * Copyright (c) 2013-2016
- * Version: 1.10.0
+ * Version: 1.11.0
  * Written by Brian F. and Geoff G.
  */
 ####################################################
@@ -1146,7 +1146,7 @@ function grav_get_video_url($url)
 
 		if(is_numeric($id))
 		{
-			return 'http://player.vimeo.com/video/'.$id.'?autoplay='.$autoplay;
+			return 'https://player.vimeo.com/video/'.$id.'?autoplay='.$autoplay;
 		}
 		return $url;
 	}
@@ -1561,9 +1561,6 @@ function grav_init()
 	remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0 ); // Links for Adjacent Posts
 	remove_action( 'wp_head', 'wp_generator' );                           // WP version
 
-	// Check and Update Privacy Settings.
-	// grav_privacy_settings();
-
 	// Check and Update Permalinks
 	grav_check_registered_post_types();
 }
@@ -1577,22 +1574,22 @@ function grav_excerpt_more($more) {
 }
 
 function grav_improved_trim_excerpt($text) {
-  global $post;
-  if ( '' == $text ) {
-          $text = get_the_content('');
-          $text = apply_filters('the_content', $text);
-          $text = str_replace('\]\]\>', ']]&gt;', $text);
-          $text = preg_replace('@<script[^>]*?>.*?</script>@si', '', $text);
-          $text = strip_tags($text, '<p>');
-          $excerpt_length = apply_filters('excerpt_length', 55);
-          $words = explode(' ', $text, $excerpt_length + 1);
-          if (count($words)> $excerpt_length) {
-                  array_pop($words);
-                  array_push($words, '...');
-                  $text = implode(' ', $words);
-          }
-  }
-  return $text;
+	global $post;
+	if ( '' == $text ) {
+		$text = get_the_content('');
+		$text = apply_filters('the_content', $text);
+		$text = str_replace('\]\]\>', ']]&gt;', $text);
+		$text = preg_replace('@<script[^>]*?>.*?</script>@si', '', $text);
+		$text = strip_tags($text, '<p>');
+		$excerpt_length = apply_filters('excerpt_length', 55);
+		$words = explode(' ', $text, $excerpt_length + 1);
+		if (count($words)> $excerpt_length) {
+		      array_pop($words);
+		      array_push($words, '...');
+		      $text = implode(' ', $words);
+		}
+	}
+	return $text;
 }
 
 // Numeric Page Navi, pass a custom query object if using a custom query
@@ -1692,6 +1689,7 @@ function grav_get_social_share_link($social, $twitter_screen_name='')
 
 /*
 * Add Button Support to Tiny MCE
+* TODO remove these functions after verification that grav_mce_formats is doing what we want
 */
 function grav_mce_init( $init )
 {
@@ -1728,6 +1726,7 @@ function grav_mce_formats( $settings ) {
 
     $settings['style_formats_merge'] = true;
     $settings['style_formats'] = json_encode( $style_formats );
+	$settings['paste_as_text'] = true;
 
     return $settings;
 }
@@ -1751,7 +1750,7 @@ function grav_theme_support()
 {
 	add_theme_support('post-thumbnails');      		// wp thumbnails (sizes handled in functions.php)
 	set_post_thumbnail_size(300, 300, true);   		// default thumb size
-	
+
 	// Add New Image Sizes
 	add_image_size('small', 300, 300, false);
 	add_image_size('xlarge', 1440, 1900, false);
@@ -1814,24 +1813,6 @@ function grav_enqueue_scripts()
 	        }
         }
     }
-}
-
-// adding formats to Tiny MCE
-function grav_mce_button( $init_array )
-{
-
-	$style_formats = array(
-		array(
-			'title' => 'Button',
-			'block' => 'span',
-			'classes' => 'button-container',
-			'wrapper' => true,
-		),
-	);
-	$init_array['style_formats'] = json_encode( $style_formats );
-
-	return $init_array;
-
 }
 
 function _get($value)
@@ -1898,22 +1879,6 @@ function grav_update_postmeta_with_s3($bucket='', $region='', $overwrite=false)
             }
         }
     }
-}
-function grav_privacy_settings()
-{
-	$locals = array('staging', 'local.', '.dev', '-dev');
-
-	foreach ($locals as $local)
-	{
-		if (strpos($_SERVER['HTTP_HOST'], $local) !== false)
-		{
-	    		if(get_option('blog_public'))
-	    		{
-	    			update_option( 'blog_public', 0 );
-	    			break;
-	    		}
-		}
-	}
 }
 
 /**

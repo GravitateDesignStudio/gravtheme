@@ -24,9 +24,6 @@ add_filter('the_excerpt', 'grav_filter_ptags_on_images');
 add_action('widgets_init', 'grav_register_sidebars');
 
 // Add Button Support to Tiny MCE
-// add_filter('tiny_mce_before_init', 'grav_mce_init' );
-// add_filter("mce_external_plugins", "grav_add_anchor_btn_js");
-// add_filter('mce_buttons', 'grav_add_anchor_btn');
 add_filter( 'tiny_mce_before_init', 'grav_mce_formats' );
 
 // Add SVG MIME type support to WP
@@ -36,7 +33,7 @@ add_filter('upload_mimes', 'grav_mime_types');
 add_shortcode('menu', 'grav_menu_shortcode');
 
 // editor styles for tinymce
-add_editor_style("library/css/editor-styles.css");
+add_editor_style("library/css/editor-styles.min.css");
 
 // Move Yoast to the bottom
 add_filter( 'wpseo_metabox_prio', create_function( '', 'return "low";' ));
@@ -50,7 +47,7 @@ add_filter( 'jpeg_quality', create_function( '', 'return 75;' ) );
 
 // Add and enqueue CSS and JS Files
 $grav_enqueue_files = array(
-    'master_css' => get_template_directory_uri() . '/library/css/master.css',
+    'master_css' => get_template_directory_uri() . '/library/css/master.min.css',
     'master_js' => get_template_directory_uri() . '/library/js/master.js',
 );
 
