@@ -1,7 +1,21 @@
-/*************************************
-Content Blocks
-**************************************/
-$block_colors: 'white', 'black', 'light', 'dark', 'red', 'blue', 'green', 'none', 'gray', 'lightgray', 'darkgray', 'grey', 'lightgrey', 'darkgrey';
+/* main: ../master.scss */
+/*
+* All Content Blocks
+*
+* This file is to be used for all styling specific
+* to content blocks.
+*
+*/
+
+$block_colors: 'bg-white', 'bg-black', 'bg-light', 'bg-dark', 'bg-red', 'bg-blue', 'bg-green', 'bg-none', 'bg-gray', 'bg-lightgray', 'bg-darkgray', 'bg-grey', 'bg-lightgrey', 'bg-darkgrey';
 @each $color in $block_colors {
 	.block-container.#{$color} + .block-container.#{$color} .block-inner { padding-top: 0; }
 }
+
+
+/*
+* Commenting for each block
+*
+* @block Example Block
+* @class .block-example
+*/

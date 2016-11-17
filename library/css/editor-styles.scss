@@ -9,10 +9,9 @@ Base index of scss files
 @import 'sass-utilities/extendables';
 @import 'sass-utilities/normalize';
 @import 'sass-includes/globals';
-@import 'sass-includes/ui';
 @import 'sass-includes/typography';
 @import 'sass-includes/spacing';
-@import 'sass-includes/wordpress';
+@import 'sass-vendor/wordpress';
 
 body {
 	margin: 20px !important;

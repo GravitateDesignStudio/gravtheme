@@ -1,0 +1,26 @@
+/* main: ../master.scss */
+/*
+* Forms
+*
+* This file is to be used for all styling specific
+* to site's forms. This includes any overwrites of
+* third party forms such as gravity forms, marketo, etc.
+*/
+
+/*************************************
+Inputs
+**************************************/
+
+input[type=submit] {
+	@extend .button;
+}
+
+/*************************************
+Gravity Forms
+**************************************/
+
+.gform_container {
+	.gform_validation_container {
+		display: none;
+	}
+}

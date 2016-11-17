@@ -1,9 +1,10 @@
 /*************************************
-Base index of scss files
+Include scss files for the build
 **************************************/
 
 @import 'compass/compass';
 @import 'compass/animation/core';
+
 @import 'sass-includes/variables';
 @import 'sass-utilities/functions';
 @import 'sass-utilities/mixins';
@@ -12,10 +13,13 @@ Base index of scss files
 //@import 'sass-utilities/foundation6';
 @import 'sass-utilities/foundation6flex';
 @import 'sass-includes/globals';
-@import 'sass-includes/ui';
+@import 'sass-includes/forms';
 @import 'sass-includes/typography';
 @import 'sass-includes/spacing';
+@import 'sass-includes/header';
+@import 'sass-includes/footer';
 @import 'sass-includes/templates';
 @import 'sass-includes/blocks';
-@import 'sass-includes/colorbox';
-@import 'sass-includes/wordpress';
+@import 'sass-vendor/colorbox';
+@import 'sass-vendor/swiper';
+@import 'sass-vendor/wordpress';

@@ -1,5 +1,6 @@
+/* main: ../master.scss */
 @mixin clearfix{
-	&:after {
+	&::after {
 		visibility: hidden;
 		display: block;
 		font-size: 0;
