@@ -1,4 +1,0 @@
-/* main: ../master.scss */
-@function rem($px,$rembase:16){
-	@return ($px/$rembase)+rem;
-}
