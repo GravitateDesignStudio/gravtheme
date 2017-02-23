@@ -1,5 +1,5 @@
 body {
-	font-size: 16px;
+	font: $body-font;
 }
 
 hr {
@@ -26,5 +26,11 @@ table {
   				text-align: left;
 			}
 		}
+	}
+}
+
+.section-container {
+	.section-inner {
+		padding: 2rem 0;
 	}
 }

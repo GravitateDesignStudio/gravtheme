@@ -1,7 +1,6 @@
 <!doctype html>
 <html <?php language_attributes(); ?>>
 
-
 <head>
 
 	<title><?php bloginfo("name"); ?> <?php wp_title('&bull;'); ?></title>
@@ -22,3 +21,5 @@
 <body id="body" <?php body_class(); ?>>
 
 <main id="global-content" class="global-wrapper">
+
+	<?php get_template_part( 'parts/headers/header', 'style1' );?>

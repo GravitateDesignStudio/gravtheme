@@ -2,15 +2,21 @@
 Base index of scss files
 **************************************/
 
-@import 'compass/compass';
-@import 'compass/animation/core';
-@import 'sass-includes/variables';
-@import 'sass-utilities/functions';
-@import 'sass-utilities/mixins';
-@import 'sass-utilities/extendables';
-@import 'sass-utilities/normalize';
-//@import 'sass-utilities/foundation6';
-@import 'sass-utilities/foundation6flex';
+@import '../../lib/gravitate/gravtheme/scss/sass-utilities/compass/compass';
+@import '../../lib/gravitate/gravtheme/scss/sass-utilities/compass/animation/core';
+@import 'variables';
+
+@import '../../lib/gravitate/gravtheme/scss/sass-utilities/functions';
+@import '../../lib/gravitate/gravtheme/scss/sass-utilities/mixins';
+@import '../../lib/gravitate/gravtheme/scss/sass-utilities/extendables';
+@import '../../lib/gravitate/gravtheme/scss/sass-utilities/normalize';
+@import '../../lib/gravitate/gravtheme/scss/sass-utilities/wordpress';
+//@import '../../lib/gravitate/gravtheme/scss/sass-utilities/foundation6';
+@import '../../lib/gravitate/gravtheme/scss/sass-utilities/foundation6flex';
+
+@import '../../lib/gravitate/gravtheme/scss/headers/header-style1';
+@import '../../lib/gravitate/gravtheme/scss/footers/footer-style1';
+
 @import 'sass-includes/globals';
 @import 'sass-includes/ui';
 @import 'sass-includes/typography';
@@ -18,4 +24,3 @@ Base index of scss files
 @import 'sass-includes/templates';
 @import 'sass-includes/blocks';
 @import 'sass-includes/colorbox';
-@import 'sass-includes/wordpress';

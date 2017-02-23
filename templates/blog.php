@@ -4,102 +4,55 @@
 */
 get_header();
 ?>
+	<h1><?php echo GRAV_FUNC::get_current_page_title();?></h1>
 
-		<?php if (is_category()) { ?>
+		<?php
 
-			<h1 class="archive-title">
-				<span><?php _e('Posts Categorized:'); ?></span> <?php single_cat_title(); ?>
-			</h1>
+		if(have_posts())
+		{
+			while(have_posts())
+			{
+				the_post();
+				get_template_part('entry');
+			}
 
-		<?php } elseif (is_tag()) { ?>
-
-			<h1 class="archive-title">
-				<span><?php _e('Posts Tagged:'); ?></span> <?php single_tag_title(); ?>
-			</h1>
-
-		<?php } elseif (is_author()) { ?>
-
-			<h1 class="archive-title">
-				<span><?php _e('Posts By:'); ?></span> <?php get_the_author_meta('display_name'); ?>
-			</h1>
-
-		<?php } elseif (is_day()) { ?>
-
-			<h1 class="archive-title">
-				<span><?php _e('Daily Archives:'); ?></span> <?php the_time('l, F j, Y'); ?>
-			</h1>
-
-		<?php } elseif (is_month()) { ?>
-
-		    <h1 class="archive-title">
-		    	<span><?php _e('Monthly Archives:'); ?>:</span> <?php the_time('F Y'); ?>
-		    </h1>
-
-		<?php } elseif (is_year()) { ?>
-
-		    <h1 class="archive-title">
-		    	<span><?php _e('Yearly Archives:'); ?>:</span> <?php the_time('Y'); ?>
-		    </h1>
-
-		<?php } else { ?>
-
-			<h1 class="page-title"><?php the_title(); ?></h1>
-
-		<?php } ?>
-
-
-
-		<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-
-
-			<?php get_template_part('entry'); ?>
-
-
-		<?php endwhile; ?>
-
-
-
-
-		<?php if (function_exists('grav_page_navi')) { // if expirimental feature is active ?>
-
+			?>
 
 			<div class="page-navi">
-				<?php grav_page_navi(); ?>
+				<?php GRAV_FUNC::page_navi(); ?>
 			</div>
 
-
-		<?php } else { // if it is disabled, display regular wp prev & next links ?>
+			<?php /*
 
 			<div class="page-navi">
-
 				<ul>
-
 					<li class="next-link"><?php next_posts_link(__('&laquo; Older Entries')) ?></li>
 					<li class="prev-link"><?php previous_posts_link(__('Newer Entries &raquo;')) ?></li>
-
 				</ul>
-
 			</div>
 
-		<?php } ?>
+			*/
+			?>
 
 
 		<?php
-			// not found (invalid post/page id, not at 404)
-		else : ?>
-
+		}
+		else
+		{
+		?>
 
 			<div class="post">
-
 		    	<?php get_template_part('parts/not-found');?>
-
 			</div>
 
-
-<?php endif; ?>
-
-
-<?php get_sidebar(); // sidebar 1 ?>
+		<?php
+		}
+		?>
 
 
-<?php get_footer(); ?>
+<?php //get_template_part( 'parts/sidebars/sidebar', 'style1' ); ?>
+
+
+<?php
+
+get_footer();

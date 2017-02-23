@@ -21,7 +21,7 @@ Fonts
 - Make sure fallbacks are included
 - e.g. $open-sans : 'Open Sans', Arial, Helvetica, sans-serif;
 **************************************/
-
+$body-font: 16px / 20px Arial, sans-serif;
 
 
 
@@ -33,3 +33,23 @@ $white: #ffffff;
 $black: #000000;
 $gray-med: #777777;
 $grey-med: $gray-med;
+
+
+
+/*************************************
+Header
+*************************************/
+$header-height: 100px;
+$header-bg-color: $gray-med;
+$header-padding: 18px 0;
+
+$header-squashed-height: 80px;
+$header-squashed-padding: 4px 0;
+
+
+/*************************************
+Footer
+*************************************/
+$footer-bg-color: $gray-med;
+$footer-padding: 3rem 0;
+$footer-text-color: $white;

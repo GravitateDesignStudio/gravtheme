@@ -1,16 +1,31 @@
 <?php
-get_header();
 
 /*
 *	Template Name: Home
 */
 
-?>
+get_header();
 
-<div class="row">
-	<div class="medium-4 large-3 columns">
-   		<h1>Front Page Template</h1>
-	</div>
-</div>
+if (have_posts()) { while (have_posts()) { the_post();
 
-<?php get_footer(); ?>
+	?>
+
+	<section class="section-container">
+		<div class="section-inner">
+			<div class="row">
+				<div class="columns small-12">
+					<h1>Home Page Tempalte</h1>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<?php
+
+	if(class_exists('GRAV_BLOCKS')){
+		GRAV_BLOCKS::display();
+	}
+	
+}}
+
+get_footer();

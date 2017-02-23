@@ -1,5 +1,7 @@
 		</main> <?php // end .global-wrapper ?>
-		<footer class="global-footer"></footer>
+
+		<?php get_template_part( 'parts/footers/footer', 'style1' );?>
+
 		<?php wp_footer(); ?>
 	</body>
 </html>
