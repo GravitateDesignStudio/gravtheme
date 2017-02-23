@@ -1,7 +1,7 @@
 /*************************************
 Content Blocks
 **************************************/
-$block_colors: 'white', 'black', 'light', 'dark', 'red', 'blue', 'green', 'none', 'gray', 'lightgray', 'darkgray', 'grey', 'lightgrey', 'darkgrey';
+
 @each $color in $block_colors {
 	.block-container.#{$color} + .block-container.#{$color} .block-inner { padding-top: 0; }
 }

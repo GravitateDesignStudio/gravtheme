@@ -35,6 +35,24 @@ $gray-med: #777777;
 $grey-med: $gray-med;
 
 
+/*************************************
+Blocks
+*************************************/
+$block_colors: 'white', 'black', 'light', 'dark', 'red', 'blue', 'green', 'none', 'gray', 'lightgray', 'darkgray', 'grey', 'lightgrey', 'darkgrey';
+
+
+/*************************************
+Spacing
+*************************************/
+$base_spacing: (blockquote: 1.66667rem, ul: 1.1111rem, ol: 1.1111rem, p: 1.1111rem, h1: 2.5rem, h2: 1.88889rem, h3: 1.5rem, h4: 1.25rem, h5: 1.1111rem);
+$h1_spacing: (h2: 1.375rem, h3: 1rem, h4: .75rem, h5: .675rem, h6: .5rem, p: .8333rem);
+$h2_spacing: (h3: .5rem, h4: .375rem, h5: .25rem, h6: .125rem, p: .555rem);
+$h3_spacing: (h4: .375rem, h5: .25rem, h6: .125rem, p: .555rem);
+$h4_spacing: (h5: .25rem, h6: .125rem, p: .555rem);
+$h5_spacing: (h6: .125rem, p: .2777rem, ul: .5555rem, ol: .5555rem);
+$h6_spacing: (p: .2777rem, ul: .5555rem, ol: .5555rem);
+
+
 
 /*************************************
 Header

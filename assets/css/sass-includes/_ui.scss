@@ -3,7 +3,7 @@ Buttons
 **************************************/
 button,
 .button {
-	@include transition(background-color 0.3s ease);
+	@include transition(all 0.3s ease);
 	border-style: solid;
 	border-width: 0;
 	color: $white;
