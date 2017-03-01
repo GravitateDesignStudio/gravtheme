@@ -1,5 +1,16 @@
-body {
-	font: $body-font;
+@each $color_name, $color_value in $bg-colors {
+	.bg-#{$color_name} {
+		background-color: $color_value;
+	}
+}
+
+@each $color_name in $bg-colors-with-light-text {
+	.bg-#{$color_name} {
+		color: $text-light;
+		* {
+			color: $text-light;
+		}
+	}
 }
 
 hr {
@@ -31,6 +42,6 @@ table {
 
 .section-container {
 	.section-inner {
-		padding: 2rem 0;
+		padding: $section-padding;
 	}
 }

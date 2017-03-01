@@ -21,7 +21,7 @@
 
             <div class="global-header-search-form">
                 <?php get_search_form(); ?>
-                <span class="search-icon" onclick="jQuery('.s').focus();">S</span>
+                <span class="search-icon" onclick="jQuery('.s').focus();"></span>
             </div>
 
             <nav class="global-header-main-links">

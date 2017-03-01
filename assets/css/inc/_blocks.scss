@@ -1,0 +1,13 @@
+/*************************************
+Content Blocks
+**************************************/
+
+@each $color_name, $color_value in $bg-colors {
+	.block-container.#{$color_name} + .block-container.#{$color_name} .block-inner { padding-top: 0; }
+}
+
+.block-container {
+	.block-inner {
+		padding: $block-padding;
+	}
+}

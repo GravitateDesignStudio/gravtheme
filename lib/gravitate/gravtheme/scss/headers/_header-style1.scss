@@ -47,6 +47,7 @@ body {
             display: inline-block;
         }
         .search-icon {
+            @include fa-icon('search-plus');
             position: absolute;
             right: 3px;
             top: 4px;
@@ -72,8 +73,43 @@ body {
         }
     }
 
-    .global-header-main-links,
-    .global-header-main-links li {
-        display: inline-block;
+    .global-header-main-links {
+        font-size: .8rem;
+        &,
+        li {
+            display: inline-block;
+        }
+        li {
+            padding-left: 3%;
+        }
+    }
+
+    .global-header-main-links ul ul {
+        display: none;
+    }
+
+    .global-header-main-menu {
+        padding: 2% 0;
+        ul:not(.sub-menu) {
+            > li {
+                display: inline-block;
+                position: relative;
+                margin-left: 3%;
+                .sub-menu {
+                    display: none;
+                    background-color: $gray-med;
+                    position: absolute;
+                    top: 0;
+                    width: 300px;
+                    padding: 20px;
+                    text-align: left;
+                }
+                &:hover {
+                    .sub-menu {
+                        display: block;
+                    }
+                }
+            }
+        }
     }
 }

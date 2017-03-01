@@ -9,8 +9,8 @@ if ( !defined('ABSPATH') ) exit;
 // Includes
 include_once('lib/gravitate/gravtheme/grav_theme_init.php'); // Grav Theme Initiate
 
-GRAV_FUNC::enqueue_file('master_css', get_template_directory_uri() . '/assets/css/master.min.css');
-GRAV_FUNC::enqueue_file('master_js', get_template_directory_uri() . '/assets/js/master.js');
+GRAV_FUNC::enqueue_file('master_css', get_template_directory_uri() . '/assets/css/min/master.min.css');
+GRAV_FUNC::enqueue_file('master_js', get_template_directory_uri() . '/assets/js/min/master.min.js');
 
 // Add Custom Post Types
 // include_once('library/cpt/resources.php');
@@ -25,6 +25,9 @@ if(function_exists('acf_add_options_page'))
 {
 	acf_add_options_page(array('page_title' => 'Theme', 'menu_slug' => 'acf-options-theme', 'position' => 2));
 }
+
+// Remove jQuery Migrate
+add_action( 'wp_default_scripts', array('GRAV_FUNC', 'dequeue_jquery_migrate') );
 
 
 ###############################################################################

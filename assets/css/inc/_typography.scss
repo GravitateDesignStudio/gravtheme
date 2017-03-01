@@ -1,0 +1,35 @@
+body {
+	font: $body-font;
+	color: $body-font-color;
+}
+
+p {
+	font-size: $paragraph-font-size;
+	font-weight: $paragraph-font-weight;
+}
+
+a {
+	color: $anchor-color;
+	text-decoration: $anchor-text-decoration;
+	&:hover {
+		color: $anchor-hover-color;
+		text-decoration: $anchor-hover-text-decoration;
+	}
+
+	@each $color_name in $bg-colors-with-light-text {
+		.bg-#{$color_name} & {
+			color: $anchor-color-on-dark-bg;
+			&:hover {
+				color: $anchor-hover-color-on-dark-bg;
+			}
+		}
+	}
+}
+
+ul {
+	padding: 0;
+	nav & {
+		list-style: none;
+		list-style-position: inside;
+	}
+}

@@ -8,11 +8,11 @@
 }
 
 %grav-vert-align {
-    @include transform(translateY(-50%));
+    //@include transform(translateY(-50%));
   position: relative;
   top: 50%;
 }
 
 %grav-vert-align-parent {
-    @include transform-style(preserve-3d);
+    //@include transform-style(preserve-3d);
 }

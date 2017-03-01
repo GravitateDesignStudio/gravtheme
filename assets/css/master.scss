@@ -1,26 +1,41 @@
 /*************************************
-Base index of scss files
+Include Functions and Mixins
 **************************************/
 
 @import '../../lib/gravitate/gravtheme/scss/sass-utilities/compass/compass';
 @import '../../lib/gravitate/gravtheme/scss/sass-utilities/compass/animation/core';
-@import 'variables';
-
 @import '../../lib/gravitate/gravtheme/scss/sass-utilities/functions';
 @import '../../lib/gravitate/gravtheme/scss/sass-utilities/mixins';
+
+/*************************************
+Include Variables
+**************************************/
+
+@import 'inc/variables';
+
+/*************************************
+Include Libraries
+**************************************/
+
+@import '../../lib/font-awesome-4.7/scss/font-awesome';
+
 @import '../../lib/gravitate/gravtheme/scss/sass-utilities/extendables';
 @import '../../lib/gravitate/gravtheme/scss/sass-utilities/normalize';
 @import '../../lib/gravitate/gravtheme/scss/sass-utilities/wordpress';
+@import '../../lib/gravitate/gravtheme/scss/sass-utilities/spacing';
 //@import '../../lib/gravitate/gravtheme/scss/sass-utilities/foundation6';
 @import '../../lib/gravitate/gravtheme/scss/sass-utilities/foundation6flex';
+//@import '../../lib/gravitate/gravtheme/scss/sass-utilities/colorbox';
 
 @import '../../lib/gravitate/gravtheme/scss/headers/header-style1';
 @import '../../lib/gravitate/gravtheme/scss/footers/footer-style1';
+@import '../../lib/gravitate/gravtheme/scss/ui/buttons';
 
-@import 'sass-includes/globals';
-@import 'sass-includes/ui';
-@import 'sass-includes/typography';
-@import 'sass-includes/spacing';
-@import 'sass-includes/templates';
-@import 'sass-includes/blocks';
-@import 'sass-includes/colorbox';
+/*************************************
+Main Project Custom Files
+**************************************/
+
+@import 'inc/globals';
+@import 'inc/typography';
+@import 'inc/ui';
+@import 'inc/blocks';

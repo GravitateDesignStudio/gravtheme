@@ -1,4 +1,4 @@
-<footer class="global-footer">
+<footer class="global-footer bg-gray-dark">
 
     <div class="row">
 
