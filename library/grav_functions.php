@@ -1911,7 +1911,7 @@ class grav_child_walker extends Walker_Nav_Menu {
 	}
 
 	// Don't print top-level elements
-	function start_el(&$output, $item, $depth=0, $args=array()) {
+	function start_el(&$output, $item, $depth=0, $args=array(),$id=0) {
 		if( $depth == 0 ){
 			$target = str_replace('#', '', $item->url);
 			$output .= '<ul id="'.$target.'" class="row hidden-nav">';
