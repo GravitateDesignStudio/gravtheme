@@ -27,8 +27,8 @@ Include Libraries
 @import '../../lib/gravitate/gravtheme/scss/foundation6flex';
 //@import '../../lib/gravitate/gravtheme/scss/colorbox';
 
-@import '../../lib/gravitate/gravtheme/scss/headers/header-style1';
-@import '../../lib/gravitate/gravtheme/scss/footers/footer-style1';
+@import '../../lib/gravitate/gravtheme/scss/header-style1';
+@import '../../lib/gravitate/gravtheme/scss/footer-style1';
 @import '../../lib/gravitate/gravtheme/scss/buttons';
 @import '../../lib/gravitate/gravtheme/scss/forms';
 @import '../../lib/gravitate/gravtheme/scss/gravity-forms';
@@ -38,6 +38,4 @@ Main Project Custom Files
 **************************************/
 
 @import 'inc/globals';
-@import 'inc/typography';
 @import 'inc/ui';
-@import 'inc/blocks';
