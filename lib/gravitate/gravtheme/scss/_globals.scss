@@ -1,0 +1,127 @@
+html {
+	font-size: $font-size-small;
+	@include media-min($medium) {
+	    font-size: $font-size-medium;
+	}
+	@include media-min($large) {
+	    font-size: 100%;
+	}
+}
+
+a {
+	color: $anchor-color;
+	text-decoration: $anchor-text-decoration;
+	&:hover {
+		color: $anchor-hover-color;
+		text-decoration: $anchor-hover-text-decoration;
+	}
+
+	@each $color_name in $bg-colors-with-light-text {
+		.bg-#{$color_name} & {
+			color: $anchor-color-on-dark-bg;
+			&:hover {
+				color: $anchor-hover-color-on-dark-bg;
+			}
+		}
+	}
+}
+
+ul {
+	padding: 0;
+	nav & {
+		list-style: none;
+		list-style-position: inside;
+	}
+}
+
+.global-content {
+	ul,
+	ol {
+		margin-top: .5rem;
+		li:not(.gfield) {
+			margin: 0 0 .5rem 2rem;
+			li:not(.gfield) {
+				margin-left: 1.5rem;
+			}
+		}
+	}
+}
+
+@each $color_name, $color_value in $bg-colors {
+	.bg-#{$color_name},
+	.block-bg-#{$color_name} {
+		background-color: $color_value;
+	}
+}
+
+@each $color_name in $bg-colors-with-light-text {
+	.bg-#{$color_name},
+	.block-bg-#{$color_name} {
+		color: $text-light;
+		* {
+			color: $text-light;
+		}
+	}
+}
+
+hr {
+	border: 0;
+	height: $hr-size;
+    background-color: $hr-bg-color;
+}
+
+table {
+	thead {
+		tr {
+			th {
+				border-bottom: 1px solid $gray-med;
+  				padding: 0.5rem;
+  				text-align: left;
+			}
+		}
+	}
+	tbody {
+		tr {
+			td {
+				border-bottom: 1px solid $gray-med;
+  				padding: 0.5rem;
+  				text-align: left;
+			}
+		}
+	}
+}
+
+.section-container {
+	.section-inner {
+		padding: $section-padding;
+	}
+}
+
+@each $type-name, $type-fields in $typography {
+	#{$type-name},
+	%#{$type-name} {
+		font: map-get($type-fields, 'type-font-small');
+		color: map-get($type-fields, 'type-color');
+		text-transform: map-get($type-fields, 'type-text-transform');
+		letter-spacing: map-get($type-fields, 'type-letter-spacing-small');
+		@include media-min($medium) {
+		    font: map-get($type-fields, 'type-font');
+			letter-spacing: map-get($type-fields, 'type-letter-spacing');
+		}
+	}
+}
+
+blockquote {
+	margin: $blockquote-margin;
+	&::before {
+	   content: '\201C';
+    }
+	&::after {
+	   content: '\201D';
+    }
+	p {
+	    font: inherit;
+	    display: inline;
+	    color: inherit;
+	}
+}

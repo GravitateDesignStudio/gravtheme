@@ -138,6 +138,7 @@ class GRAV_FUNC {
 	 *
 	 * @return (void)
 	 * @author GG
+	 * @author WA
 	 *
 	 * Requires csv2array()
 	 * Labels must match WP Post Table Fields (ie. post_type, post_title, etc)
@@ -164,18 +165,25 @@ class GRAV_FUNC {
 		// Data to Return
 		$data = self::csv2array($args);
 
+		// Process the CSV data
 		foreach($data as $post)
 		{
-			if(!empty($post['post_type']))
+			// Ensure we have post_type and post_title
+			if(!empty($post['post_title']))
 			{
-				$post = array();
-				$post['post_name'] = sanitize_title(strtolower($post['post_title']));
-				$post['post_status'] == (!empty($post['post_status']) ? trim($post['post_status']) : 'publish'); // Field Separator in file
+				$post_insert = array();
+				$post_insert['post_title'] = trim($post['post_title']);
+				$post_insert['post_name'] = sanitize_title(strtolower($post['post_title']));
+				$post_insert['post_type'] = (!empty($post['post_type']) ? trim($post['post_type']) : 'post');
+				$post_insert['post_status'] = (!empty($post['post_status']) ? trim($post['post_status']) : 'publish'); // Field Separator in file
 
-				$post_id = wp_insert_post( $post );
+				// Create the post
+				$post_id = wp_insert_post( $post_insert );
 
+				// If we have a successful post ID
 				if($post_id)
 				{
+					// Process the remaining keys
 					foreach ($post as $key => $value)
 					{
 						// Check if Field is Post Meta
@@ -200,7 +208,7 @@ class GRAV_FUNC {
 	}
 
 	/**
-	 * Get Reall IP based on Server Settings
+	 * Get Real IP based on Server Settings
 	 * *
 	 * @return (string)
 	 * @author GG
@@ -897,10 +905,6 @@ class GRAV_FUNC {
 		{
 			return $matches[1];
 		}
-		else if(!$pos && strpos($url, 'http') === false)
-		{
-			return $url;
-		}
 
 		return 0;
 	}
@@ -936,10 +940,6 @@ class GRAV_FUNC {
 		{
 			$split = explode("?", substr($url, ($pos+3)));
 			return $split[0];
-		}
-		else if(!$pos && strpos($url, 'http') === false)
-		{
-			return $url;
 		}
 
 		return 0;
@@ -1052,6 +1052,11 @@ class GRAV_FUNC {
 		}
 	}
 
+	public static function allow_br($value)
+	{
+		return str_replace(array('&lt;br&gt;','&lt;br/&gt;','&lt;br /&gt;'), '<br>', $value);
+	}
+
 	public static function excerpt($new_length = 20)
 	{
 	  add_filter('excerpt_length', function () use ($new_length) {
@@ -1071,7 +1076,7 @@ class GRAV_FUNC {
 	 * @author GG
 	 *
 	 **/
-	public static function debug($var, $show_types = false, $return = false)
+	public static function debug($var='', $show_types = false, $return = false)
 	{
 		$trace = '';
 		if($dbtrace = debug_backtrace())
@@ -1237,6 +1242,13 @@ class GRAV_FUNC {
 		remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0 ); // Links for Adjacent Posts
 		remove_action( 'wp_head', 'wp_generator' );                           // WP version
 
+		if (!is_admin()) {
+			wp_deregister_script('wp-embed');
+		}
+
+		remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+		remove_action( 'wp_print_styles', 'print_emoji_styles' );
+
 		// Check and Update Permalinks
 		self::update_registered_post_types();
 	}
@@ -1358,9 +1370,19 @@ class GRAV_FUNC {
 
 	    $style_formats = array(
 	        array(
-	            'title' => 'Button',
+	            'title' => 'Button (Primary)',
 	            'selector' => 'a',
-	            'classes' => 'button'
+	            'classes' => 'button button-primary'
+	        ),
+	        array(
+	            'title' => 'Button (Secondary)',
+	            'selector' => 'a',
+	            'classes' => 'button button-secondary'
+	        ),
+	        array(
+	            'title' => 'Remove Shadow',
+	            'selector' => 'img',
+	            'classes' => 'remove-shadow'
 	        ),
 	    );
 
@@ -1393,6 +1415,7 @@ class GRAV_FUNC {
 			'footer-menu' => 'Footer Menu', 			// secondary nav in footer
 			'footer-links' => 'Footer Utility Links', 	// secondary nav in footer
 			'mobile-menu' => 'Mobile Menu',   			// Mobile nav in header
+			'mobile-links' => 'Mobile Utility Links',   // Mobile nav in header
 			'sitemap-menu' => 'SiteMap Menu' 			// Sitemap Links
 		);
 	}
@@ -1454,7 +1477,7 @@ class GRAV_FUNC {
 	 * @return (array)
 	 * @author GG
 	 **/
-	public static function menu($menu='main-menu', $class='')
+	public static function menu($menu='main-menu', $class='menu')
 	{
 		$default_menus = self::get_default_menus();
 
@@ -1589,7 +1612,8 @@ class GRAV_FUNC {
 	public static function get_thumbnail_url($size = 'thumbnail', $post_id = 0)
 	{
 	    $post_id = ($post_id != 0) ? $post_id : get_the_ID();
-	    $thumb = wp_get_attachment_image_src( get_post_thumbnail_id($post_id), $size );
+		$post_thumb_id = get_post_thumbnail_id($post_id);
+	    $thumb = wp_get_attachment_image_src( ($post_thumb_id ? $post_thumb_id : $post_id), $size );
 	    $url = ($thumb) ? $thumb['0'] : false;
 	    return $url;
 	}
@@ -1601,42 +1625,62 @@ class GRAV_FUNC {
 
 	public static function get_current_page_title()
 	{
+		$queried_object = get_queried_object();
+		$blog_page_id = get_option( 'page_for_posts' );
+
 		if(is_category())
 		{
-			return '<span>Posts Categorized:</span> '.single_cat_title('', false);
+			return '<span>'.($blog_page_id ? get_the_title($blog_page_id) : 'Blog').'</span><span class="title-separator">:</span> <span class="sub-title">'.single_cat_title('', false).'</span>';
 		}
 
 		if(is_tag())
 		{
-			return '<span>Posts Tagged:</span> '.single_tag_title('', false);
+			return '<span>'.($blog_page_id ? get_the_title($blog_page_id) : 'Blog').'</span><span class="title-separator">:</span> <span class="sub-title">'.single_tag_title('', false).'</span>';
 		}
 
 		if(is_author())
 		{
-			return '<span>Posts By:</span> '.get_the_author_meta('display_name');
+			return '<span>Posts By:</span> <span class="sub-title">'.get_the_author_meta('display_name').'</span>';
 		}
 
 		if(is_day())
 		{
-			return '<span>Daily Archives:</span> '.get_the_time('l, F j, Y');
+			return '<span>'.($blog_page_id ? get_the_title($blog_page_id) : 'Blog').'</span><span class="title-separator">:</span> <span class="sub-title">'.get_the_time('l, F j, Y').'</span>';
 		}
 
 		if(is_month())
 		{
-			return '<span>Daily Archives:</span> '.get_the_time('F Y');
+			return '<span>'.($blog_page_id ? get_the_title($blog_page_id) : 'Blog').'</span><span class="title-separator">:</span> <span class="sub-title">'.get_the_time('F Y').'</span>';
 		}
 
 		if(is_year())
 		{
-			return '<span>Daily Archives:</span> '.get_the_time('Y');
+			return '<span>'.($blog_page_id ? get_the_title($blog_page_id) : 'Blog').'</span><span class="title-separator">:</span> <span class="sub-title">'.get_the_time('Y').'</span>';
 		}
 
 		if(self::is_blog())
 		{
-			if($blog_page_id = get_option( 'page_for_posts' ))
+			return ($blog_page_id ? get_the_title($blog_page_id) : 'Blog');
+		}
+
+		if(is_archive() && !empty(get_queried_object()->labels->name))
+		{
+			return get_queried_object()->labels->name;
+		}
+
+		if(is_tax())
+		{
+			if(!empty($queried_object->taxonomy))
 			{
-				return get_the_title($blog_page_id);
+				$term_name = $queried_object->name;
+				$queried_object = get_taxonomy($queried_object->taxonomy);
+				if(!empty($queried_object->object_type[0]))
+				{
+					$archive_post_type = $queried_object->object_type[0];
+					$queried_object = get_post_type_object($archive_post_type);
+				}
 			}
+			return '<span>'.$queried_object->name.'</span><span class="title-separator">:</span> <span class="sub-title">'.$term_name.'</span>';
 		}
 
 		return get_the_title();
@@ -1645,17 +1689,32 @@ class GRAV_FUNC {
 
 	public static function template_include($template)
 	{
+		if(is_page_template() && file_exists($template))
+		{
+			return $template;
+		}
+
 		$template_dir = get_template_directory() . '/templates';
+		$post_type = str_replace('_', '-', get_post_type());
+		$taxonomy = get_query_var('taxonomy');
 
 	    if(is_front_page() && file_exists($template_dir.'/home.php'))
 	    {
 	        return $template_dir.'/home.php';
 	    }
-	    elseif(is_home() && file_exists($template_dir.'/blog.php'))
+		elseif((is_tax() || is_tag() || is_category()) && $taxonomy && file_exists($template_dir.'/taxonomy-'.$taxonomy.'.php'))
 	    {
-	        return $template_dir.'/blog.php';
+	        return $template_dir.'/archive-'.$taxonomy.'.php';
 	    }
-	    elseif(is_archive() && file_exists($template_dir.'/archive.php'))
+		elseif((is_tax() || is_tag() || is_category()) && file_exists($template_dir.'/taxonomy.php'))
+	    {
+	        return $template_dir.'/archive.php';
+	    }
+	    elseif((is_archive() || is_home()) && file_exists($template_dir.'/archive-'.$post_type.'.php'))
+	    {
+	        return $template_dir.'/archive-'.$post_type.'.php';
+	    }
+		elseif((is_archive() || is_home()) && file_exists($template_dir.'/archive.php'))
 	    {
 	        return $template_dir.'/archive.php';
 	    }
@@ -1667,11 +1726,18 @@ class GRAV_FUNC {
 	    {
 	        return $template_dir.'/404.php';
 	    }
-		elseif(is_page() && is_singular() && file_exists($template_dir.'/_default.php'))
+		elseif(is_author() && file_exists($template_dir.'/author.php'))
 	    {
-	        return $template_dir.'/_default.php';
+	        return $template_dir.'/author.php';
 	    }
-	    else
+		elseif(is_singular() && file_exists($template_dir.'/single-'.$post_type.'.php'))
+	    {
+	        return $template_dir.'/single-'.$post_type.'.php';
+	    }
+		elseif(is_singular() && file_exists($template_dir.'/single.php'))
+	    {
+	        return $template_dir.'/single.php';
+	    }
 
 		if(file_exists($template_dir.'/_default.php'))
 		{
@@ -1711,6 +1777,61 @@ class GRAV_FUNC {
 		{
 			$scripts->registered['jquery']->deps = array_diff( $scripts->registered['jquery']->deps, array( 'jquery-migrate' ) );
 		}
+	}
+
+	/**
+	 * Get meta values easily based on meta key, post type and status
+	 * @param string 	$key    	Meta key you wish to query
+	 * @param string 	$type   	Post type you wish to query (default 'post')
+	 * @param string 	$status 	Post status (default 'publish')
+	 */
+	public static function get_meta_values( $key = '', $type = 'post', $status = 'publish' )
+	{
+	    global $wpdb;
+
+	    if( empty( $key ) )
+	        return;
+
+	    $r = $wpdb->get_col( $wpdb->prepare( "
+	        SELECT pm.meta_value FROM {$wpdb->postmeta} pm
+	        LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+	        WHERE pm.meta_key = '%s'
+	        AND p.post_status = '%s'
+	        AND p.post_type = '%s'
+	    ", $key, $status, $type ) );
+
+	    return $r;
+	}
+
+	/**
+	 * Extract a screen-friendly hostname from a URL for display purposes
+	 * @param string 	$url 	The URL that you want to extarct from
+	 */
+	function url_to_domain( $url )
+	{
+	    $host = @parse_url($url, PHP_URL_HOST);
+
+		// If the URL can't be parsed, use the original URL
+	    // Change to "return false" if you don't want that
+	    if (!$host)
+		{
+			$host = $url;
+		}
+
+	    // The "www." prefix isn't really needed if we're just using
+	    // this to display the domain to the user
+	    if (substr($host, 0, 4) == "www.")
+		{
+			$host = substr($host, 4);
+		}
+
+	    // Limit the length, since screen space is limited
+	    if (strlen($host) > 50)
+		{
+			$host = substr($host, 0, 47) . '...';
+		}
+
+		return $host;
 	}
 
 }

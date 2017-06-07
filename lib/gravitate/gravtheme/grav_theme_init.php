@@ -43,7 +43,7 @@ add_filter( 'template_include', array('GRAV_FUNC', 'template_include'), 99 );
 
 add_action( 'wp_loaded', array('GRAV_FUNC', 'wp_loaded'), 11 );
 
-if( !defined('define') && getenv('WP_ENV') !== 'local' )
+if( !defined('ENVIRONMENT') || ENVIRONMENT !== 'local' )
 {
     define( 'ACF_LITE' , true ); // true hides acf from the admin panel. false shows it.
 }

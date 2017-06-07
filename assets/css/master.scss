@@ -2,10 +2,10 @@
 Include Functions and Mixins
 **************************************/
 
-@import '../../lib/gravitate/gravtheme/scss/sass-utilities/compass/compass';
-@import '../../lib/gravitate/gravtheme/scss/sass-utilities/compass/animation/core';
-@import '../../lib/gravitate/gravtheme/scss/sass-utilities/functions';
-@import '../../lib/gravitate/gravtheme/scss/sass-utilities/mixins';
+@import '../../lib/gravitate/gravtheme/scss/compass/compass';
+@import '../../lib/gravitate/gravtheme/scss/compass/animation/core';
+@import '../../lib/gravitate/gravtheme/scss/functions';
+@import '../../lib/gravitate/gravtheme/scss/mixins';
 
 /*************************************
 Include Variables
@@ -19,13 +19,13 @@ Include Libraries
 
 @import '../../lib/font-awesome-4.7/scss/font-awesome';
 
-@import '../../lib/gravitate/gravtheme/scss/sass-utilities/extendables';
-@import '../../lib/gravitate/gravtheme/scss/sass-utilities/normalize';
-@import '../../lib/gravitate/gravtheme/scss/sass-utilities/wordpress';
-@import '../../lib/gravitate/gravtheme/scss/sass-utilities/spacing';
-//@import '../../lib/gravitate/gravtheme/scss/sass-utilities/foundation6';
-@import '../../lib/gravitate/gravtheme/scss/sass-utilities/foundation6flex';
-//@import '../../lib/gravitate/gravtheme/scss/sass-utilities/colorbox';
+@import '../../lib/gravitate/gravtheme/scss/extendables';
+@import '../../lib/gravitate/gravtheme/scss/normalize';
+@import '../../lib/gravitate/gravtheme/scss/wordpress';
+@import '../../lib/gravitate/gravtheme/scss/spacing';
+//@import '../../lib/gravitate/gravtheme/scss/foundation6';
+@import '../../lib/gravitate/gravtheme/scss/foundation6flex';
+//@import '../../lib/gravitate/gravtheme/scss/colorbox';
 
 @import '../../lib/gravitate/gravtheme/scss/headers/header-style1';
 @import '../../lib/gravitate/gravtheme/scss/footers/footer-style1';

@@ -1,0 +1,36 @@
+/*************************************
+WordPress Specifics
+**************************************/
+
+.alignleft, .alignright { display: inline-block; }
+.alignleft { float: left; margin: 0 20px 5px 0; }
+.alignright { float: right; margin: 0 0 5px 20px; }
+.alignnone { margin: 5px 15px 15px 0; }
+.aligncenter { display: block; margin: 15px auto; }
+
+.wp-caption { background: rgba(0, 0, 0, 0.1); border: 1px rgba(0, 0, 0, 0.3) solid; padding: 15px; font-size: 0.85em; text-align: center; }
+.wp-caption img { border: 1px rgba(0, 0, 0, 0.3) solid; margin: 0 auto 15px auto; max-width: 98.5%; width: auto; }
+
+body #wpadminbar {
+    @include media-max(783px) {
+        position: fixed !important;
+        // height: 32px !important;
+        // img.avatar {
+        //     max-height: 14px;
+        //     max-width: 14px;
+        // }
+        // #wp-admin-bar-wp-logo > .ab-item .ab-icon::before,
+        // .quicklinks a::before,
+        // .quicklinks a span::before {
+        //     font-size: 20px !important;
+        //     line-height: 32px !important;
+        //     top: 0 !important;
+        // }
+        // .quicklinks a {
+        //     height: 32px !important;
+        // }
+        // .quicklinks .ab-icon {
+        //     font-size: 24px !important;
+        // }
+    }
+}

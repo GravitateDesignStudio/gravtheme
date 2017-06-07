@@ -1,0 +1,24 @@
+.global-footer {
+    background-color: $footer-bg-color;
+    color: $footer-text-color;
+    padding: $footer-padding-small;
+    @include media-min($medium) {
+        padding: $footer-padding;
+    }
+}
+
+.global-footer-main-menu {
+    li {
+        display: inline-block;
+    }
+}
+
+.global-social-links {
+    li {
+        display: inline-block;
+        margin: 0;
+        &::before {
+            display: none;
+        }
+    }
+}

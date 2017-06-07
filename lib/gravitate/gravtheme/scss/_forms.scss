@@ -1,0 +1,164 @@
+/*************************************
+Inputs
+**************************************/
+
+
+/*************************************
+Gravity Forms
+**************************************/
+
+.gform_container {
+	.gform_validation_container {
+		display: none;
+	}
+}
+
+
+input[type="text"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+	@include transition(all $transition-speed ease-out);
+	@include appearance(none);
+	@include border-radius($input-border-radius);
+	border: $input-border;
+	padding: $input-padding-small;
+	background: $input-background-color;
+	min-height: $input-min-height-small;
+	font: $input-font;
+	color: $input-text-color;
+	display: block;
+	width: 100%;
+	@include input-placeholder {
+		color: $input-placeholder-color;
+	};
+	@include media-min($medium) {
+	    display: inline-block;
+		width: auto;
+		padding: $input-padding-medium;
+		min-height: $input-min-height-medium;
+	}
+	@include media-min($large) {
+		padding: $input-padding;
+		min-height: $input-min-height;
+	}
+	&:focus {
+		@include border-radius($input-focus-border-radius);
+		border: $input-focus-border;
+		padding: $input-focus-padding;
+		background: $input-focus-background-color;
+		color: $input-focus-text-color;
+	}
+	@each $color-name in $bg-colors-with-light-text {
+		.bg-#{$color-name} &,
+		.block-bg-#{$color-name} & {
+			@include border-radius($input-dark-bg-border-radius);
+			border: $input-dark-bg-border;
+			background: $input-dark-bg-background-color;
+			color: $input-dark-bg-text-color;
+			@include input-placeholder {
+				color: $input-dark-bg-placeholder-color;
+			};
+			&:focus {
+				@include border-radius($input-dark-bg-focus-border-radius);
+				border: $input-dark-bg-focus-border;
+				background: $input-dark-bg-focus-background-color;
+				color: $input-dark-bg-focus-text-color;
+			}
+		}
+	}
+}
+
+.input-wrapper {
+	display: inline-block;
+	position: relative;
+	input,
+	select {
+		@include appearance(none);
+	}
+
+	&.input-wrapper-checkbox,
+	&.input-wrapper-radio {
+		@include size($input-checkbox-radio-size);
+		margin: $input-checkbox-radio-margin;
+		vertical-align: $input-checkbox-radio-vertical-align;
+		border: $input-border;
+		@each $color-name in $bg-colors-with-light-text {
+			.bg-#{$color-name} &,
+			.block-bg-#{$color-name} & {
+				border: $input-dark-bg-border;
+			}
+		}
+		input {
+			@include absolute();
+		}
+		&.checked {
+			&::before {
+				@include absolute();
+				@include size($input-checked-fill-size);
+				content: '';
+				display: block;
+				background: $input-checked-fill-color;
+				@each $color-name in $bg-colors-with-light-text {
+					.bg-#{$color-name} &,
+					.block-bg-#{$color-name} & {
+						background: $input-dark-bg-checked-fill-color;
+					}
+				}
+			}
+		}
+	}
+	&.input-wrapper-radio {
+		@include border-radius(50%);
+		&.checked {
+			&::before {
+				@include border-radius(50%);
+			}
+		}
+	}
+}
+
+.input-wrapper-select {
+	position: relative;
+	display: block;
+	width: 100%;
+	@include media-min($medium) {
+	    display: inline-block;
+		width: auto;
+	}
+	select::-ms-expand {
+		display: none;
+	}
+	&::before,
+	&::after {
+		@include transform(rotate(-45deg));
+		position: absolute;
+	    top: 30%;
+		right: 10px;
+		content: '';
+		display: block;
+		width: 6px;
+		height: 6px;
+		border-top: 1px solid $gray-dark;
+		border-right: 1px solid $gray-dark;
+		@each $color-name in $bg-colors-with-light-text {
+			.bg-#{$color-name} &,
+			.block-bg-#{$color-name} & {
+				border-top: 1px solid $gray-light;
+				border-right: 1px solid $gray-light;
+			}
+		}
+	}
+	&::after {
+		@include transform(rotate(135deg));
+	    top: auto;
+		bottom: 30%;
+	}
+	select option {
+		color: $input-text-color;
+	}
+}

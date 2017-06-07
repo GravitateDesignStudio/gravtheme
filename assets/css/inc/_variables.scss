@@ -1,9 +1,12 @@
 /*************************************
 Foundation Variables
 **************************************/
-$row-max-width: 1440px;
-$mobile-gutter-width: .625rem;
-$gutter-width: .9375rem;
+$row-max-width-num: 1440;
+$row-max-width: #{$row-max-width-num}px;
+$outer-gutter-width-small: 1rem;
+$outer-gutter-width: 2.85rem;
+$gutter-width-small: 1.25rem;
+$gutter-width: 1.25rem;
 $medium: 641px;
 $large: 1025px;
 $xlarge: 1441px;
@@ -13,15 +16,21 @@ $xxlarge: 1921px;
 Colors
 **************************************/
 
-$white: #ffffff;
-$black: #000000;
-$gray-light: #dddddd;
-$gray-med: #777777;
-$gray-dark: #333333;
-$transparent: rgba(0,0,0,0);
+$black:          #000000;
+$gray-darkest:   #222222;
+$gray-dark:      #444444;
+$gray-med:       #aaaaaa;
+$gray:           #cccccc;
+$gray-light:     #eeeeee;
+$gray-lightest:  #f1f1f1;
+$white:          #ffffff;
 
 $text-light: $white;
 $text-dark: $gray-dark;
+
+$error-text: #ff0000;
+$transparent: rgba($black, 0);
+$shadow: rgba(0,0,0,0.1);
 
 $bg-colors: (
     white: $white,
@@ -34,6 +43,7 @@ $bg-colors: (
 $bg-colors-with-light-text: (
     'gray-med',
     'gray-dark',
+    'gray-darkest',
     'black'
 );
 
@@ -41,10 +51,100 @@ $bg-colors-with-light-text: (
 /*************************************
 Typography
 **************************************/
-$body-font: normal normal normal 16px / 20px Arial, sans-serif;  // Make sure fallbacks are included
+$font-arial: Arial, sans-serif;
+// $font-lexia: 'lexia',serif;
+// $font-proxima: 'proxima-nova', sans-serif;
+// $font-veneer: 'veneerregular', Arial, sans-serif;
+$font-primary: $font-arial;
+
+$body-font: normal normal 100 rem(16) / 1em $font-primary;
 $body-font-color: $text-dark;
-$paragraph-font-size: 1em;
-$paragraph-font-weight: normal;
+
+// Global Size Change
+$font-size-small: 80%;
+$font-size-medium: 90%;
+
+// Blockquote
+$blockquote-margin: 2em 1em;
+
+// Max Content Width
+$content-max-width: $large;
+
+// Font Settings
+$typography: (
+    'body': (
+        type-font: $body-font,
+        type-font-small: $body-font,
+        type-letter-spacing: 0.3px,
+        type-letter-spacing-small: 0.3px,
+        type-color: $body-font-color,
+        type-text-transform: normal,
+    ),
+    'p': (
+        type-font: normal normal 100 rem(16) / rem(24) $font-primary,
+        type-font-small: normal normal 100 rem(16) / rem(24) $font-primary,
+        type-letter-spacing: 0.3px,
+        type-letter-spacing-small: 0.3px,
+        type-color: $body-font-color,
+        type-text-transform: normal,
+    ),
+    'blockquote': (
+        type-font: normal normal normal rem(24) / rem(36) $font-lexia,
+        type-font-small: normal normal normal rem(24) / rem(36) $font-lexia,
+        type-letter-spacing: 0.5px,
+        type-letter-spacing-small: 0.5px,
+        type-color: $blue,
+        type-text-transform: normal,
+    ),
+    'h1': (
+        type-font: normal normal normal rem(70) / 1em $font-veneer,
+        type-font-small: normal normal normal rem(50) / 1em $font-veneer,
+        type-letter-spacing: 2px,
+        type-letter-spacing-small: 1.5px,
+        type-color: $green,
+        type-text-transform: normal,
+    ),
+    'h2': (
+        type-font: normal normal normal rem(46) / 1em $font-veneer,
+        type-font-small: normal normal normal rem(40) / 1em $font-veneer,
+        type-letter-spacing: 2px,
+        type-letter-spacing-small: 1.5px,
+        type-color: $blue,
+        type-text-transform: normal,
+    ),
+    'h3': (
+        type-font: normal normal normal rem(32) / 1em $font-lexia,
+        type-font-small: normal normal normal rem(28) / 1em $font-lexia,
+        type-letter-spacing: 1px,
+        type-letter-spacing-small: 0.8px,
+        type-color: $gray-darkest,
+        type-text-transform: normal,
+    ),
+    'h4': (
+        type-font: normal normal normal rem(32) / 1em $font-veneer,
+        type-font-small: normal normal normal rem(28) / 1em $font-veneer,
+        type-letter-spacing: 1.5px,
+        type-letter-spacing-small: 1.25px,
+        type-color: $green,
+        type-text-transform: normal,
+    ),
+    'h5': (
+        type-font: normal normal normal rem(24) / 1em $font-lexia,
+        type-font-small: normal normal normal rem(20) / 1em $font-lexia,
+        type-letter-spacing: 0.96px,
+        type-letter-spacing-small: 0.8px,
+        type-color: $gray-darkest,
+        type-text-transform: normal,
+    ),
+    'h6': (
+        type-font: normal normal normal rem(17) / 1em $font-primary,
+        type-font-small: normal normal normal rem(16) / 1em $font-primary,
+        type-letter-spacing: 1.5px,
+        type-letter-spacing-small: 1.25px,
+        type-color: $blue,
+        type-text-transform: uppercase,
+    )
+);
 
 
 /*************************************
@@ -59,90 +159,46 @@ $fa-li-width:         (30em / 14);
 /*************************************
 Header
 *************************************/
-$header-height: 100px;
-$header-bg-color: $gray-med;
-$header-padding: 18px 0;
+$header-mobile-menu-breakpoint: $large;
 
-$header-squashed-height: 80px;
-$header-squashed-padding: 4px 0;
+$header-height: 98px;
+$header-height-medium: 70px;
+$header-height-mobile-menu: $header-height-medium;
+$header-height-small: 50px;
+
+$header-scrolled-height: 70px;
+$header-scrolled-height-small: 50px;
+
+$header-bg-color: $white;
+$header-padding: 0;
+$header-padding-small: 0;
+$header-scrolled-padding: 0;
+
+$header-logo-max-width: 300px;
+$header-logo-max-width-small: 150px;
+$header-scrolled-logo-max-width: 300px;
+
+$header-logo-padding: 10px 0;
+
+
+/*************************************
+Navs
+*************************************/
+$nav-submenu-width-num: 260;
+$nav-submenu-width: #{$nav-submenu-width-num}px;
+$nav-submenu-max-width: $nav-submenu-width-num + $row-max-width-num;
+
+$nav-mobile-menu-placement: right;
+$nav-mobile-menu-width: 400px;
 
 
 /*************************************
 Footer
 *************************************/
-$footer-bg-color: $gray-dark;
-$footer-padding: 3rem 0;
+$footer-bg-color: $black;
+$footer-padding: 2rem 0 1.5rem 0;
+$footer-padding-small: 3.8rem $outer-gutter-width-small 2rem;
 $footer-text-color: $white;
-
-
-/*************************************
-Default Sections
-*************************************/
-$section-padding: 2rem 0;
-
-
-/*************************************
-Buttons
-*************************************/
-
-// Button 1
-$button-text-color: $white; //$white;
-$button-bg-color: $gray-med;
-$button-border: 1px solid $white;
-$button-border-radius: 0;
-$button-font-size: 0.88889rem;
-$button-font-weight: normal;
-$button-padding: 0.489rem 1.378rem 0.444rem 1.378rem;
-
-// Hover
-$button-hover-text-color: $white;
-$button-hover-bg-color: $gray-med;
-
-// Dark Backgrounds
-$button-bg-color-on-dark-bg: $transparent;
-$button-border-color-on-dark-bg: $text-light;
-
-$buttons: (
-    'primary': (
-        text-color: $white, //$white,
-        bg-color: $gray-med,
-        border: 1px solid $white,
-        border-radius: 0,
-        font-size: 0.88889rem,
-        font-weight: normal,
-        padding: 0.489rem 1.378rem 0.444rem 1.378rem,
-
-        // Hover
-        hover-text-color: $white,
-        hover-bg-color: $gray-med,
-
-        // Dark Backgrounds
-        bg-color-on-dark-bg: $transparent,
-        border-color-on-dark-bg: $text-light,
-    ),
-    'primary-big': (
-        text-color: $white, //$white,
-        bg-color: $gray-med,
-        border: 1px solid $white,
-        border-radius: 0,
-        font-size: 0.88889rem,
-        font-weight: normal,
-        padding: 0.489rem 1.978rem 0.444rem 1.378rem,
-
-        // Hover
-        hover-text-color: $white,
-        hover-bg-color: $gray-med,
-
-        // Dark Backgrounds
-        bg-color-on-dark-bg: $transparent,
-        border-color-on-dark-bg: $text-light,
-
-        //icons
-        // icon-content: $fa-var-search,
-        // icon-top: 4px,
-        // icon-left: 4px
-    )
-);
 
 
 /*************************************
@@ -163,15 +219,115 @@ $anchor-hover-color-on-dark-bg: $gray-light;
 /*************************************
 Blocks
 *************************************/
-$block-padding: 1rem 0;
+$block-padding: 4rem 0;
+
+
+/*************************************
+Forms
+*************************************/
+
+// Inputs
+$input-border: 1px solid $blue;
+$input-border-radius: 0;
+$input-background-color: $transparent;
+$input-padding: 10px 20px 12px 18px;
+$input-min-height: 45px;
+$input-padding-medium: 10px 20px 12px 18px;
+$input-min-height-medium: 41px;
+$input-padding-small: 8px 20px 8px 18px;
+$input-min-height-small: 36px;
+$input-font: $body-font;
+$input-text-color: $body-font-color;
+$input-placeholder-color: $gray-med;
+
+$input-checkbox-radio-size: 16px;
+$input-checkbox-radio-margin: 2px;
+$input-checkbox-radio-vertical-align: -6px;
+$input-checked-fill-size: 8px;
+$input-checked-fill-color: $green;
+$input-dark-bg-checked-fill-color: $green;
+
+// Inputs Focus
+$input-focus-border: 1px solid $gray-dark;
+$input-focus-border-radius: 0;
+$input-focus-background-color: $transparent;
+$input-focus-padding: $input-padding;
+$input-focus-text-color: $body-font-color;
+
+// Inputs on Dark Backgrounds
+$input-dark-bg-border: 1px solid $gray-light;
+$input-dark-bg-border-radius: 0;
+$input-dark-bg-background-color: $transparent;
+$input-dark-bg-text-color: $gray-light;
+$input-dark-bg-placeholder-color: $gray-med;
+
+// Inputs Focus on Dark Backgrounds
+$input-dark-bg-focus-border: 1px solid $white;
+$input-dark-bg-focus-border-radius: 0;
+$input-dark-bg-focus-background-color: $transparent;
+$input-dark-bg-focus-text-color: $white;
+
+
 
 /*************************************
 Spacing
 *************************************/
-$base-spacing: (blockquote: 1.66667rem, ul: 1.1111rem, ol: 1.1111rem, p: 1.1111rem, h1: 2.5rem, h2: 1.88889rem, h3: 1.5rem, h4: 1.25rem, h5: 1.1111rem);
-$h1-spacing: (h2: 1.375rem, h3: 1rem, h4: .75rem, h5: .675rem, h6: .5rem, p: .8333rem);
-$h2-spacing: (h3: .5rem, h4: .375rem, h5: .25rem, h6: .125rem, p: .555rem);
-$h3-spacing: (h4: .375rem, h5: .25rem, h6: .125rem, p: .555rem);
-$h4-spacing: (h5: .25rem, h6: .125rem, p: .555rem);
-$h5-spacing: (h6: .125rem, p: .2777rem, ul: .5555rem, ol: .5555rem);
-$h6-spacing: (p: .2777rem, ul: .5555rem, ol: .5555rem);
+$base-spacing: (
+    blockquote: 1.66667rem,
+    ul: 1rem,
+    ol: 1rem,
+    h1: 2.5rem,
+    h2: 1.88889rem,
+    h3: 1.5rem,
+    h4: 1.25rem,
+    h5: 1.1111rem,
+     p: 1.1111rem
+);
+$h1-spacing: (
+    h2: 1.375rem,
+    h3: 1.25rem,
+    h4: 1rem,
+    h5: .75rem,
+    h6: .5rem,
+     p: 1rem
+);
+$h2-spacing: (
+    h3: 1rem,
+    h4: 1rem,
+    h5: .5rem,
+    h6: .325rem,
+     p: .555rem
+);
+$h3-spacing: (
+    h4: .375rem,
+    h5: .25rem,
+    h6: .125rem,
+     p: .555rem
+);
+$h4-spacing: (
+    h5: .25rem,
+    h6: .125rem,
+     p: 1rem
+);
+$h5-spacing: (
+    h6: .125rem,
+    ul: .5555rem,
+    ol: .5555rem,
+     p: .5rem
+);
+$h6-spacing: (
+    ul: .5555rem,
+    ol: .5555rem,
+     p: .2777rem
+);
+
+
+/*************************************
+Other
+*************************************/
+$section-padding: 2rem 0;
+
+$transition-speed: 0.2s;
+
+$hr-size: 1px;
+$hr-bg-color: $gray-light;
