@@ -20,6 +20,8 @@
 
 <body id="body" <?php body_class(); ?>>
 
-<main id="global-content" class="global-wrapper">
+	<div class="global-wrapper">
 
-	<?php get_template_part( 'parts/headers/header', 'style1' );?>
+		<?php get_template_part( 'parts/header', 'default' );?>
+
+		<main class="global-content">

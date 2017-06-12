@@ -3,7 +3,7 @@
     <div class="row">
 
 		<div class="columns small-12 large-4 text-left">
-			<ul class="global-footer-social-links">
+			<ul class="social-links">
 
                 <?php foreach(get_field('theme_options_social_links', 'option') as $social) { if($social['link'] && $social['title']){ ?>
 					<li>
@@ -32,7 +32,7 @@
 
 	<div class="row">
 		 <div class="columns small-12 global-footer-legal text-left">
-              <p class="text0right">© <?php echo date('Y');?> <?php echo bloginfo('name');?></p>
+              <p class="text-right">© <?php echo date('Y');?> <?php echo bloginfo('name');?></p>
               <nav class="global-footer-utility-links">
   				<?php GRAV_FUNC::menu('footer-links'); ?>
               </nav>
