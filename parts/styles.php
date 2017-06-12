@@ -156,15 +156,15 @@
                         <label for="choice_1_8_3" id="label_1_8_3">Third Choice</label>
                      </li>
                      <li class="gchoice_1_8_4">
-                        <input name="input_8.4" value="First Choice" id="choice_1_8_4" tabindex="10" type="checkbox">
+                        <input name="input_8.4" value="First Choice" id="choice_1_8_4" tabindex="13" type="checkbox">
                         <label for="choice_1_8_4" id="label_1_8_4">Fourth Choice</label>
                      </li>
                      <li class="gchoice_1_8_5">
-                        <input name="input_8.5" value="Second Choice" id="choice_1_8_5" tabindex="11" type="checkbox">
+                        <input name="input_8.5" value="Second Choice" id="choice_1_8_5" tabindex="14" type="checkbox">
                         <label for="choice_1_8_5" id="label_1_8_5">Fifth Choice</label>
                      </li>
                      <li class="gchoice_1_8_6">
-                        <input name="input_8.6" value="Third Choice" id="choice_1_8_6" tabindex="12" type="checkbox">
+                        <input name="input_8.6" value="Third Choice" id="choice_1_8_6" tabindex="15" type="checkbox">
                         <label for="choice_1_8_6" id="label_1_8_6">Sixth Choice</label>
                      </li>
                   </ul>
