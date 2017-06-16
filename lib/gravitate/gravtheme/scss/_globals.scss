@@ -47,23 +47,6 @@ ul {
 	}
 }
 
-@each $color_name, $color_value in $bg-colors {
-	.bg-#{$color_name},
-	.block-bg-#{$color_name} {
-		background-color: $color_value;
-	}
-}
-
-@each $color_name in $bg-colors-with-light-text {
-	.bg-#{$color_name},
-	.block-bg-#{$color_name} {
-		color: $text-light;
-		* {
-			color: $text-light;
-		}
-	}
-}
-
 hr {
 	border: 0;
 	height: $hr-size;
@@ -97,6 +80,9 @@ table {
 	}
 }
 
+/*
+ *  Typography
+ */
 @each $type-name, $type-fields in $typography {
 	#{$type-name},
 	%#{$type-name} {
@@ -107,6 +93,29 @@ table {
 		@include media-min($medium) {
 		    font: map-get($type-fields, 'type-font');
 			letter-spacing: map-get($type-fields, 'type-letter-spacing');
+		}
+	}
+}
+
+/*
+ *  Dark Background Colors and Light Text
+ */
+@each $color_name, $color_value in $bg-colors {
+	.bg-#{$color_name},
+	.block-bg-#{$color_name} {
+		background-color: $color_value;
+	}
+}
+
+@each $color_name in $bg-colors-with-light-text {
+	.bg-#{$color_name},
+	.bg-#{$color_name} .block-inner,
+	.block-bg-#{$color_name},
+	.block-bg-#{$color_name} .block-inner,
+	 {
+		color: $text-light;
+		* {
+			color: $text-light;
 		}
 	}
 }
