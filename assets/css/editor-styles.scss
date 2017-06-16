@@ -2,10 +2,10 @@
 Include Functions and Mixins
 **************************************/
 
-@import '../../lib/gravitate/gravtheme/scss/sass-utilities/compass/compass';
-@import '../../lib/gravitate/gravtheme/scss/sass-utilities/compass/animation/core';
-@import '../../lib/gravitate/gravtheme/scss/sass-utilities/functions';
-@import '../../lib/gravitate/gravtheme/scss/sass-utilities/mixins';
+@import '../../lib/gravitate/gravtheme/scss/compass/compass';
+@import '../../lib/gravitate/gravtheme/scss/compass/animation/core';
+@import '../../lib/gravitate/gravtheme/scss/functions';
+@import '../../lib/gravitate/gravtheme/scss/mixins';
 
 /*************************************
 Include Variables
@@ -17,17 +17,16 @@ Include Variables
 Include Libraries
 **************************************/
 
-@import '../../lib/gravitate/gravtheme/scss/sass-utilities/extendables';
-@import '../../lib/gravitate/gravtheme/scss/sass-utilities/normalize';
-@import '../../lib/gravitate/gravtheme/scss/sass-utilities/wordpress';
-@import '../../lib/gravitate/gravtheme/scss/sass-utilities/spacing';
+@import '../../lib/gravitate/gravtheme/scss/extendables';
+@import '../../lib/gravitate/gravtheme/scss/normalize';
+@import '../../lib/gravitate/gravtheme/scss/wordpress';
+@import '../../lib/gravitate/gravtheme/scss/spacing';
 
 /*************************************
 Main Project Files
 **************************************/
 
 @import 'inc/globals';
-@import 'inc/typography';
 @import 'inc/ui';
 
 body {

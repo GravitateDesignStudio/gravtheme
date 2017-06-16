@@ -3,11 +3,20 @@
 if ( !defined('ABSPATH') ) exit;
 
 ###############################################################################
-##  Theme Setup
+##  Includes
 ###############################################################################
+
+
+// Autoload Composer Packages
+//require_once(dirname(ABSPATH).'/vendor/autoloader.php');
 
 // Includes
 include_once('lib/gravitate/gravtheme/grav_theme_init.php'); // Grav Theme Initiate
+
+
+###############################################################################
+##  Theme Setup
+###############################################################################
 
 GRAV_FUNC::enqueue_file('master_css', get_template_directory_uri() . '/assets/css/min/master.min.css');
 GRAV_FUNC::enqueue_file('master_js', get_template_directory_uri() . '/assets/js/min/master.min.js');

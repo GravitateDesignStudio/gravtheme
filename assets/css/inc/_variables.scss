@@ -41,6 +41,8 @@ $bg-colors: (
 );
 
 $bg-colors-with-light-text: (
+    'image',
+    'video',
     'gray-med',
     'gray-dark',
     'gray-darkest',
@@ -52,7 +54,6 @@ $bg-colors-with-light-text: (
 Typography
 **************************************/
 $font-arial: Arial, sans-serif;
-// $font-lexia: 'lexia',serif;
 // $font-proxima: 'proxima-nova', sans-serif;
 // $font-veneer: 'veneerregular', Arial, sans-serif;
 $font-primary: $font-arial;
@@ -89,48 +90,48 @@ $typography: (
         type-text-transform: normal,
     ),
     'blockquote': (
-        type-font: normal normal normal rem(24) / rem(36) $font-lexia,
-        type-font-small: normal normal normal rem(24) / rem(36) $font-lexia,
+        type-font: normal normal normal rem(24) / rem(36) $font-primary,
+        type-font-small: normal normal normal rem(24) / rem(36) $font-primary,
         type-letter-spacing: 0.5px,
         type-letter-spacing-small: 0.5px,
-        type-color: $blue,
+        type-color: $body-font-color,
         type-text-transform: normal,
     ),
     'h1': (
-        type-font: normal normal normal rem(70) / 1em $font-veneer,
-        type-font-small: normal normal normal rem(50) / 1em $font-veneer,
+        type-font: normal normal normal rem(70) / 1em $font-primary,
+        type-font-small: normal normal normal rem(50) / 1em $font-primary,
         type-letter-spacing: 2px,
         type-letter-spacing-small: 1.5px,
-        type-color: $green,
+        type-color: $body-font-color,
         type-text-transform: normal,
     ),
     'h2': (
-        type-font: normal normal normal rem(46) / 1em $font-veneer,
-        type-font-small: normal normal normal rem(40) / 1em $font-veneer,
+        type-font: normal normal normal rem(46) / 1em $font-primary,
+        type-font-small: normal normal normal rem(40) / 1em $font-primary,
         type-letter-spacing: 2px,
         type-letter-spacing-small: 1.5px,
-        type-color: $blue,
+        type-color: $body-font-color,
         type-text-transform: normal,
     ),
     'h3': (
-        type-font: normal normal normal rem(32) / 1em $font-lexia,
-        type-font-small: normal normal normal rem(28) / 1em $font-lexia,
+        type-font: normal normal normal rem(32) / 1em $font-primary,
+        type-font-small: normal normal normal rem(28) / 1em $font-primary,
         type-letter-spacing: 1px,
         type-letter-spacing-small: 0.8px,
         type-color: $gray-darkest,
         type-text-transform: normal,
     ),
     'h4': (
-        type-font: normal normal normal rem(32) / 1em $font-veneer,
-        type-font-small: normal normal normal rem(28) / 1em $font-veneer,
+        type-font: normal normal normal rem(32) / 1em $font-primary,
+        type-font-small: normal normal normal rem(28) / 1em $font-primary,
         type-letter-spacing: 1.5px,
         type-letter-spacing-small: 1.25px,
-        type-color: $green,
+        type-color: $body-font-color,
         type-text-transform: normal,
     ),
     'h5': (
-        type-font: normal normal normal rem(24) / 1em $font-lexia,
-        type-font-small: normal normal normal rem(20) / 1em $font-lexia,
+        type-font: normal normal normal rem(24) / 1em $font-primary,
+        type-font-small: normal normal normal rem(20) / 1em $font-primary,
         type-letter-spacing: 0.96px,
         type-letter-spacing-small: 0.8px,
         type-color: $gray-darkest,
@@ -141,7 +142,7 @@ $typography: (
         type-font-small: normal normal normal rem(16) / 1em $font-primary,
         type-letter-spacing: 1.5px,
         type-letter-spacing-small: 1.25px,
-        type-color: $blue,
+        type-color: $body-font-color,
         type-text-transform: uppercase,
     )
 );
@@ -202,6 +203,106 @@ $footer-text-color: $white;
 
 
 /*************************************
+Buttons
+*************************************/
+
+// Button 1
+$button-text-color: $white; //$white;
+$button-bg-color: $gray-med;
+$button-border: 1px solid $white;
+$button-border-radius: 0;
+$button-font-size: 0.88889rem;
+$button-font-weight: normal;
+$button-padding: 0.489rem 1.378rem 0.444rem 1.378rem;
+
+// Hover
+$button-hover-text-color: $white;
+$button-hover-bg-color: $gray-med;
+
+// Dark Backgrounds
+$button-bg-color-on-dark-bg: $transparent;
+$button-border-color-on-dark-bg: $text-light;
+
+$buttons: (
+    'primary': (
+        button-text-color: $white, //$white,
+        button-bg-color: $gray-dark,
+        button-border: 0,
+        button-border-radius: 0,
+        button-font-size: rem(14),
+        button-font-weight: normal,
+        button-padding: 0.65rem 1.5rem 0.5rem 1.5rem,
+        button-box-shadow: none,
+        button-text-transform: uppercase,
+        button-min-width: 174px,
+
+        // Hover
+        button-hover-text-color: $white,
+        button-hover-bg-color: $gray-dark,
+        button-hover-border-color: $gray-dark,
+
+        // Active
+        button-active-text-color: $white,
+        button-active-bg-color: $gray-dark,
+        button-active-border-color: $white,
+
+        // Dark Backgrounds
+        button-text-color-on-dark-bg: $white,
+        button-bg-color-on-dark-bg: $black,
+        button-border-color-on-dark-bg: $text-light,
+
+        // Hover on Dark Backgrounds
+        button-hover-text-color-on-dark-bg: $white,
+        button-hover-bg-color-on-dark-bg: $black,
+        button-hover-border-color-on-dark-bg: $white,
+
+        // Active on Dark Backgrounds
+        button-active-text-color-on-dark-bg: $white,
+        button-active-bg-color-on-dark-bg: $black,
+        button-active-border-color-on-dark-bg: $black,
+    ),
+    'primary-big': (
+        // button-text-color: $white, //$white,
+        // button-bg-color: $gray-med,
+        // button-border: 1px solid $white,
+        // button-border-radius: 0,
+        button-font-size: 1.5rem,
+        // button-font-weight: normal,
+        button-padding: 0.6rem 1.5rem 0.6rem 1.5rem,
+        // button-box-shadow: none,
+
+        // // Hover
+        // button-hover-text-color: $white,
+        // button-hover-bg-color: $gray-med,
+        // button-hover-border-color: $white,
+        //
+        // // Active
+        // button-active-text-color: $white,
+        // button-active-bg-color: $gray-med,
+        // button-active-border-color: $white,
+        //
+        // // Dark Backgrounds
+        // button-text-color-on-dark-bg: $white,
+        // button-bg-color-on-dark-bg: $transparent,
+        // button-border-color-on-dark-bg: $text-light,
+        //
+        // // Hover on Dark Backgrounds
+        // button-hover-text-color-on-dark-bg: $white,
+        // button-hover-bg-color-on-dark-bg: $gray-med,
+        // button-hover-border-color-on-dark-bg: $white,
+        //
+        // // Active on Dark Backgrounds
+        // button-active-text-color-on-dark-bg: $white,
+        // button-active-bg-color-on-dark-bg: $gray-med,
+        // button-active-border-color-on-dark-bg: $black,
+    )
+);
+
+// Set the first Button as the default
+$button-default: map-get($buttons, nth(map-keys($buttons), 1));
+
+
+/*************************************
 Anchors
 *************************************/
 $anchor-color: $black;
@@ -227,7 +328,7 @@ Forms
 *************************************/
 
 // Inputs
-$input-border: 1px solid $blue;
+$input-border: 1px solid $gray-dark;
 $input-border-radius: 0;
 $input-background-color: $transparent;
 $input-padding: 10px 20px 12px 18px;
@@ -244,8 +345,8 @@ $input-checkbox-radio-size: 16px;
 $input-checkbox-radio-margin: 2px;
 $input-checkbox-radio-vertical-align: -6px;
 $input-checked-fill-size: 8px;
-$input-checked-fill-color: $green;
-$input-dark-bg-checked-fill-color: $green;
+$input-checked-fill-color: $gray-dark;
+$input-dark-bg-checked-fill-color: $gray-dark;
 
 // Inputs Focus
 $input-focus-border: 1px solid $gray-dark;
