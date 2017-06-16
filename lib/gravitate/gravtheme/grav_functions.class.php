@@ -1736,16 +1736,16 @@ class GRAV_FUNC {
 	    }
 		elseif(is_single() && file_exists($template_dir.'/single.php'))
 	    {
-	        return $template_dir.'/singu.php';
+	        return $template_dir.'/single.php';
 	    }
 		elseif(is_singular() && file_exists($template_dir.'/singular.php'))
 	    {
 	        return $template_dir.'/singular.php';
 	    }
 
-		if(file_exists($template_dir.'/_default.php'))
+		if(file_exists($template_dir.'/archive.php'))
 		{
-	    	return $template_dir.'/_default.php';
+	    	return $template_dir.'/archive.php';
 		}
 
 	}
