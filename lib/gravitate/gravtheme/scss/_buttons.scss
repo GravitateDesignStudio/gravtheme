@@ -18,6 +18,7 @@ input[type=submit] {
 	padding: map-get($button-default, 'button-padding');
 	text-transform: map-get($button-default, 'button-text-transform');
 	min-width: map-get($button-default, 'button-min-width');
+	min-height: map-get($button-default, 'button-min-height');
 	outline: none;
 	text-align: center;
 	text-decoration: none;

@@ -13,6 +13,23 @@ Gravity Forms
 	}
 }
 
+.gfield_time_minute,
+.gfield_time_hour,
+.gfield_time_ampm {
+    max-width: 33%;
+    display: inline-block !important;
+    input {
+        width: 80%;
+        display: inline-block !important;
+    }
+    i {
+        font-style: normal;
+    }
+    label {
+        display: none;
+    }
+}
+
 
 input[type="text"],
 input[type="number"],
@@ -148,8 +165,8 @@ select {
 		@each $color-name in $bg-colors-with-light-text {
 			.bg-#{$color-name} &,
 			.block-bg-#{$color-name} & {
-				border-top: 1px solid $gray-light;
-				border-right: 1px solid $gray-light;
+				border-top-color: $gray-light;
+				border-right-color: $gray-light;
 			}
 		}
 	}
@@ -160,5 +177,11 @@ select {
 	}
 	select option {
 		color: $input-text-color;
+		@each $color-name in $bg-colors-with-light-text {
+			.bg-#{$color-name} &,
+			.block-bg-#{$color-name} & {
+				color: $input-dark-bg-text-color;
+			}
+		}
 	}
 }

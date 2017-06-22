@@ -11,16 +11,14 @@ jQuery(function($){
 	*
 	*/
 
-	function filter_links()
-	{
-		/* Make all External Links and PDF's open in a new Tab */
-	    var host = new RegExp('/' + window.location.host + '/');
-	    $('a').each(function() {
-		    if ((!host.test(this.href) && this.href.slice(0, 1) != "/" && this.href.slice(0, 1) != "#" && this.href.slice(0, 1) != "?") || this.href.indexOf('.pdf') > 0) {
-			    $(this).attr({'target': '_blank'});
-		    }
-		});
-	}
+
+
+
+
+
+
+
+
 
 	/*
 	* End Functions
@@ -35,7 +33,12 @@ jQuery(function($){
 	*/
 	$(document).ready(function(){
 
-		filter_links();
+		grav.filterLinks();
+		grav.setHeightVars();
+		grav.setScrollVars();
+		grav.addDropDownsToSubMenus();
+		grav.addListenerToMobileMenuButton();
+		grav.wrapInputItems();
 
 	});
 
