@@ -33,7 +33,7 @@
 	<div class="row">
 		 <div class="columns small-12 global-footer-legal text-right">
 
-              <p class="text-right">© <?php echo date('Y');?> <?php echo bloginfo('name');?></p>
+              <p class="text-right">© <?php echo date('Y');?> <?php the_field('copyright_text', 'option');?></p>
 
               <nav class="global-footer-utility-links">
                   <?php GRAV_FUNC::menu('footer-links'); ?>

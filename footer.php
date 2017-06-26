@@ -6,5 +6,7 @@
 
 	<?php wp_footer(); ?>
 
+	<?php the_field('global_body_bottom_content', 'option');?>
+
 </body>
 </html>

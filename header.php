@@ -2,6 +2,7 @@
 <html <?php language_attributes(); ?>>
 
 <head>
+	<?php the_field('global_head_top_content', 'option');?>
 
 	<title><?php bloginfo("name"); ?> <?php wp_title('&bull;'); ?></title>
 
@@ -14,11 +15,15 @@
 
 	<?php wp_head(); ?>
 
+	<?php the_field('global_head_bottom_content', 'option');?>
+
 </head>
 
 
 
 <body id="body" <?php body_class(); ?>>
+
+	<?php the_field('global_body_top_content', 'option');?>
 
 	<div class="global-wrapper">
 
