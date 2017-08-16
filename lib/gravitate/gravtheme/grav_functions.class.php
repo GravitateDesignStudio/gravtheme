@@ -1445,7 +1445,7 @@ class GRAV_FUNC {
 
 		foreach (self::get_default_menus() as $menu => $menu_title)
 		{
-			if(!wp_get_nav_menu_object($menu))
+			if (!in_array($menu, array_keys(get_registered_nav_menus())))
 			{
 				$menu_id = wp_create_nav_menu($menu);
 				$menu_locations[$menu] = $menu_id;
