@@ -2,7 +2,7 @@
 <html <?php language_attributes(); ?>>
 
 <head>
-	<?php the_field('global_head_top_content', 'option');?>
+	<?php the_field('global_head_top_content', 'option', false); ?>
 
 	<title><?php bloginfo("name"); ?> <?php wp_title('&bull;'); ?></title>
 
@@ -15,7 +15,7 @@
 
 	<?php wp_head(); ?>
 
-	<?php the_field('global_head_bottom_content', 'option');?>
+	<?php the_field('global_head_bottom_content', 'option', false); ?>
 
 </head>
 
@@ -23,7 +23,7 @@
 
 <body id="body" <?php body_class(); ?>>
 
-	<?php the_field('global_body_top_content', 'option');?>
+	<?php the_field('global_body_top_content', 'option', false); ?>
 
 	<div class="global-wrapper">
 
