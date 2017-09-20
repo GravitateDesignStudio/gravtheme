@@ -1505,7 +1505,7 @@ class GRAV_FUNC {
 	{
 		if(($admin && is_admin()) || (!$admin && !is_admin()))
 		{
-	    	$cache_var = 0;
+	    	$cache_var = null;
 
 	    	if(strpos($script_file, get_template_directory_uri()) !== false) // If Local file then get the time of when it was modified
 	    	{
