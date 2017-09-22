@@ -58,7 +58,7 @@ $font-arial: Arial, sans-serif;
 // $font-veneer: 'veneerregular', Arial, sans-serif;
 $font-primary: $font-arial;
 
-$body-font: normal normal 100 rem(16) / 1em $font-primary;
+$body-font: normal normal 100 rem(16) / 1 $font-primary;
 $body-font-color: $text-dark;
 
 // Global Size Change
