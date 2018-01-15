@@ -1,0 +1,412 @@
+/*************************************
+Foundation Variables
+-- Foundation variables reference: https://github.com/zurb/foundation-sites/blob/develop/scss/settings/_settings.scss
+-- local reference can be found at: node_modules/foundation-sites/scss/settings/_settings.scss
+**************************************/
+$global-width: 1300px;
+
+$row-max-width-num: 1440;
+$row-max-width: #{$row-max-width-num}px;
+$outer-gutter-width-small: 1rem;
+$outer-gutter-width: 2.85rem;
+$gutter-width-small: 1.25rem;
+$gutter-width: 1.25rem;
+$medium: 641px;
+$large: 1025px;
+$xlarge: 1441px;
+$xxlarge: 1921px;
+
+/*************************************
+z-index
+**************************************/
+$z-root: 0;
+
+$z-header: $z-root + 10;
+
+
+/*************************************
+Colors
+**************************************/
+$black:         #000000;
+$blue:          #145CA1;
+$red:           #98143C;
+$gray:          #D4D7DA;
+$white:         #ffffff;
+
+
+$text-light: $white;
+$text-dark: $black;
+
+$error-text: $red;
+$transparent: rgba($black, 0);
+$shadow: rgba($black, 0.1);
+
+$bg-colors: (
+    white: $white,
+    black: $black,
+    blue: $blue,
+    red: $red,
+    gray: $gray
+);
+
+$bg-colors-with-light-text: (
+    'image',
+    'video',
+    'black',
+    'blue',
+    'brown',
+    'red'
+);
+
+
+/*************************************
+Typography
+**************************************/
+$font-arial: Arial, sans-serif;
+$font-primary: $font-arial;
+
+$body-font: normal normal 100 rem(16) / 1 $font-primary;
+$body-font-color: $text-dark;
+
+// Global Size Change
+$font-size-small: 80%;
+$font-size-medium: 90%;
+
+// Blockquote
+$blockquote-margin: 2em 1em;
+
+// Max Content Width
+$content-max-width: $large;
+
+// Font Settings
+$typography: (
+    'body': (
+        type-font: $body-font,
+        type-font-small: $body-font,
+        type-letter-spacing: 0.3px,
+        type-letter-spacing-small: 0.3px,
+        type-color: $body-font-color,
+        type-text-transform: none,
+    ),
+    'p': (
+        type-font: normal normal 100 rem(16) / 1.5 $font-primary,
+        type-font-small: normal normal 100 rem(16) / 1.5 $font-primary,
+        type-letter-spacing: 0.3px,
+        type-letter-spacing-small: 0.3px,
+        type-color: $body-font-color,
+        type-text-transform: none,
+    ),
+    'blockquote': (
+        type-font: normal normal normal rem(24) / 1.5 $font-primary,
+        type-font-small: normal normal normal rem(24) / 1.5 $font-primary,
+        type-letter-spacing: 0.5px,
+        type-letter-spacing-small: 0.5px,
+        type-color: $body-font-color,
+        type-text-transform: none,
+    ),
+    'h1': (
+        type-font: normal normal normal rem(70) / 1 $font-primary,
+        type-font-small: normal normal normal rem(50) / 1 $font-primary,
+        type-letter-spacing: 2px,
+        type-letter-spacing-small: 1.5px,
+        type-color: $body-font-color,
+        type-text-transform: none,
+    ),
+    'h2': (
+        type-font: normal normal normal rem(46) / 1 $font-primary,
+        type-font-small: normal normal normal rem(40) / 1 $font-primary,
+        type-letter-spacing: 2px,
+        type-letter-spacing-small: 1.5px,
+        type-color: $body-font-color,
+        type-text-transform: none,
+    ),
+    'h3': (
+        type-font: normal normal normal rem(32) / 1 $font-primary,
+        type-font-small: normal normal normal rem(28) / 1 $font-primary,
+        type-letter-spacing: 1px,
+        type-letter-spacing-small: 0.8px,
+        type-color: $body-font-color,
+        type-text-transform: none,
+    ),
+    'h4': (
+        type-font: normal normal normal rem(32) / 1 $font-primary,
+        type-font-small: normal normal normal rem(28) / 1 $font-primary,
+        type-letter-spacing: 1.5px,
+        type-letter-spacing-small: 1.25px,
+        type-color: $body-font-color,
+        type-text-transform: none,
+    ),
+    'h5': (
+        type-font: normal normal normal rem(24) / 1 $font-primary,
+        type-font-small: normal normal normal rem(20) / 1 $font-primary,
+        type-letter-spacing: 0.96px,
+        type-letter-spacing-small: 0.8px,
+        type-color: $body-font-color,
+        type-text-transform: none,
+    ),
+    'h6': (
+        type-font: normal normal normal rem(17) / 1 $font-primary,
+        type-font-small: normal normal normal rem(16) / 1 $font-primary,
+        type-letter-spacing: 1.5px,
+        type-letter-spacing-small: 1.25px,
+        type-color: $body-font-color,
+        type-text-transform: uppercase,
+    )
+);
+
+
+/*************************************
+Forms
+*************************************/
+
+// Inputs
+$input-border: 1px solid $black;
+$input-border-radius: 0;
+$input-background-color: $transparent;
+$input-padding: 10px 20px 12px 18px;
+$input-min-height: 45px;
+$input-padding-medium: 10px 20px 12px 18px;
+$input-min-height-medium: 41px;
+$input-padding-small: 8px 20px 8px 18px;
+$input-min-height-small: 36px;
+$input-font: $body-font;
+$input-text-color: $body-font-color;
+$input-placeholder-color: $gray;
+
+$input-checkbox-radio-size: 16px;
+$input-checkbox-radio-margin: 2px;
+$input-checkbox-radio-vertical-align: -6px;
+$input-checked-fill-size: 8px;
+$input-checked-fill-color: $black;
+$input-dark-bg-checked-fill-color: $black;
+
+// Inputs Focus
+$input-focus-border: 1px solid $black;
+$input-focus-border-radius: 0;
+$input-focus-background-color: $transparent;
+$input-focus-padding: $input-padding;
+$input-focus-text-color: $body-font-color;
+
+// Inputs on Dark Backgrounds
+$input-dark-bg-border: 1px solid $gray;
+$input-dark-bg-border-radius: 0;
+$input-dark-bg-background-color: $transparent;
+$input-dark-bg-text-color: $gray;
+$input-dark-bg-placeholder-color: $gray;
+
+// Inputs Focus on Dark Backgrounds
+$input-dark-bg-focus-border: 1px solid $white;
+$input-dark-bg-focus-border-radius: 0;
+$input-dark-bg-focus-background-color: $transparent;
+$input-dark-bg-focus-text-color: $white;
+
+
+/*************************************
+Buttons
+*************************************/
+
+// Button 1
+$button-text-color: $white; //$white;
+$button-bg-color: $black;
+$button-border: 1px solid $white;
+$button-border-radius: 0;
+$button-font-size: 0.88889rem;
+$button-font-weight: normal;
+$button-padding: 0.489rem 1.378rem 0.444rem 1.378rem;
+
+// Hover
+$button-hover-text-color: $white;
+$button-hover-bg-color: $gray;
+
+// Dark Backgrounds
+$button-bg-color-on-dark-bg: $transparent;
+$button-border-color-on-dark-bg: $text-light;
+
+$buttons: (
+    'primary': (
+        button-text-color: $white, //$white,
+        button-bg-color: $black,
+        button-border: 0,
+        button-border-radius: 0,
+        button-font-size: rem(14),
+        button-font-weight: normal,
+        button-padding: 0.65rem 1.5rem 0.5rem 1.5rem,
+        button-box-shadow: none,
+        button-text-transform: uppercase,
+        button-min-width: 174px,
+        button-min-height: $input-min-height,
+
+        // Hover
+        button-hover-text-color: $white,
+        button-hover-bg-color: $black,
+        button-hover-border-color: $black,
+
+        // Active
+        button-active-text-color: $white,
+        button-active-bg-color: $black,
+        button-active-border-color: $white,
+
+        // Dark Backgrounds
+        button-text-color-on-dark-bg: $white,
+        button-bg-color-on-dark-bg: $black,
+        button-border-color-on-dark-bg: $text-light,
+
+        // Hover on Dark Backgrounds
+        button-hover-text-color-on-dark-bg: $white,
+        button-hover-bg-color-on-dark-bg: $black,
+        button-hover-border-color-on-dark-bg: $white,
+
+        // Active on Dark Backgrounds
+        button-active-text-color-on-dark-bg: $white,
+        button-active-bg-color-on-dark-bg: $black,
+        button-active-border-color-on-dark-bg: $black,
+    ),
+    'secondary': (
+        button-text-color: $black, //$white,
+        button-bg-color: $white,
+        button-border: 1px solid $black,
+
+        // Hover
+        button-hover-text-color: $blue,
+        // button-hover-bg-color: $gray-med,
+        button-hover-border-color: $blue,
+
+        // // Active
+        // button-active-text-color: $white,
+        // button-active-bg-color: $gray-med,
+        // button-active-border-color: $white,
+
+        // Dark Backgrounds
+        button-text-color-on-dark-bg: $text-light,
+        button-bg-color-on-dark-bg: $transparent,
+        button-border-color-on-dark-bg: $text-light,
+
+        // Hover on Dark Backgrounds
+        button-hover-text-color-on-dark-bg: $black,
+        button-hover-bg-color-on-dark-bg: $transparent,
+        button-hover-border-color-on-dark-bg: $black,
+        //
+        // // Active on Dark Backgrounds
+        // button-active-text-color-on-dark-bg: $white,
+        // button-active-bg-color-on-dark-bg: $gray-med,
+        // button-active-border-color-on-dark-bg: $black,
+    ),
+    'primary-big': (
+        // button-text-color: $white, //$white,
+        // button-bg-color: $gray-med,
+        // button-border: 1px solid $white,
+        // button-border-radius: 0,
+        button-font-size: 1.5rem,
+        // button-font-weight: normal,
+        button-padding: 0.6rem 1.5rem 0.6rem 1.5rem,
+        // button-box-shadow: none,
+
+        // // Hover
+        // button-hover-text-color: $white,
+        // button-hover-bg-color: $gray-med,
+        // button-hover-border-color: $white,
+        //
+        // // Active
+        // button-active-text-color: $white,
+        // button-active-bg-color: $gray-med,
+        // button-active-border-color: $white,
+        //
+        // // Dark Backgrounds
+        // button-text-color-on-dark-bg: $white,
+        // button-bg-color-on-dark-bg: $transparent,
+        // button-border-color-on-dark-bg: $text-light,
+        //
+        // // Hover on Dark Backgrounds
+        // button-hover-text-color-on-dark-bg: $white,
+        // button-hover-bg-color-on-dark-bg: $gray-med,
+        // button-hover-border-color-on-dark-bg: $white,
+        //
+        // // Active on Dark Backgrounds
+        // button-active-text-color-on-dark-bg: $white,
+        // button-active-bg-color-on-dark-bg: $gray-med,
+        // button-active-border-color-on-dark-bg: $black,
+    )
+);
+
+// Set the first Button as the default
+$button-default: map-get($buttons, nth(map-keys($buttons), 1));
+
+
+/*************************************
+Anchors
+*************************************/
+$anchor-color: $black;
+$anchor-text-decoration: none;
+
+// Anchor Hover
+$anchor-hover-color: $black;
+$anchor-hover-text-decoration: underline;
+
+// Dark backgrounds
+$anchor-color-on-dark-bg: $white;
+$anchor-hover-color-on-dark-bg: $gray;
+
+
+/*************************************
+Blocks
+*************************************/
+$block-padding: 4rem 0;
+
+
+/*************************************
+Spacing
+*************************************/
+$base-spacing: (
+    blockquote: 1.66667rem,
+    ul: 1rem,
+    ol: 1rem,
+    h1: 2.5rem,
+    h2: 1.88889rem,
+    h3: 1.5rem,
+    h4: 1.25rem,
+    h5: 1.1111rem,
+     p: 1.1111rem
+);
+$h1-spacing: (
+    h2: 1.375rem,
+    h3: 1.25rem,
+    h4: 1rem,
+    h5: .75rem,
+    h6: .5rem,
+     p: 1rem
+);
+$h2-spacing: (
+    h3: 1rem,
+    h4: 1rem,
+    h5: .5rem,
+    h6: .325rem,
+     p: .555rem
+);
+$h3-spacing: (
+    h4: .375rem,
+    h5: .25rem,
+    h6: .125rem,
+     p: .555rem
+);
+$h4-spacing: (
+    h5: .25rem,
+    h6: .125rem,
+     p: 1rem
+);
+$h5-spacing: (
+    h6: .125rem,
+    ul: .5555rem,
+    ol: .5555rem,
+     p: .5rem
+);
+$h6-spacing: (
+    ul: .5555rem,
+    ol: .5555rem,
+     p: .2777rem
+);
+
+
+/*************************************
+Other
+*************************************/
+$transition-speed: 0.2s;

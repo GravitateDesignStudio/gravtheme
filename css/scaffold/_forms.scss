@@ -1,0 +1,289 @@
+$form-disabled-opacity: 0.4 !default;
+
+input[type="text"],
+input[type="number"],
+input[type="tel"],
+input[type="url"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+	transition: all $transition-speed ease-out;
+	appearance: none;
+	border-radius: $input-border-radius;
+	border: $input-border;
+	padding: $input-padding-small;
+	background: $input-background-color;
+	min-height: $input-min-height-small;
+	font: $input-font;
+	color: $input-text-color;
+	display: block;
+	width: 100%;
+
+	&::placeholder {
+		color: $input-placeholder-color;
+	}
+
+	@include media-min($medium) {
+	    display: inline-block;
+		width: auto;
+		padding: $input-padding-medium;
+		min-height: $input-min-height-medium;
+	}
+
+	@include media-min($large) {
+		padding: $input-padding;
+		min-height: $input-min-height;
+	}
+
+	&:focus {
+		border-radius: $input-focus-border-radius;
+		border: $input-focus-border;
+		padding: $input-focus-padding;
+		background: $input-focus-background-color;
+		color: $input-focus-text-color;
+	}
+
+	@each $color-name in $bg-colors-with-light-text {
+		.bg-#{$color-name} &,
+		.block-bg-#{$color-name} & {
+			border-radius: $input-dark-bg-border-radius;
+			border: $input-dark-bg-border;
+			background: $input-dark-bg-background-color;
+			color: $input-dark-bg-text-color;
+
+			&::placeholder {
+				color: $input-dark-bg-placeholder-color;	
+			}
+
+			&:focus {
+				border-radius: $input-dark-bg-focus-border-radius;
+				border: $input-dark-bg-focus-border;
+				background: $input-dark-bg-focus-background-color;
+				color: $input-dark-bg-focus-text-color;
+			}
+		}
+	}
+
+	&:disabled {
+		opacity: $form-disabled-opacity;
+	}
+}
+
+select,
+select:focus {
+	background-image: url('../../media/images/arrow-down.png');
+	background-repeat: no-repeat;
+	background-position: calc(100% - 10px) 50%;
+	padding-right: 35px;
+
+	&:disabled {
+		opacity: $form-disabled-opacity;
+	}
+}
+
+select::-ms-expand {
+	display: none;
+}
+
+input[type=checkbox],
+input[type=radio] {
+	display: none;
+
+	& + label {
+		cursor: pointer;
+		position: relative;
+		padding-left: 25px;
+		display: inline-block;
+		line-height: 1.2;
+
+		&::before,
+		&::after {
+			content: '';
+			position: absolute;
+		}
+
+		&::before {
+			width: $input-checkbox-radio-size;
+			height: $input-checkbox-radio-size;
+			// border: 1px solid $gray;
+			border: $input-border;
+			background: $white;
+		}
+
+		&::after {
+			opacity: 0;
+			transition: opacity $transition-speed ease-in;
+		}
+
+		& + input[type=checkbox],
+		& + input[type=radio] {
+			& + label {
+				margin-left: 2rem;
+			}
+		}
+	}
+
+	&:checked + label {
+		&::after {
+			opacity: 1;
+		}
+	}
+
+	&:disabled + label {
+		opacity: $form-disabled-opacity;
+	}
+}
+
+input[type=checkbox] {
+	& + label {
+		&::before {
+			transform: translateY(-50%);
+			top: 50%;
+			left: 0;
+		}
+
+		&::after {
+			transform: translateY(-50%);
+			top: 50%;
+			left: 4px;
+			width: #{$input-checkbox-radio-size - 8px};
+			height: #{$input-checkbox-radio-size - 8px};
+			background: $input-checked-fill-color;
+		}
+	}
+}
+
+input[type=radio] {
+	& + label {
+		&::before {
+			transform: translateY(-50%);
+			top: 50%;
+			left: 0;
+
+			border-radius: 100%;
+		}
+
+		&::after {
+			transform: translateY(-50%);
+			top: 50%;
+			left: 4px;
+			width: #{$input-checkbox-radio-size - 8px};
+			height: #{$input-checkbox-radio-size - 8px};
+			border-radius: 100%;
+			background: $input-checked-fill-color;
+		}
+	}
+}
+
+
+.input-wrapper {
+	display: inline-block;
+	position: relative;
+	input,
+	select {
+		appearance: none;
+	}
+
+	&.input-wrapper-checkbox,
+	&.input-wrapper-radio {
+		@include size($input-checkbox-radio-size);
+
+		margin: $input-checkbox-radio-margin;
+		vertical-align: $input-checkbox-radio-vertical-align;
+		border: $input-border;
+
+		@each $color-name in $bg-colors-with-light-text {
+			.bg-#{$color-name} &,
+			.block-bg-#{$color-name} & {
+				border: $input-dark-bg-border;
+			}
+		}
+
+		input {
+			@include absolute();
+		}
+
+		&.checked {
+			&::before {
+				@include absolute();
+				@include size($input-checked-fill-size);
+
+				content: '';
+				display: block;
+				background: $input-checked-fill-color;
+
+				@each $color-name in $bg-colors-with-light-text {
+					.bg-#{$color-name} &,
+					.block-bg-#{$color-name} & {
+						background: $input-dark-bg-checked-fill-color;
+					}
+				}
+			}
+		}
+	}
+
+	&.input-wrapper-radio {
+		border-radius: 50%;
+
+		&.checked {
+			&::before {
+				border-radius: 50%;
+			}
+		}
+	}
+}
+
+.input-wrapper-select {
+	position: relative;
+	display: block;
+	width: 100%;
+
+	@include media-min($medium) {
+	    display: inline-block;
+		width: auto;
+	}
+
+	select::-ms-expand {
+		display: none;
+	}
+
+	&::before,
+	&::after {
+		transform: rotate(-45deg);
+		position: absolute;
+	    top: 30%;
+		right: 10px;
+		content: '';
+		display: block;
+		width: 6px;
+		height: 6px;
+		border-top: 1px solid $black;
+		border-right: 1px solid $black;
+
+		@each $color-name in $bg-colors-with-light-text {
+			.bg-#{$color-name} &,
+			.block-bg-#{$color-name} & {
+				border-top-color: $gray;
+				border-right-color: $gray;
+			}
+		}
+	}
+
+	&::after {
+		transform: rotate(135deg);
+	    top: auto;
+		bottom: 30%;
+	}
+
+	select option {
+		color: $input-text-color;
+
+		@each $color-name in $bg-colors-with-light-text {
+			.bg-#{$color-name} &,
+			.block-bg-#{$color-name} & {
+				color: $input-dark-bg-text-color;
+			}
+		}
+	}
+}

@@ -1,0 +1,12 @@
+/*
+* Set base and after header spacing.
+*/
+$spacing: ('*': $base-spacing, h1: $h1-spacing, h2: $h2-spacing, h3: $h3-spacing, h4: $h4-spacing, h5: $h5-spacing, h6: $h6-spacing);
+
+@each $elem, $current-spacing in $spacing {
+	@each $h, $margin in $current_spacing {
+		#{$elem} + #{$h} {
+			margin-top: $margin;
+		}
+	}
+}

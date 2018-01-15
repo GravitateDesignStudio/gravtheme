@@ -1,0 +1,141 @@
+/* Global Styles Here */
+html {
+	font-size: $font-size-small;
+	
+	@include media-min($medium) {
+	    font-size: $font-size-medium;
+	}
+
+	@include media-min($large) {
+	    font-size: 100%;
+	}
+}
+
+a {
+	color: $anchor-color;
+	text-decoration: $anchor-text-decoration;
+	
+	&:hover {
+		color: $anchor-hover-color;
+		text-decoration: $anchor-hover-text-decoration;
+	}
+
+	@each $color_name in $bg-colors-with-light-text {
+		.bg-#{$color_name} & {
+			color: $anchor-color-on-dark-bg;
+			&:hover {
+				color: $anchor-hover-color-on-dark-bg;
+			}
+		}
+	}
+}
+
+ul {
+	padding: 0;
+	
+	nav & {
+		list-style: none;
+		list-style-position: inside;
+	}
+}
+
+table {
+	thead {
+		tr {
+			th {
+				border-bottom: 1px solid $gray;
+  				padding: 0.5rem;
+  				text-align: left;
+			}
+		}
+	}
+
+	tbody {
+		tr {
+			td {
+				border-bottom: 1px solid $gray;
+  				padding: 0.5rem;
+  				text-align: left;
+			}
+		}
+	}
+}
+
+/*
+ *  Typography
+ */
+@each $type-name, $type-fields in $typography {
+	#{$type-name},
+	%#{$type-name} {
+		font: map-get($type-fields, 'type-font-small');
+		color: map-get($type-fields, 'type-color');
+		text-transform: map-get($type-fields, 'type-text-transform');
+		letter-spacing: map-get($type-fields, 'type-letter-spacing-small');
+		
+		@include media-min($medium) {
+		    font: map-get($type-fields, 'type-font');
+			letter-spacing: map-get($type-fields, 'type-letter-spacing');
+		}
+	}
+}
+
+/*
+ *  Dark Background Colors and Light Text
+ */
+@each $color_name, $color_value in $bg-colors {
+	.bg-#{$color_name},
+	.block-bg-#{$color_name} {
+		background-color: $color_value;
+	}
+}
+
+@each $color_name in $bg-colors-with-light-text {
+	.bg-#{$color_name},
+	.bg-#{$color_name} .block-inner,
+	.block-bg-#{$color_name},
+	.block-bg-#{$color_name} .block-inner {
+		color: $text-light;
+		
+		* {
+			color: $text-light;
+		}
+	}
+}
+
+blockquote {
+	margin: $blockquote-margin;
+	
+	&::before {
+	   content: '\201C';
+    }
+	
+	&::after {
+	   content: '\201D';
+    }
+	
+	p {
+	    font: inherit;
+	    display: inline;
+	    color: inherit;
+	}
+}
+
+video {
+	max-width: 100%;
+}
+
+.wysiwyg {
+	ul,
+	ol {
+		padding-left: 0;
+		margin-top: 0.5rem;
+
+		li {
+			margin: 0 0 0.5rem 1.5rem;
+
+			li {
+				margin-left: 1.5rem;
+			}
+		}
+	}
+}

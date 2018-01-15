@@ -39,9 +39,9 @@ input[type="email"],
 input[type="password"],
 textarea,
 select {
-	@include transition(all $transition-speed ease-out);
-	@include appearance(none);
-	@include border-radius($input-border-radius);
+	transition: all $transition-speed ease-out;
+	appearance: none;
+	border-radius: $input-border-radius;
 	border: $input-border;
 	padding: $input-padding-small;
 	background: $input-background-color;
@@ -50,9 +50,11 @@ select {
 	color: $input-text-color;
 	display: block;
 	width: 100%;
-	@include input-placeholder {
+
+	&::placeholder {
 		color: $input-placeholder-color;
-	};
+	}
+
 	@include media-min($medium) {
 	    display: inline-block;
 		width: auto;
@@ -64,7 +66,7 @@ select {
 		min-height: $input-min-height;
 	}
 	&:focus {
-		@include border-radius($input-focus-border-radius);
+		border-radius: $input-focus-border-radius;
 		border: $input-focus-border;
 		padding: $input-focus-padding;
 		background: $input-focus-background-color;
@@ -73,15 +75,17 @@ select {
 	@each $color-name in $bg-colors-with-light-text {
 		.bg-#{$color-name} &,
 		.block-bg-#{$color-name} & {
-			@include border-radius($input-dark-bg-border-radius);
+			border-radius: $input-dark-bg-border-radius;
 			border: $input-dark-bg-border;
 			background: $input-dark-bg-background-color;
 			color: $input-dark-bg-text-color;
-			@include input-placeholder {
-				color: $input-dark-bg-placeholder-color;
-			};
+
+			&::placeholder {
+				color: $input-dark-bg-placeholder-color;	
+			}
+
 			&:focus {
-				@include border-radius($input-dark-bg-focus-border-radius);
+				border-radius: $input-dark-bg-focus-border-radius;
 				border: $input-dark-bg-focus-border;
 				background: $input-dark-bg-focus-background-color;
 				color: $input-dark-bg-focus-text-color;
@@ -95,7 +99,7 @@ select {
 	position: relative;
 	input,
 	select {
-		@include appearance(none);
+		appearance: none;
 	}
 
 	&.input-wrapper-checkbox,
@@ -130,10 +134,10 @@ select {
 		}
 	}
 	&.input-wrapper-radio {
-		@include border-radius(50%);
+		border-radius: 50%;
 		&.checked {
 			&::before {
-				@include border-radius(50%);
+				border-radius: 50%;
 			}
 		}
 	}
@@ -152,7 +156,7 @@ select {
 	}
 	&::before,
 	&::after {
-		@include transform(rotate(-45deg));
+		transform: rotate(-45deg);
 		position: absolute;
 	    top: 30%;
 		right: 10px;
@@ -171,7 +175,7 @@ select {
 		}
 	}
 	&::after {
-		@include transform(rotate(135deg));
+		transform: rotate(135deg);
 	    top: auto;
 		bottom: 30%;
 	}

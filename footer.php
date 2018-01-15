@@ -1,12 +1,13 @@
 		</main> <?php // end .global-content ?>
 
-		<?php get_template_part( 'parts/footer', 'default' );?>
+		<?php Grav\WP\Content::get_template_part('components/footer'); ?>
 
 	</div> <?php // end .global-wrapper ?>
 
-	<?php wp_footer(); ?>
+	<?php
+	wp_footer();
 
-	<?php the_field('global_body_bottom_content', 'option', false); ?>
-
+	the_field('global_body_bottom_content', 'option', false);
+	?>
 </body>
 </html>

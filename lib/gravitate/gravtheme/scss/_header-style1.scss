@@ -13,7 +13,7 @@ body {
         margin-top: $header-height-mobile-menu;
     }
     html.scrolled & {
-        @include transition(margin-top $transition-speed cubic-bezier(0, 1, 0.5, 1));
+        transition: margin-top $transition-speed cubic-bezier(0, 1, 0.5, 1);
     }
 }
 
@@ -22,7 +22,7 @@ body {
 *  Main Styles for Header and Menus
 */
 .global-header {
-    @include transition(none);
+    transition: none;
     @include fixed(0,0,auto,auto);
     display: flex;
     align-items: center;
@@ -60,7 +60,7 @@ body {
         }
     }
     html.scrolled & {
-        @include transition(all $transition-speed cubic-bezier(0, 1, 0.5, 1));
+        transition: all $transition-speed cubic-bezier(0, 1, 0.5, 1);
     }
     body.admin-bar & {
         top: 46px;
@@ -80,7 +80,7 @@ body {
     }
     .menu-item-has-children .sub-menu ul,
     .global-header-mobile-nav-container .menu-item-has-children .sub-menu {
-        @include transition(all 0.2s ease-out);
+        transition: all 0.2s ease-out;
         max-height: 0;
         opacity: 0.4;
         overflow: hidden;
@@ -104,7 +104,7 @@ body {
                 margin: .5rem 1rem;
             }
             > .nav-dropdown::after {
-                @include transform(rotate(45deg));
+                transform: rotate(45deg);
             }
         }
         .nav-dropdown {
@@ -116,8 +116,8 @@ body {
             padding: 14px;
             &::after {
                 @include absolute(5px, 5px, auto, auto);
-                @include transform(rotate(-45deg));
-                @include transition(all $transition-speed ease-out);
+                transform: rotate(-45deg);
+                transition: all $transition-speed ease-out;
                 display: block;
                 content: '';
                 border: solid $black;
@@ -174,7 +174,7 @@ body {
         display: none;
     }
     input[type="text"] {
-        @include transition(all $transition-speed ease-out);
+        transition: all $transition-speed ease-out;
         background: inherit;
         color: $white;
         border: 1px solid $white;
@@ -194,8 +194,8 @@ body {
 *   Main Utility Links
 */
 .global-header-main-links-nav-container {
-    @include transition(all 0.1s ease-out);
-    @include transform(scaleY(1));
+    transition: all 0.1s ease-out;
+    transform: scaleY(1);
     max-height: 40px;
 }
 
@@ -239,9 +239,9 @@ body {
             }
             > .sub-menu {
                 @include absolute(0, auto, auto, auto);
-                @include transition(opacity 0.1s ease-out, transform 0.1s cubic-bezier(0, 1, 0.5, 1));
-                @include transform(translateY(-20px) scaleY(0.8));
-                @include transform-origin(center, top);
+                transition: opacity 0.1s ease-out, transform 0.1s cubic-bezier(0, 1, 0.5, 1);
+                transform: translateY(-20px) scaleY(0.8);
+                transform-origin: center top;
                 background-color: $header-bg-color;
                 width: $nav-submenu-width;
                 padding: 20px 20px 20px 0;
@@ -251,7 +251,7 @@ body {
             }
             &:hover {
                 > .sub-menu {
-                    @include transform(translateY(0) scaleY(1));
+                    transform: translateY(0) scaleY(1);
                     opacity: 1;
                     pointer-events: all;
                 }
@@ -280,7 +280,7 @@ body {
         padding: $header-logo-padding;
         display: flex;
         img {
-            @include transition(all $transition-speed ease-out);
+            transition: all $transition-speed ease-out;
             height: auto;
             max-width: $header-logo-max-width-small;
             max-height: 100%;
@@ -304,9 +304,9 @@ body {
 }
 
 .global-header-mobile-nav-container {
-    @include transition(all $transition-speed cubic-bezier(0, 1, 0.5, 1));
-    @include transform(translateY(-20px) scaleY(0.8));
-    @include transform-origin(center, top);
+    transition: all $transition-speed cubic-bezier(0, 1, 0.5, 1);
+    transform: translateY(-20px) scaleY(0.8);
+    transform-origin: center top;
     position: relative;
     pointer-events: none;
     background-color: $header-bg-color;
@@ -318,7 +318,7 @@ body {
         display: none;
     }
     .mobile-menu-open & {
-        @include transform(translateY(0) scaleY(1));
+        transform: translateY(0) scaleY(1);
         opacity: 1;
         pointer-events: all;
     }
@@ -342,7 +342,7 @@ body {
 *   Mobile Menu Button
 */
 .button-mobile-menu {
-    @include transform(translateY(-50%));
+    transform: translateY(-50%);
     @include absolute(46%, 12px, auto, auto);
     background-color: $transparent;
     height: 42px;
@@ -354,7 +354,7 @@ body {
         display: none;
     }
     span {
-        @include transform(-50%);
+        transform: -50%;
         @include absolute(50%, 0, auto, 0);
         margin: auto;
         width: 60%;
@@ -373,7 +373,7 @@ body {
     span,
     span::before,
     span::after {
-        @include transition(all $transition-speed ease-in-out);
+        transition: all $transition-speed ease-in-out;
         background-color: $white;
         border-radius: 4px;
         position: absolute;
@@ -389,10 +389,10 @@ body {
                 top: 0;
             }
             &::before {
-                @include transform(rotate(45deg));
+                transform: rotate(45deg);
             }
             &::after {
-                @include transform(rotate(-45deg));
+                transform: rotate(-45deg);
             }
         }
     }

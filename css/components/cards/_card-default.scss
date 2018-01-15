@@ -1,0 +1,18 @@
+.card {
+	display: block;
+	background: $gray;
+
+	&__image {
+		width: 100%;
+		height: 200px;
+		object-fit: cover;
+	}
+
+	&__title {
+		padding: 0 1rem;
+	}
+
+	&__content {
+		padding: 1rem;
+	}
+}

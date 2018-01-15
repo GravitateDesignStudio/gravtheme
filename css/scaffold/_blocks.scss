@@ -1,0 +1,17 @@
+$block-padding: 4rem 0 !default;
+
+// remove default 'block-inner' top padding from the second block
+// in a series of two with the same background color
+@each $color_name, $color_value in $bg-colors {
+	.block-container.#{$color_name} + .block-container.#{$color_name} {
+		.block-inner {
+			padding-top: 0;
+		}
+	}
+}
+
+.block-container {
+	.block-inner {
+		padding: $block-padding;
+	}
+}

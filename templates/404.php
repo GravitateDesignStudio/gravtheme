@@ -1,25 +1,38 @@
-<?php get_header(); ?>
+<?php
+get_header();
 
-	<section class="section-container">
-		<div class="section-inner">
-			<div class="row">
-				<div class="columns">
-					<h1>404 - Not Found</h1>
+$title = get_field('theme_options_404_title', 'option');
+$content = get_field('theme_options_404_content', 'option');
 
-					<p>We're sorry, the page you requested cannot be found.</p>
+if (!$title) {
+	$title = '404 - Not Found';
+}
+?>
 
-					<p>If you typed the URL yourself, please make sure that the spelling is correct. <br />
+<section class="banner banner-four-oh-four">
+	<div class="row">
+		<div class="columns small-12 text-center">
+			<h1 class="banner__title">404 - Not Found</h1>
+		</div>
+	</div>
+</section>
 
-					If you clicked on a link to get here, there may be a problem with the link. <br />
-
-					Try using your browser's "Back" button or the "Return to previous page" link below to choose a different link on that page, or use search to find what you are looking for.</p>
-
-					<p>We apologize for the inconvenience!</p>
-
-					<p><a href="javascript:history.back();">&raquo; Return to previous page</a></p>
-				</div>
+<?php if ($content) { ?>
+<section class="section-container">
+	<div class="section-inner">
+		<div class="row">
+			<div class="columns small-12 wysiwyg">
+				<?php echo $content; ?>
 			</div>
 		</div>
-	</section>
+	</div>
+</section>
+<?php } ?>
 
-<?php get_footer(); ?>
+<?php
+GRAV_BLOCKS::display(array(
+	'section' => '404_blocks_grav_blocks',
+	'object' => 'option'
+));
+
+get_footer();

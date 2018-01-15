@@ -1,0 +1,28 @@
+.style-testing {
+	&__icon-container {
+		column-count: 2;
+
+		@include media-min($medium) {
+			column-count: 3;
+		}
+
+		@include media-min($large) {
+			column-count: 4;
+		}
+	}
+
+	&__icon-row {
+		display: flex;
+		align-items: center;
+		margin-bottom: 1.5rem;
+	}
+
+	&__icon {
+		width: 48px;
+		height: 48px;
+	}
+
+	&__icon-name {
+		margin-left: 1rem;
+	}
+}

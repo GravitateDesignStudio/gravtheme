@@ -1,0 +1,13 @@
+{
+    "name": "gravitate/gravtheme",
+    "description": "Gravitate WordPress Starter Theme",
+    "type": "project",
+    "require": {
+        "gravitate/grav-util": "^1.2"
+    },
+	"autoload": {
+		"psr-4": {
+            "ClientNamespace\\": "inc/ClientNamespace/"
+		}
+	}
+}

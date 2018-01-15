@@ -1,44 +1,34 @@
 <?php
-
-if ( !defined('ABSPATH') ) exit;
-
-###############################################################################
-##  Includes
-###############################################################################
-
-
-// Autoload Composer Packages
-//require_once(dirname(ABSPATH).'/vendor/autoloader.php');
-
-// Includes
-include_once('lib/gravitate/gravtheme/grav_theme_init.php'); // Grav Theme Initiate
-
-
-###############################################################################
-##  Theme Setup
-###############################################################################
-
-GRAV_FUNC::enqueue_file('master_css', get_template_directory_uri() . '/assets/css/min/master.min.css');
-GRAV_FUNC::enqueue_file('master_js', get_template_directory_uri() . '/assets/js/min/master.min.js');
-
-// Add Custom Post Types
-// include_once('library/cpt/resources.php');
-// include_once('library/cpt/team.php');
-
-// editor styles for tinymce
-add_editor_style("/assets/css/min/editor-styles.min.css");
-
-add_action('admin_init', array('GRAV_FUNC', 'lock_w3tc_settings_pages')); // Block client from making W3TC Changes
-
-if(function_exists('acf_add_options_page'))
-{
-	acf_add_options_page(array('page_title' => 'Theme', 'menu_slug' => 'acf-options-theme', 'position' => 2));
+if (!defined('ABSPATH')) {
+	exit;
 }
 
-// Remove jQuery Migrate
-add_action( 'wp_default_scripts', array('GRAV_FUNC', 'dequeue_jquery_migrate') );
+// check for/require composer autoloader
+if (!file_exists(dirname(__FILE__).'/vendor/autoload.php')) {
+	die("The required composer dependencies must be installed for this theme. Please run 'composer install' from the theme root.");
+}
 
+require_once('vendor/autoload.php');
 
-###############################################################################
-#######################   CUSTOM THEME FUNCTIONALITY  #########################
-###############################################################################
+// check for existence of gravitate/grav-theme package
+if (!class_exists('\Grav\WP\Content')) {
+	die("The 'gravitate/grav-theme' composer package is required for this theme. Please run 'composer install' from the theme root.");
+}
+
+// redirect image URLs for local development
+if (defined('LOCAL_IMAGE_REDIRECT') && WP_HOME !== null && stripos(WP_HOME, '.local.com') !== -1) {
+	Grav\Dev\Image::local_image_redirect(LOCAL_IMAGE_REDIRECT);
+}
+
+require_once('bootstrap/theme-setup.php');
+require_once('bootstrap/performance.php');
+require_once('bootstrap/media.php');
+require_once('bootstrap/scripts-styles.php');
+require_once('bootstrap/custom-post-types.php');
+require_once('bootstrap/taxonomies.php');
+require_once('bootstrap/acf.php');
+require_once('bootstrap/menus.php');
+require_once('bootstrap/tinymce.php');
+require_once('bootstrap/plugins.php');
+require_once('bootstrap/blocks.php');
+require_once('bootstrap/theme-settings-pages.php');

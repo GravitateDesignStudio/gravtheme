@@ -1,9 +1,9 @@
 // Base
 .button,
 input[type=submit] {
-	@include transition(all $transition-speed ease-out);
-	@include border-radius(map-get($button-default, 'button-border-radius'));
-	@include appearance(none);
+	transition: all $transition-speed ease-out;
+	border-radius: map-get($button-default, 'button-border-radius');
+	appearance: none;
 	border: map-get($button-default, 'button-border');
 	box-shadow: map-get($button-default, 'button-box-shadow');
 	color: map-get($button-default, 'button-text-color');
@@ -59,7 +59,7 @@ input[type=submit] {
 	// Additional Buttons
 	@each $button-name, $button-fields in $buttons {
 		&.button-#{$button-name} {
-			@include border-radius(map-get($button-fields, 'button-border-radius'));
+			border-radius: map-get($button-fields, 'button-border-radius');
 			border: map-get($button-fields, 'button-border');
 			box-shadow: map-get($button-fields, 'button-box-shadow');
 			color: map-get($button-fields, 'button-text-color');

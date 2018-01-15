@@ -1,0 +1,53 @@
+/*************************************
+Include Functions and Mixins
+**************************************/
+@import 'scaffold/functions';
+@import 'scaffold/mixins';
+
+/*************************************
+Include Variables
+**************************************/
+@import 'variables';
+
+// included in foundation
+// @import '../node_modules/normalize.css/normalize';
+
+/*************************************
+Foundation Grid
+**************************************/
+@import '../node_modules/foundation-sites/scss/foundation';
+
+@include foundation-global-styles;
+@include foundation-flex-grid;
+@include foundation-visibility-classes;
+@include foundation-flex-classes;
+
+/*************************************
+Scaffolding
+**************************************/
+@import 'scaffold/spacing';
+@import 'scaffold/buttons';
+@import 'scaffold/forms';
+@import 'scaffold/blocks';
+
+/*************************************
+Vendor Styles
+**************************************/
+@import 'vendor/wordpress';
+@import 'vendor/gravity-forms';
+
+@import '../node_modules/swiper/dist/css/swiper';
+
+/*************************************
+Main Project Custom Files
+**************************************/
+
+@import 'globals';
+
+@import 'components/style-testing';
+
+@import 'components/header';
+@import 'components/footer';
+@import 'components/banners';
+
+@import 'components/cards/card-default';

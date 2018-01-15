@@ -1,0 +1,46 @@
+{
+	"name": "gravtheme",
+	"version": "3.0.0",
+	"description": "Gravitate WordPress Theme",
+	"scripts": {
+		"eslint": "npx eslint js/**/*.js",
+		"build-css": "npx gulp scss",
+		"build-js": "npx gulp js",
+		"build": "npm run build-css; npm run build-js",
+		"watch": "npx gulp"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/GravitateDesignStudio/gravtheme.git"
+	},
+	"author": "Gravitate Design Studio",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/GravitateDesignStudio/gravtheme/issues"
+	},
+	"homepage": "https://github.com/GravitateDesignStudio/gravtheme#readme",
+	"dependencies": {
+		"babel-core": "^6.26.0",
+		"babel-loader": "^7.1.2",
+		"babel-preset-env": "^1.6.1",
+		"browser-sync": "^2.18.13",
+		"eslint": "^4.13.1",
+		"eslint-config-airbnb-base": "^12.1.0",
+		"eslint-plugin-import": "^2.8.0",
+		"foundation-sites": "^6.4.4-rc1",
+		"gulp": "^3.9.1",
+		"gulp-autoprefixer": "^4.0.0",
+		"gulp-clean-css": "^3.9.0",
+		"gulp-load-plugins": "^1.5.0",
+		"gulp-rename": "^1.2.2",
+		"gulp-sass": "^3.1.0",
+		"gulp-sourcemaps": "^2.6.1",
+		"jquery-colorbox": "^1.6.4",
+		"normalize.css": "^7.0.0",
+		"object-fit-images": "^3.2.3",
+		"swiper": "^4.0.7",
+		"uglifyjs-webpack-plugin": "^1.1.4",
+		"webpack": "^3.10.0",
+		"webpack-stream": "^4.0.0"
+	}
+}

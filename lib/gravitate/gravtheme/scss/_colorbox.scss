@@ -84,7 +84,7 @@ Colorbox
 #colorbox,
 #cboxContent,
 #cboxLoadedContent {
-	@include box-sizing(content-box);
+	box-sizing: content-box;
 }
 #cboxError {
 	padding: 50px;
@@ -185,7 +185,7 @@ Colorbox
 }
 
 .cboxPhoto {
-    @include transform(translateY(-50%));
+	transform: translateY(-50%);
     @include absolute(50%,0,auto,0);
     height: auto !important;
     margin-top: 0 !important;
@@ -225,10 +225,9 @@ Colorbox
     z-index: 100000000;
 	&::before {
 		color: $white;
-		content: $fa-var-times;
+		content: 'x';
 		display: inline-block;
-		font-family: 'fontawesome';
-        margin-right: 0;
+		margin-right: 0;
         margin-left: 5px;
         margin-top: 3px;
         padding-bottom: 10px;
@@ -249,9 +248,8 @@ Colorbox
 	box-shadow: none;
 	&::before {
 		color: $white;
-        content: $fa-var-chevron-right;
+        content: '>';
 		display: inline-block;
-		font-family: 'fontawesome';
 		margin-right: 30px;
 		margin-left: 5px;
 		margin-top: 2px;
@@ -264,7 +262,7 @@ Colorbox
 }
 
 #cboxPrevious {
-	@include transform(rotate(180deg));
+	transform: rotate(180deg);
 }
 
 #cboxCurrent {

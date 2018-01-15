@@ -1,0 +1,38 @@
+.site-footer {
+	&__menu {
+		ul {
+			display: flex;
+		}
+
+		li {
+			margin-right: 0.5rem;
+
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+
+		&--primary {
+		}
+
+		&--secondary {
+		}
+	}
+
+	&__social-links {
+		display: flex;
+		justify-content: flex-end;
+		list-style: none;
+	}
+
+	&__social-link {
+		display: inline-block;
+		width: 32px;
+		height: 32px;
+		margin-right: 1rem;
+
+		&:last-child {
+			margin-right: 0;
+		}
+	}
+}

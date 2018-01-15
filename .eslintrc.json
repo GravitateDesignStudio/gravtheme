@@ -1,0 +1,25 @@
+{
+    "extends": "airbnb-base",
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "globals": {
+        "jQuery": true
+    },
+    "rules": {
+        "indent": ["error", "tab"],
+        "no-tabs": 0,
+        "comma-dangle": ["error", "never"],
+        "no-var": 0,
+        "operator-assignment": "off",
+        "prefer-template": "off",
+        "prefer-arrow-callback": "off",
+        "no-param-reassign": "off",
+        "func-names": "off",
+        "wrap-iife": ["error", "inside"],
+        "object-shorthand": "off",
+        "vars-on-top": "off",
+        "max-len": "off"
+    }
+}
