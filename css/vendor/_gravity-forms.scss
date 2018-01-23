@@ -1,0 +1,357 @@
+.gform_fields {
+    list-style: none;
+}
+
+.gfield_radio,
+.gfield_checkbox {
+    list-style: none;
+
+    li + li {
+        margin-top: 0.25rem;
+    }
+}
+
+.gfield_time_minute,
+.gfield_time_hour,
+.gfield_time_ampm {
+    max-width: 33%;
+    display: inline-block !important;
+	
+	input {
+        width: 80%;
+        display: inline-block !important;
+	}
+	
+    i {
+        font-style: normal;
+	}
+	
+    label {
+        display: none;
+    }
+}
+
+.gform_wrapper {
+    .top_label li.gfield.gf_inline {
+        vertical-align: top;
+        width: auto !important;
+        margin-right: 14px;
+        float: none !important;
+        display: -moz-inline-stack;
+        display: inline-block;
+        zoom: 1;
+    }
+
+    .gform_validation_container {
+        display: none !important;
+        position: absolute !important;
+        left: -9000px;
+    }
+
+    div.validation_error {
+        color: $error-text;
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
+    .validation_message {
+        color: $error-text;
+        font-weight: bold;
+        letter-spacing: normal;
+        font-size: 0.8em;
+    }
+
+    /* Gravity Forms CSS Error Fixes */
+     img {
+        border: 0;
+    }
+
+    .gform_ajax_spinner {
+	    display: none;
+	}
+
+    .gfield_error {
+        background: none;
+        border: 0;
+        padding: 0;
+    }
+
+    .gfield_description.validation_message,
+    .gfield_error .ginput_container {
+        margin-top: 0;
+        padding-top: 4px;
+    }
+
+    .gfield_description.validation_message {
+        margin-bottom: 14px;
+    }
+
+    .gform_heading,
+    .validation_error {
+        margin-bottom: 18px;
+    }
+
+    .gform_footer {
+        margin-top: 1rem;
+    }
+
+    .charleft,
+    .validation_message {
+        text-align: left;
+    }
+
+    .ginput_counter {
+        font-size: 12px;
+    }
+
+    .top_label li.gfield {
+        margin: 0 0 1rem;
+    }
+
+    .top_label li.gfield.gf_inline input[type=email].large,
+    .top_label li.gfield.gf_inline input[type=number].large,
+    .top_label li.gfield.gf_inline input[type=password].large,
+    .top_label li.gfield.gf_inline input[type=tel].large,
+    .top_label li.gfield.gf_inline input[type=text].large,
+    .top_label li.gfield.gf_inline input[type=url].large {
+        width: 25.4em !important;
+    }
+
+    .top_label li.gfield.gf_inline input[type=email].medium,
+    .top_label li.gfield.gf_inline input[type=number].medium,
+    .top_label li.gfield.gf_inline input[type=password].medium,
+    .top_label li.gfield.gf_inline input[type=tel].medium,
+    .top_label li.gfield.gf_inline input[type=text].medium,
+    .top_label li.gfield.gf_inline input[type=url].medium {
+        width: 18.7em !important;
+    }
+
+    .top_label li.gfield.gf_inline input[type=text].datepicker.medium {
+        width: 6em !important;
+    }
+
+    .top_label li.gfield.gf_inline input[type=email].small,
+    .top_label li.gfield.gf_inline input[type=number].small,
+    .top_label li.gfield.gf_inline input[type=password].small,
+    .top_label li.gfield.gf_inline input[type=tel].small,
+    .top_label li.gfield.gf_inline input[type=text].small,
+    .top_label li.gfield.gf_inline input[type=url].small {
+        width: 5em !important;
+    }
+
+    .top_label li.gfield.gf_inline select {
+        width: auto !important;
+    }
+
+    .top_label li.gfield.gf_inline textarea {
+        width: 95% !important;
+    }
+
+    .top_label li.gfield.gf_inline div.gfield_time_hour input[type=text],
+    .top_label li.gfield.gf_inline div.gfield_time_minute input[type=text] {
+        width: 70% !important;
+    }
+
+    .top_label li.gfield.gf_inline div.gfield_date_day,
+    .top_label li.gfield.gf_inline div.gfield_date_month,
+    .top_label li.gfield.gf_inline div.gfield_date_year,
+    .top_label li.gfield.gf_inline div.gfield_time_hour,
+    .top_label li.gfield.gf_inline div.gfield_time_minute {
+        width: 50px;
+    }
+
+    .top_label li.gfield.gf_inline div.gfield_time_ampm {
+        width: auto;
+    }
+
+    li.gf_inline div.ginput_container {
+        white-space: nowrap !important;
+    }
+    /* 2 column ready class ------------------------------------------------------*/
+
+    .top_label li.gfield.gf_left_half,
+    .top_label li.gfield.gf_right_half {
+        width: 100%;
+        @include media-min($medium) {
+            width: 49%;
+        }
+    }
+
+    .top_label li.gfield.gf_left_half {
+        float: left;
+        clear: left !important;
+    }
+
+    .top_label li.gfield.gf_right_half {
+        float: right;
+        clear: right !important;
+    }
+
+    .top_label li.gfield.gf_left_half input.large,
+    .top_label li.gfield.gf_left_half input.medium,
+    .top_label li.gfield.gf_left_half select.large,
+    .top_label li.gfield.gf_left_half select.medium,
+    .top_label li.gfield.gf_right_half input.large,
+    .top_label li.gfield.gf_right_half input.medium,
+    .top_label li.gfield.gf_right_half select.large,
+    .top_label li.gfield.gf_right_half select.medium,
+    .top_label li.gfield.gf_left_half textarea,
+    .top_label li.gfield.gf_right_half textarea {
+        width: 100%;
+    }
+
+    .top_label li.gfield.gf_left_half input.small,
+    .top_label li.gfield.gf_right_half input.small {
+        width: 35%;
+    }
+
+    .top_label li.gfield.gf_left_half+li.gsection,
+    .top_label li.gfield.gf_right_half+li.gsection,
+    .top_label li.gfield.gf_left_half+li.gfield.gsection.gf_left_half,
+    .top_label li.gfield.gf_left_half+li.gfield.gsection.gf_right_half,
+    .top_label li.gfield.gf_right_half+li.gfield.gsection.gf_left_half,
+    .top_label li.gfield.gf_right_half+li.gfield.gsection.gf_right_half,
+    .top_label li.gfield.gsection.gf_left_half+li.gfield.gsection.gf_left_half,
+    .top_label li.gfield.gsection.gf_right_half+li.gfield.gsection.gf_left_half,
+    .top_label li.gfield.gsection.gf_right_half+li.gfield.gsection.gf_right_half,
+    .top_label li.gfield.gsection.gf_left_half+li.gfield.gsection.gf_right_half+li.gfield.gsection.gf_left_half+li.gfield.gsection.gf_right_half {
+        padding: 16px 0 8px;
+    }
+
+    .top_label li.gfield.gsection.gf_left_half+li.gfield.gsection.gf_right_half {
+        padding: 0 0 8px;
+    }
+
+    .top_label li.gfield.gf_left_half+.gform_footer,
+    .top_label li.gfield.gf_left_half+li.gfield,
+    .top_label li.gfield.gf_right_half+.gform_footer,
+    .top_label li.gfield.gf_right_half+li.gfield {
+        clear: both;
+    }
+    /* 3 column ready class ------------------------------------------------------*/
+    .top_label li.gfield.gf_left_third,
+    .top_label li.gfield.gf_middle_third,
+    .top_label li.gfield.gf_right_third {
+        width: 100%;
+        @include media-min($medium) {
+            width: 32%;
+        }
+    }
+
+    .top_label li.gfield.gf_left_third {
+        float: left;
+        clear: left;
+    }
+
+    .top_label li.gfield.gf_middle_third {
+        float: left;
+        clear: none !important;
+        @include media-min($medium) {
+            margin-left: 2%;
+        }
+    }
+
+    .top_label li.gfield.gf_right_third {
+        float: right;
+        clear: right !important;
+    }
+
+    input,
+    select,
+    textarea {
+        &.medium {
+            width: 49%;
+        }
+        &.large {
+            width: 100%;
+        }
+    }
+
+    .top_label li.gfield.gf_left_third input.large,
+    .top_label li.gfield.gf_left_third input.medium,
+    .top_label li.gfield.gf_left_third select.large,
+    .top_label li.gfield.gf_left_third select.medium,
+    .top_label li.gfield.gf_middle_third input.large,
+    .top_label li.gfield.gf_middle_third input.medium,
+    .top_label li.gfield.gf_middle_third select.large,
+    .top_label li.gfield.gf_middle_third select.medium,
+    .top_label li.gfield.gf_right_third input.large,
+    .top_label li.gfield.gf_right_third input.medium,
+    .top_label li.gfield.gf_right_third select.large,
+    .top_label li.gfield.gf_right_third select.medium {
+        width: 100%;
+    }
+
+    .top_label li.gfield.gf_left_third+li.gsection,
+    .top_label li.gfield.gf_right_third+li.gsection {
+        padding: 16px 0 8px;
+    }
+
+    .top_label li.gfield.gf_left_third+.gform_footer,
+    .top_label li.gfield.gf_left_third+li.gfield,
+    .top_label li.gfield.gf_middle_third+.gform_footer,
+    .top_label li.gfield.gf_middle_third+li.gfield,
+    .top_label li.gfield.gf_right_third+.gform_footer,
+    .top_label li.gfield.gf_right_third+li.gfield {
+        clear: both;
+    }
+    /* radio/checkbox sub-column ready classes ------------------------------------------------------*/
+    li.gfield.gf_2col ul.gfield_checkbox li,
+    li.gfield.gf_2col ul.gfield_radio li,
+    li.gfield.gf_list_2col ul.gfield_checkbox li,
+    li.gfield.gf_list_2col ul.gfield_radio li {
+        width: 50%;
+        float: left;
+        margin: 0 0 8px;
+        min-height: 1.8em;
+    }
+
+    li.gfield.gf_3col ul.gfield_checkbox li,
+    li.gfield.gf_3col ul.gfield_radio li,
+    li.gfield.gf_list_3col ul.gfield_checkbox li,
+    li.gfield.gf_list_3col ul.gfield_radio li {
+        width: 33%;
+        float: left;
+        margin: 0 0 8px;
+        min-height: 1.8em;
+    }
+
+    li.gfield.gf_list_4col ul.gfield_checkbox li,
+    li.gfield.gf_list_4col ul.gfield_radio li {
+        width: 25%;
+        float: left;
+        margin: 0 0 8px;
+        min-height: 1.8em;
+    }
+
+    li.gfield.gf_list_5col ul.gfield_checkbox li,
+    li.gfield.gf_list_5col ul.gfield_radio li {
+        width: 20%;
+        float: left;
+        margin: 0 0 8px;
+        min-height: 1.8em;
+    }
+
+    li.gfield.gf_2col ul.gfield_checkbox,
+    li.gfield.gf_2col ul.gfield_radio,
+    li.gfield.gf_3col ul.gfield_checkbox,
+    li.gfield.gf_3col ul.gfield_radio,
+    li.gfield.gf_list_2col ul.gfield_checkbox,
+    li.gfield.gf_list_2col ul.gfield_radio,
+    li.gfield.gf_list_3col ul.gfield_checkbox,
+    li.gfield.gf_list_3col ul.gfield_radio,
+    li.gfield.gf_list_4col ul.gfield_checkbox,
+    li.gfield.gf_list_4col ul.gfield_radio,
+    li.gfield.gf_list_5col ul.gfield_checkbox,
+    li.gfield.gf_list_5col ul.gfield_radio {
+        overflow: hidden;
+    }
+
+    li.gfield.gf_list_2col label.gfield_label,
+    li.gfield.gf_list_3col label.gfield_label,
+    li.gfield.gf_list_4col label.gfield_label,
+    li.gfield.gf_list_5col label.gfield_label,
+    li.gfield.gf_list_inline label.gfield_label {
+        margin: 10px 0;
+    }
+}
