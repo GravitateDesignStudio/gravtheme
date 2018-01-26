@@ -10,6 +10,12 @@ $block-padding: 4rem 0 !default;
 	}
 }
 
+.block-container.block-bg-none + .block-container.block-bg-none {
+	.block-inner {
+		padding-top: 0;
+	}
+}
+
 .block-container {
 	.block-inner {
 		padding: $block-padding;
