@@ -10,9 +10,9 @@ if (!file_exists(dirname(__FILE__).'/vendor/autoload.php')) {
 
 require_once('vendor/autoload.php');
 
-// check for existence of gravitate/grav-theme package
+// check for existence of gravitate/grav-util package
 if (!class_exists('\Grav\WP\Content')) {
-	die("The 'gravitate/grav-theme' composer package is required for this theme. Please run 'composer install' from the theme root.");
+	die("The 'gravitate/grav-util' composer package is required for this theme. Please run 'composer install' from the theme root.");
 }
 
 // redirect image URLs for local development
