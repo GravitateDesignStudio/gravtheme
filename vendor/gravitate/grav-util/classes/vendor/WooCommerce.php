@@ -139,13 +139,15 @@ class WooCommerce {
 			}
 		}
 
-		add_action('woocommerce_product_options_general_product_data', function() use (&$fields) {
-			\Grav\WooCommerce::display_wc_fields(get_the_ID(), $fields);
+		$class_ref = __CLASS__;
+
+		add_action('woocommerce_product_options_general_product_data', function() use (&$fields, &$class_ref) {
+			$class_ref::display_wc_fields(get_the_ID(), $fields);
 		});
 
 		// save the custom variation attributes when the product is saved/updated
-		add_action('woocommerce_process_product_meta', function($post_id) use (&$fields) {
-			\Grav\WooCommerce::save_wc_fields($post_id, $fields);
+		add_action('woocommerce_process_product_meta', function($post_id) use (&$fields, &$class_ref) {
+			$class_ref::save_wc_fields($post_id, $fields);
 		});
 	}
 
@@ -170,14 +172,16 @@ class WooCommerce {
 			}
 		}
 
+		$class_ref = __CLASS__;
+
 		// add the custom variation attributes to the admin UI
-		add_action('woocommerce_product_after_variable_attributes', function($loop, $variation_data, $variation) use (&$fields) {
-			\Grav\WooCommerce::display_wc_fields($variation->ID, $fields);
+		add_action('woocommerce_product_after_variable_attributes', function($loop, $variation_data, $variation) use (&$fields, &$class_ref) {
+			$class_ref::display_wc_fields($variation->ID, $fields);
 		}, 10, 3);
 
 		// save the custom variation attributes when the product is saved/updated
-		add_action('woocommerce_save_product_variation', function($post_id) use (&$fields) {
-			\Grav\WooCommerce::save_wc_fields($post_id, $fields);
+		add_action('woocommerce_save_product_variation', function($post_id) use (&$fields, &$class_ref) {
+			$class_ref::save_wc_fields($post_id, $fields);
 		}, 10, 2);
 	}
 
@@ -192,5 +196,55 @@ class WooCommerce {
 	 */
 	public static function get_product_variation_field($post_id, $field_name) {
 		return get_post_meta($post_id, $field_name, true);
+	}
+
+	/**
+	 * Return the permalink for a WooCommerce page
+	 * 
+	 * @param string	$page	page name to get the permalink for
+	 * 
+	 * @return string	the permalink
+	 * 
+	 * @since 2018.01.21
+	 * @author DF
+	 */
+	public static function get_page_permalink($page) {
+		if (!function_exists('wc_get_page_id')) {
+			return '';
+		}
+
+		return get_the_permalink(\wc_get_page_id($page));
+	}
+
+	/**
+	 * Get an attribute taxonomy name
+	 * 
+	 * @param string	$name	taxonomy name (ex: color)
+	 * 
+	 * @return string	the taxonomy term name (ex: pa_color)
+	 * 
+	 * @since 2018.01.21
+	 * @author DF
+	 */
+	public static function get_attribute_taxonomy_name($name) {
+		$wc_attribute_taxonomies = \wc_get_attribute_taxonomies();
+
+		if (!$wc_attribute_taxonomies) {
+			return '';
+		}
+
+		foreach ($wc_attribute_taxonomies as $tax) {
+			$tax_name = \wc_attribute_taxonomy_name($tax->attribute_name);
+	
+			if (!$tax_name) {
+				continue;
+			}
+
+			if ($tax->attribute_name == $name) {
+				return $tax_name;
+			}
+		}
+
+		return '';
 	}
 }

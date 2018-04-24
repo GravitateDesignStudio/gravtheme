@@ -18,7 +18,7 @@ $tag_links = $tags ? array_map(function($tag_term) {
         </a>
     </h2>
     <p class="post__meta">
-        <span class="post__meta-date">Posted On: <time datetime="<?php echo esc_attr(date('Y-m-d', $time)); ?>" pubdate><?php echo esc_html(date('F jS, Y', $time)); ?></time></span>
+        <span class="post__meta-date">Posted On: <time datetime="<?php echo esc_attr(date('Y-m-d', $time)); ?>"><?php echo esc_html(date('F jS, Y', $time)); ?></time></span>
         <span class="post__meta-category">Filed Under: <?php the_category(', ', '', $post_id); ?></span>
         <?php if (comments_open($post_id)) { ?><span class="post__meta-comments"><?php comments_popup_link(); ?></span><?php } ?>
     </p>

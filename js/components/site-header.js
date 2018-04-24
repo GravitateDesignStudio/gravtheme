@@ -1,22 +1,18 @@
 const SiteHeader = (function ($) {
 	return class {
-		constructor() {
-			this.initialized = false;
+		constructor($el) {
+			this.$el = $el;
 			this.headerHeight = 0;
+
+			this.updateHeaderHeightVar();
+			this.setupEventHandlers();
 		}
 
-		init() {
-			if (this.initialized) {
-				return;
-			}
-
+		setupEventHandlers() {
 			// mobile menu button handler
-			$('.site-header__mobile-menu-button').on('click tap', function () {
+			this.$el.find('.site-header__mobile-menu-button').on('click tap', function () {
 				$('html').toggleClass('mobile-menu-active');
 			});
-
-			// retrieve inital header height value
-			this.updateHeaderHeightVar();
 
 			$(window).resize(() => {
 				// update header height on resize
@@ -27,14 +23,12 @@ const SiteHeader = (function ($) {
 				// update header height on scroll
 				this.updateHeaderHeightVar();
 			});
-
-			this.initialized = true;
 		}
 
 		updateHeaderHeightVar() {
-			this.headerHeight = $('.site-header').outerHeight();
+			this.headerHeight = this.$el.outerHeight();
 		}
 	};
 })(jQuery);
 
-export default new SiteHeader();
+export default SiteHeader;

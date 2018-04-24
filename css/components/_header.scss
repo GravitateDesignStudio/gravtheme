@@ -27,6 +27,7 @@ html.mobile-menu-active {
 
 	&__mobile-container {
 		z-index: $z-header + 1;
+		display: flex;
 		transition: opacity 0.25s ease-in-out;
 		position: fixed;
 		top: 0;
@@ -43,7 +44,6 @@ html.mobile-menu-active {
 		background: $white;
 
 		html.mobile-menu-active & {
-			display: flex;
 			opacity: 1;
 			pointer-events: all;
 		}

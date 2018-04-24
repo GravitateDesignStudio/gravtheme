@@ -1,7 +1,8 @@
 <?php
 namespace Grav\WP;
 
-class Geo {
+class Geo
+{
 	/**
 	 * Calculates the distance between two set of coordinate points.
 	 * See http://stackoverflow.com/questions/10053358/measuring-the-distance-between-two-coordinates-in-php for more information.
@@ -14,7 +15,8 @@ class Geo {
 	 * @param  boolean $vincenty_formula optionally use the vincenty formula for calculation (default is the haversine formula)
 	 * @return float                     distance between the two points in the specified format
 	 */
-	public static function distance_between_points($fromLat, $fromLng, $toLat, $toLng, $format='mi', $vincenty_formula=false) {
+	public static function distance_between_points($fromLat, $fromLng, $toLat, $toLng, $format = 'mi', $vincenty_formula = false)
+	{
 		// convert from degrees to radians
 		$fromLat = deg2rad($fromLat);
 		$fromLng = deg2rad($fromLng);
@@ -25,20 +27,16 @@ class Geo {
 		$earthRadius = ($format == 'mi') ? 3959 : 6371000;
 
 		if ($vincenty_formula) {
-
 			$lngDelta = $toLng - $fromLng;
 			$a = pow(cos($toLat) * sin($lngDelta), 2) + pow(cos($fromLat) * sin($toLat) - sin($fromLat) * cos($toLat) * cos($lngDelta), 2);
 			$b = sin($fromLat) * sin($toLat) + cos($fromLat) * cos($toLat) * cos($lngDelta);
 
 			$angle = atan2(sqrt($a), $b);
-
 		} else {
-
 			$latDelta = $toLat - $fromLat;
 			$lngDelta = $toLng - $fromLng;
 
 			$angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) + cos($fromLat) * cos($toLat) * pow(sin($lngDelta / 2), 2)));
-
 		}
 
 		return $angle * $earthRadius;
@@ -54,9 +52,18 @@ class Geo {
 	 * @return (object)
 	 * @author GG
 	 **/
-	public static function address_to_location($address) {
-		$address = str_replace(' ', '+', urlencode($address));
-		$details_url = 'http://maps.googleapis.com/maps/api/geocode/json?address='.$address.'&sensor=false';
+	public static function address_to_location($address, $key = '')
+	{
+		$query_parts = array(
+			'address='.str_replace(' ', '+', urlencode($address)),
+			'sensor=false'
+		);
+
+		if ($key) {
+			$query_parts[] = 'key='.$key;
+		}
+
+		$details_url = 'https://maps.googleapis.com/maps/api/geocode/json?'.implode('&', $query_parts);
 
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $details_url);
@@ -91,7 +98,7 @@ class Geo {
 	 * @author GG, DF
 	 *
 	 **/
-	function get_posts_by_location($args = array())
+	public static function get_posts_by_location($args = array())
 	{
 		global $wpdb;
 
@@ -106,24 +113,18 @@ class Geo {
 		$limit = (!empty($args['limit']) ? esc_sql($args['limit']) : 999999); // 999999 is default
 		$meta_query = (!empty($args['meta_query'])) ? $args['meta_query'] : array();
 
-		if(is_array($from_location))
-		{
-			if(isset($args['from_location']['latitude']))
-			{
+		if (is_array($from_location)) {
+			if (isset($args['from_location']['latitude'])) {
 				$from_latitude = $args['from_location']['latitude'];
 				$from_longitude = $args['from_location']['longitude'];
-			}
-			else if(isset($args['from_location'][0]))
-			{
+			} else if (isset($args['from_location'][0])) {
 				$from_latitude = $args['from_location'][0];
 				$from_longitude = $args['from_location'][1];
 			}
-		}
-		else
-		{
+		} else {
 			$location = self::address_to_location($from_location);
-			$from_latitude = $location['latitude'];
-			$from_longitude = $location['longitude'];
+			$from_latitude = $location->latitude;
+			$from_longitude = $location->longitude;
 		}
 
 		// build select clauses
@@ -164,5 +165,20 @@ class Geo {
 		$sql = "SELECT ".implode(', ', $select_clauses)." FROM {$wpdb->posts} ".implode(' ', $join_clauses)." WHERE post_type = '{$post_type}' AND post_status = 'publish' HAVING ".implode(' AND ', $where_having_clauses)." ORDER BY distance LIMIT {$limit}";
 
 		return $wpdb->get_results($sql);
+	}
+
+	public static function get_user_ip()
+	{
+		if (isset($_SERVER['HTTP_CLIENT_IP'])) {
+			$client_ip = $_SERVER['HTTP_CLIENT_IP'];
+		} else if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+			$client_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+		} else if (isset($_SERVER['HTTP_X_REAL_IP'])) {
+			$client_ip = $_SERVER['HTTP_X_REAL_IP'];
+		} else {
+			$client_ip = $_SERVER['REMOTE_ADDR'];
+		}
+
+		return $client_ip;
 	}
 }

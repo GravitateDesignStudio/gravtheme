@@ -23,6 +23,7 @@ a {
 	@each $color_name in $bg-colors-with-light-text {
 		.bg-#{$color_name} & {
 			color: $anchor-color-on-dark-bg;
+			
 			&:hover {
 				color: $anchor-hover-color-on-dark-bg;
 			}
@@ -96,7 +97,7 @@ table {
 	.block-bg-#{$color_name} .block-inner {
 		color: $text-light;
 		
-		* {
+		*:not(svg):not(use) {
 			color: $text-light;
 		}
 	}
@@ -138,4 +139,27 @@ video {
 			}
 		}
 	}
+}
+
+// Useful classes that are missing without the Foundation typography styles
+.text-left {
+	text-align: left;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.text-right {
+	text-align: right;
+}
+
+code {
+	background: $black;
+	color: $white;
+	padding: 0.1rem 0.25rem;
+}
+
+strong {
+	font-weight: 600;
 }

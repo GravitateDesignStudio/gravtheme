@@ -2,7 +2,7 @@
 <html <?php language_attributes(); ?>>
 <head>
 	<?php do_action('global_head_top_content'); ?>
-	<?php the_field('global_head_top_content', 'option', false); ?>
+	<?php if (!defined('IGNORE_USER_SCRIPTS') || !constant('IGNORE_USER_SCRIPTS')) { the_field('global_head_top_content', 'option', false); } ?>
 	
 	<title><?php bloginfo("name"); ?> <?php wp_title('&bull;'); ?></title>
 	<meta http-equiv="Content-Type" content="<?php bloginfo('html_type'); ?>; charset=<?php bloginfo('charset'); ?>" />
@@ -13,10 +13,10 @@
 	<link rel="pingback" href="<?php bloginfo('pingback_url'); ?>">
 	
 	<?php wp_head(); ?>
-	<?php the_field('global_head_bottom_content', 'option', false); ?>
+	<?php if (!defined('IGNORE_USER_SCRIPTS') || !constant('IGNORE_USER_SCRIPTS')) { the_field('global_head_bottom_content', 'option', false); } ?>
 </head>
 <body id="body" <?php body_class(); ?>>
-	<?php the_field('global_body_top_content', 'option', false); ?>
+	<?php if (!defined('IGNORE_USER_SCRIPTS') || !constant('IGNORE_USER_SCRIPTS')) { the_field('global_body_top_content', 'option', false); } ?>
 	
 	<div class="global-wrapper">
 		<?php Grav\WP\Content::get_template_part('components/header'); ?>

@@ -26,6 +26,7 @@
 
 #cboxContent {
 	position: relative;
+	background: $white;
 }
 
 #cboxLoadedContent {
@@ -77,4 +78,10 @@
 	box-sizing: content-box;
 	-moz-box-sizing: content-box;
 	-webkit-box-sizing: content-box;
+}
+
+#cboxClose {
+	position: absolute;
+	top: 0;
+	right: 0;
 }

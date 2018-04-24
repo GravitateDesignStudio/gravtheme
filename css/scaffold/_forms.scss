@@ -80,6 +80,10 @@ select:focus {
 	&:disabled {
 		opacity: $form-disabled-opacity;
 	}
+
+	&[multiple] {
+		background-image: none;
+	}
 }
 
 select::-ms-expand {

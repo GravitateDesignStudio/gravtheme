@@ -204,24 +204,6 @@ $input-dark-bg-focus-text-color: $white;
 /*************************************
 Buttons
 *************************************/
-
-// Button 1
-$button-text-color: $white; //$white;
-$button-bg-color: $black;
-$button-border: 1px solid $white;
-$button-border-radius: 0;
-$button-font-size: 0.88889rem;
-$button-font-weight: normal;
-$button-padding: 0.489rem 1.378rem 0.444rem 1.378rem;
-
-// Hover
-$button-hover-text-color: $white;
-$button-hover-bg-color: $gray;
-
-// Dark Backgrounds
-$button-bg-color-on-dark-bg: $transparent;
-$button-border-color-on-dark-bg: $text-light;
-
 $buttons: (
     'primary': (
         button-text-color: $white, //$white,
@@ -336,7 +318,7 @@ $button-default: map-get($buttons, nth(map-keys($buttons), 1));
 Anchors
 *************************************/
 $anchor-color: $black;
-$anchor-text-decoration: none;
+$anchor-text-decoration: underline;
 
 // Anchor Hover
 $anchor-hover-color: $black;
@@ -350,7 +332,26 @@ $anchor-hover-color-on-dark-bg: $gray;
 /*************************************
 Blocks
 *************************************/
-$block-padding: 4rem 0;
+$block-padding: (
+    small: (
+        top: 4.25rem,
+        bottom: 4.25rem,
+        left: 0,
+        right: 0,
+    ),
+    medium: (
+        top: 6.25rem,
+        bottom: 6.25rem,
+        left: 0,
+        right: 0,
+    ),
+    large: (
+        top: 6.25rem,
+        bottom: 6.25rem,
+        left: 0,
+        right: 0,
+    ),
+);
 
 
 /*************************************

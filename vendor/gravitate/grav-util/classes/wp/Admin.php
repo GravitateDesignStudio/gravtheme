@@ -88,7 +88,7 @@ class Admin {
 		return false;
 	}
 
-	public static function remove_taxonomy_table_columns($tax_slug, $remove_columns = array()) {
+	public static function remove_taxonomy_table_columns($tax_slug, $remove_columns = array(), $priority = 10) {
 		add_filter('manage_edit-'.$tax_slug.'_columns', function($columns) use (&$remove_columns) {
 			foreach ($remove_columns as $remove_column) {
 				if (isset($columns[$remove_column])) {
@@ -97,7 +97,30 @@ class Admin {
 			}
 		
 			return $columns;
-		});
+		}, $priority);
+	}
+
+	public static function add_taxonomy_table_columns($tax_slug, $columns = array(), $priority = 11) {
+		add_filter('manage_edit-'.$tax_slug.'_columns', function($defaults) use (&$columns) {
+			foreach (array_keys($columns) as $col_name) {
+				$col_key = strtolower(preg_replace('/[^\da-z]/i', '', $col_name));
+				
+				$defaults[$col_key] = $col_name;
+			}
+
+			return $defaults;
+		}, $priority);
+
+		add_filter('manage_'.$tax_slug.'_custom_column', function($content, $column_name, $term_id) use (&$columns) {
+			foreach (array_keys($columns) as $new_col_key) {
+				if (strtolower(preg_replace('/[^\da-z]/i', '', $new_col_key)) == $column_name) {
+					$col_func = $columns[$new_col_key];
+					echo $col_func($term_id);
+				}
+			}
+
+			return $content;
+		}, 10, 3);
 	}
 
 	public static function remove_taxonomy_editor_fields($tax_slug, $remove_fields = array()) {
@@ -118,7 +141,7 @@ class Admin {
 		}, 999);
 	}
 
-	public static function remove_table_columns($post_type, $remove_ids = array()) {
+	public static function remove_table_columns($post_type, $remove_ids = array(), $priority = 10) {
 		add_filter('manage_'.$post_type.'_posts_columns', function($defaults) use (&$remove_ids) {
 			foreach ($remove_ids as $remove_id) {
 				if (isset($defaults[$remove_id])) {
@@ -127,10 +150,10 @@ class Admin {
 			}
 
 			return $defaults;
-		}, 10);
+		}, $priority);
 	}
 
-	public static function add_table_columns($post_type, $new_columns = array()) {
+	public static function add_table_columns($post_type, $new_columns = array(), $priority = 11) {
 		add_filter('manage_'.$post_type.'_posts_columns', function($defaults) use (&$new_columns) {
 			foreach (array_keys($new_columns) as $col_name) {
 				$col_key = strtolower(preg_replace('/[^\da-z]/i', '', $col_name));
@@ -139,7 +162,7 @@ class Admin {
 			}
 
 			return $defaults;
-		}, 11);
+		}, $priority);
 
 		add_action('manage_'.$post_type.'_posts_custom_column', function($column_name, $post_id) use (&$new_columns) {
 			foreach (array_keys($new_columns) as $new_col_key) {

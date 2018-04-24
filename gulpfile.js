@@ -11,9 +11,9 @@ function loadLocalConfig() {
 const gulp			= require('gulp');
 const plugins		= require('gulp-load-plugins')();
 const browsersync	= require('browser-sync').create();
-const webpack		= require('webpack');
-const webpackStream	= require('webpack-stream');
-const webpackConfig	= require('./webpack.config.js');
+// const webpack		= require('webpack');
+// const webpackStream	= require('webpack-stream');
+// const webpackConfig	= require('./webpack.config.js');
 
 gulp.task('scss', function () {
 	return gulp.src('css/master.scss')
@@ -70,8 +70,12 @@ gulp.task('js', function () {
 			message: 'Starting JS build',
 			title: 'JS Build'
 		}))
-		.pipe(webpackStream(webpackConfig, webpack))
-		.pipe(gulp.dest('dist/js'));
+		// .pipe(webpackStream(webpackConfig, webpack))
+		// .pipe(plugins.exec('npx parcel build <%= file.path %> --out-file master.min -d dist/js'))
+		// .pipe(plugins.exec.reporter());
+		.pipe(plugins.exec('npx webpack --mode production'))
+		.pipe(plugins.exec.reporter());
+		// .pipe(gulp.dest('dist/js'));
 });
 
 gulp.task('js-watch', ['js'], function (done) {
@@ -87,12 +91,7 @@ gulp.task('browser-sync', function () {
 		process.exit();
 	}
 
-	browsersync.init({
-		proxy: localConfig.browserSync.proxy,
-		open: false,
-		notify: true,
-		https: localConfig.browserSync.https
-	});
+	browsersync.init(localConfig.browserSync);
 
 	gulp.watch('css/**/*.scss', ['scss']);
 	gulp.watch('js/**/*.js', ['js-watch']);

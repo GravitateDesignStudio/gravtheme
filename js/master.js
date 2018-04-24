@@ -1,9 +1,16 @@
 /* global jQuery */
 
 import objectFitImages from 'object-fit-images';
-import Swiper from 'swiper';
 import gravUtil from './util/grav-util';
-import siteHeader from './components/site-header';
+import ThemeWelcome from './components/testing/theme-welcome';
+import SiteHeader from './components/site-header';
+
+const instances = {
+	components: {
+		themeWelcome: null,
+		siteHeader: null
+	}
+};
 
 jQuery(function ($) {
 	/**
@@ -15,13 +22,24 @@ jQuery(function ($) {
 		gravUtil.setScrollVars();
 		gravUtil.updateScrollClasses(100);
 
-		siteHeader.init();
+		/**
+		 * Initialize components
+		 */
+		// theme welcome -- this can be removed during development
+		const $themeWelcomeEls = $('.theme-welcome');
 
-		const swiperTest = new Swiper('.swiper-container');
+		if ($themeWelcomeEls.length) {
+			instances.themeWelcome = new ThemeWelcome($themeWelcomeEls.first());
+		}
+
+		// site header
+		const $siteHeaderEls = $('.site-header');
+
+		if ($siteHeaderEls.length) {
+			instances.components.siteHeader = new SiteHeader($siteHeaderEls.first());
+		}
 
 		objectFitImages();
-
-		// $.colorbox({ html: '<h1>Welcome</h1>' });
 	});
 
 	/**

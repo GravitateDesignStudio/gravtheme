@@ -3,7 +3,7 @@ namespace Grav\WP;
 
 class TinyMCE {
 	public static function add_formats($formats, $merge_formats = true) {
-		add_filter('tiny_mce_before_init', function($init_array) use (&$formats) {
+		add_filter('tiny_mce_before_init', function($init_array) use (&$formats, &$merge_formats) {
 			/*
 			* Each array child is a format with it's own settings
 			* Notice that each array has title, block, classes, and wrapper arguments

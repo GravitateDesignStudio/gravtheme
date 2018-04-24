@@ -1,5 +1,3 @@
-$block-padding: 4rem 0 !default;
-
 // remove default 'block-inner' top padding from the second block
 // in a series of two with the same background color
 @each $color_name, $color_value in $bg-colors {
@@ -18,6 +16,14 @@ $block-padding: 4rem 0 !default;
 
 .block-container {
 	.block-inner {
-		padding: $block-padding;
+		padding: map-deep-get($block-padding, 'small', 'top') map-deep-get($block-padding, 'small', 'right') map-deep-get($block-padding, 'small', 'bottom') map-deep-get($block-padding, 'small', 'left');
+
+		@include media-min($medium) {
+			padding: map-deep-get($block-padding, 'medium', 'top') map-deep-get($block-padding, 'medium', 'right') map-deep-get($block-padding, 'medium', 'bottom') map-deep-get($block-padding, 'medium', 'left');
+		}
+
+		@include media-min($large) {
+			padding: map-deep-get($block-padding, 'large', 'top') map-deep-get($block-padding, 'large', 'right') map-deep-get($block-padding, 'large', 'bottom') map-deep-get($block-padding, 'large', 'left');
+		}
 	}
 }

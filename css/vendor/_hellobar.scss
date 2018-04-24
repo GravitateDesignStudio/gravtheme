@@ -1,0 +1,37 @@
+body.hellobar--position-top {
+	transition: margin 0.5s ease-in-out;
+}
+
+.hellobar {
+	z-index: 10;
+	position: fixed;
+	left: 0;
+	width: 100%;
+	opacity: 0;
+	pointer-events: none;
+	transition: all 0.5s ease-in-out;
+	background: #fff;
+	border: 1px solid red;
+
+	body.hellobar--position-top & {
+		top: 0;
+		transform: translateY(-100%);
+	}
+
+	body.hellobar--position-bottom & {
+		bottom: 0;
+		transform: translateY(100%);
+	}
+
+	body.hellobar--visible & {
+		opacity: 1;
+		pointer-events: all;
+		transform: translateY(0);
+	}
+
+	&__wrapper {
+		max-width: $global-width;
+		margin: 0 auto;
+		display: flex;
+	}
+}

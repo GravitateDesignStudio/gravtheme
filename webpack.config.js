@@ -2,9 +2,11 @@ const path 				= require('path');
 const UglifyJsPlugin 	= require('uglifyjs-webpack-plugin');
 
 module.exports = {
+	mode: 'production',
 	// watch: true,
 	cache: true,
 	devtool: 'cheap-source-map',
+	// devtool: 'source-map',
 	entry: './js/master.js',
 	output: {
 		path: path.join(__dirname, '/dist/js'),
@@ -14,33 +16,41 @@ module.exports = {
 		modules: ['node_modules']
 	},
 	module: {
-		loaders: [
+		rules: [
 			{
 				test: /\.js$/,
-				exclude: /(node_modules|bower_components)/,
-				// exclude: /node_modules\/(?!(dom7|swiper)\/).*/,
-				loader: 'babel-loader?cacheDirectory=true',
-				query: {
-					presets: [
-						['babel-preset-env', {
-							targets: {
-								browsers: ['last 2 versions', 'ie >= 11']
-							}
-						}]
-					]
+				exclude: /node_modules\/(?!(dom7|swiper)\/).*/,
+				use: {
+					loader: 'babel-loader',
+					options: {
+						// presets: [
+						// 	['babel-preset-env', {
+						// 		targets: {
+						// 			browsers: ['last 2 versions', 'ie >= 11']
+						// 		}
+						// 	}]
+						// ],
+						cacheDirectory: true
+					}
 				}
 			}
 		]
-	},
-	plugins: [
-		new UglifyJsPlugin({
-			exclude: /(node_modules|bower_components)/,
-			// exclude: /node_modules\/(?!(dom7|swiper)\/).*/,
-			cache: true,
-			parallel: true,
-			uglifyOptions: {
-				warnings: true
-			}
-		})
-	]
+	}
+	// plugins: [
+	// 	new UglifyJsPlugin({
+	// 		// exclude: /(node_modules|bower_components)/,
+	// 		// exclude: /node_modules\/(?!(dom7|swiper)\/).*/,
+	// 		exclude: /node_modules/,
+	// 		cache: true,
+	// 		parallel: true,
+	// 		uglifyOptions: {
+	// 			warnings: true,
+	// 			output: {
+	// 				comments: false,
+	// 				beautify: false
+	// 			}
+	// 		},
+	// 		sourceMap: true
+	// 	})
+	// ]
 };

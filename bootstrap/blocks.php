@@ -28,3 +28,27 @@ add_filter('grav_get_css', function($css, $block_name) {
 
 	return $css;
 }, 10, 2);
+
+add_action('rest_api_init', function() {
+	register_rest_field(['post', 'page'], 'grav_blocks', [
+		'get_callback' => function($post) {
+			return get_field('grav_blocks');
+		}
+	]);
+});
+
+
+add_filter('hello_bar_fields_settings', function($fields) {
+	$fields = array_filter($fields, function($field) {
+		return $field['key'] !== 'hello_bar_icon';
+	});
+
+	return $fields;
+});
+
+add_filter('hello_bar_colors', function($colors) {
+	return array(
+		'hellobar--blue' => 'Blue',
+		'hellobar--red' => 'Red'
+	);
+});

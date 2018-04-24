@@ -2,7 +2,7 @@
 namespace Grav\WP;
 
 class ThemeSupport {
-	static public $support_items = [];
+	static public $support_items = array();
     static private $hook_registered = false;
 
     static public function add($name, $params='') {
