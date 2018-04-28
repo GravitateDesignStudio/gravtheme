@@ -1,12 +1,10 @@
 const path 				= require('path');
-const UglifyJsPlugin 	= require('uglifyjs-webpack-plugin');
+// const UglifyJsPlugin 	= require('uglifyjs-webpack-plugin');
 
 module.exports = {
 	mode: 'production',
-	// watch: true,
 	cache: true,
-	devtool: 'cheap-source-map',
-	// devtool: 'source-map',
+	devtool: 'source-map',
 	entry: './js/master.js',
 	output: {
 		path: path.join(__dirname, '/dist/js'),
