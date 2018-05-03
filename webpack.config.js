@@ -1,5 +1,4 @@
-const path 				= require('path');
-// const UglifyJsPlugin 	= require('uglifyjs-webpack-plugin');
+const path = require('path');
 
 module.exports = {
 	mode: 'production',
@@ -21,34 +20,10 @@ module.exports = {
 				use: {
 					loader: 'babel-loader',
 					options: {
-						// presets: [
-						// 	['babel-preset-env', {
-						// 		targets: {
-						// 			browsers: ['last 2 versions', 'ie >= 11']
-						// 		}
-						// 	}]
-						// ],
 						cacheDirectory: true
 					}
 				}
 			}
 		]
 	}
-	// plugins: [
-	// 	new UglifyJsPlugin({
-	// 		// exclude: /(node_modules|bower_components)/,
-	// 		// exclude: /node_modules\/(?!(dom7|swiper)\/).*/,
-	// 		exclude: /node_modules/,
-	// 		cache: true,
-	// 		parallel: true,
-	// 		uglifyOptions: {
-	// 			warnings: true,
-	// 			output: {
-	// 				comments: false,
-	// 				beautify: false
-	// 			}
-	// 		},
-	// 		sourceMap: true
-	// 	})
-	// ]
 };
