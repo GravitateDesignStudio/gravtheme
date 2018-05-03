@@ -84,7 +84,7 @@ acf_add_local_field_group(array (
                         'id' => '',
                     ),
                     'choices' => $sprite_symbols,
-                    'default_value' => is_array($sprite_symbols) ? $sprite_symbols[0] : '',
+                    'default_value' => (is_array($sprite_symbols) && isset($sprite_symbols[0])) ? $sprite_symbols[0] : '',
                     'allow_null' => 0,
                     'multiple' => 0,         // allows for multi-select
                     'ui' => 0,               // creates a more stylized UI
